@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
-void main() {
-  runApp(const MyApp());
-}
+import 'screens/home.dart';
+import 'routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  final _title = 'Nigohalog';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: _title,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: HomeScreen.route,
+      routes: getRoutes(),
     );
   }
 }
