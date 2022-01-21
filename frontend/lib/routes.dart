@@ -1,4 +1,4 @@
-import 'screens/home.dart';
+import 'screens/home/home.dart';
 import 'screens/history.dart';
 import 'screens/favorite.dart';
 
