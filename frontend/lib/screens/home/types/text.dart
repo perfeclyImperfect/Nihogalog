@@ -5,6 +5,11 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: const Text('Text'));
+    return Container(
+      child: OutlinedButton(
+        onPressed: null,
+        child: Text('hoy'),
+      ),
+    );
   }
 }
