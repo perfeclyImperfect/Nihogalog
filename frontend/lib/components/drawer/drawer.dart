@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'darkMode.dart';
-import 'navigationListTile.dart';
+import 'parts/darkMode.dart';
+import 'parts/navigationListTile.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
