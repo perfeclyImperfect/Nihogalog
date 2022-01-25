@@ -5,5 +5,7 @@ class speech_converter_controller:
         self.language_selected = language_selected
         self.language_convert = language_convert
 
-    def main(self, *args, **kwargs):
-        print(self.language_convert)
+        self.text_input = "example text input speech_converter_controller"
+        self.text_output = "example text output speech_converter_controller"
+        self.speech_input = "example speech input speech_converter_controller"
+        self.speech_output = "example speech output speech_converter_controller"

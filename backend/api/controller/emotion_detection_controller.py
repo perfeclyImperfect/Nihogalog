@@ -5,5 +5,7 @@ class emotion_detection_controller:
         self.language_selected = language_selected
         self.language_convert = language_convert
 
-    def main(self, *args, **kwargs):
-        print(self.language_convert)
+        self.text_input = "example text input emotion_detection_controller"
+        self.text_output = "example text output emotion_detection_controller"
+        self.speech_input = "example speech input emotion_detection_controller"
+        self.speech_output = "example speech output emotion_detection_controller"

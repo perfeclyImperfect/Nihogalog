@@ -14,22 +14,19 @@ from .controller.text_detection_translator_controller import *
 @csrf_exempt
 def emotion_detection(request):
     data = json.loads(request.body.decode())
-
     convert = emotion_detection_controller(
         image_input=data['image_input'],
         language_selected=data['language_selected'],
         language_convert=data['language_convert']
     )
-    convert.main()
-
     return JsonResponse(
         {
             'success': True,
-            'text_input': "Text input",
-            'language_selected': "Japanese",
-            'language_convert': "Tagalog",
-            'text_output': "Japanese",
-            'speech_output': "dir"
+            'text_input': convert.text_input,
+            'language_selected': convert.language_selected,
+            'language_convert': convert.language_convert,
+            'text_output': convert.text_output,
+            'speech_output': convert.speech_output
         }
     )
 
@@ -42,15 +39,14 @@ def object_detection(request):
         language_selected=data['language_selected'],
         language_convert=data['language_convert']
     )
-    convert.main()
     return JsonResponse(
         {
             'success': True,
-            'text_input': "Text input",
-            'language_selected': "Japanese",
-            'language_convert': "Tagalog",
-            'text_output': "Japanese",
-            'speech_output': "dir"
+            'text_input': convert.text_input,
+            'language_selected': convert.language_selected,
+            'language_convert': convert.language_convert,
+            'text_output': convert.text_output,
+            'speech_output': convert.speech_output
         }
     )
 
@@ -63,15 +59,14 @@ def speech_converter(request):
         language_selected=data['language_selected'],
         language_convert=data['language_convert']
     )
-    convert.main()
     return JsonResponse(
         {
             'success': True,
-            'text_input': "Text input",
-            'language_selected': "Japanese",
-            'language_convert': "Tagalog",
-            'text_output': "Japanese",
-            'speech_output': "dir"
+            'text_input': convert.text_input,
+            'language_selected': convert.language_selected,
+            'language_convert': convert.language_convert,
+            'text_output': convert.text_output,
+            'speech_output': convert.speech_output
         }
     )
 
@@ -84,15 +79,14 @@ def text_converter(request):
         language_selected=data['language_selected'],
         language_convert=data['language_convert']
     )
-    convert.main()
     return JsonResponse(
         {
             'success': True,
-            'text_input': "Text input",
-            'language_selected': "Japanese",
-            'language_convert': "Tagalog",
-            'text_output': "Japanese",
-            'speech_output': "Response"
+            'text_input': convert.text_input,
+            'language_selected': convert.language_selected,
+            'language_convert': convert.language_convert,
+            'text_output': convert.text_output,
+            'speech_output': convert.speech_output
         }
     )
 
@@ -105,14 +99,13 @@ def text_detection_translator(request):
         language_selected=data['language_selected'],
         language_convert=data['language_convert']
     )
-    convert.main()
     return JsonResponse(
         {
             'success': True,
-            'text_input': "Text input",
-            'language_selected': "Japanese",
-            'language_convert': "Tagalog",
-            'text_output': "Japanese",
-            'speech_output': "dir"
+            'text_input': convert.text_input,
+            'language_selected': convert.language_selected,
+            'language_convert': convert.language_convert,
+            'text_output': convert.text_output,
+            'speech_output': convert.speech_output
         }
     )

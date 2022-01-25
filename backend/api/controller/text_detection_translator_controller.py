@@ -4,5 +4,7 @@ class text_detection_translator_controller:
         self.language_selected = language_selected
         self.language_convert = language_convert
 
-    def main(self, *args, **kwargs):
-        print(self.language_convert)
+        self.text_input = "example text input text_detection_translator_controller"
+        self.text_output = "example text output text_detection_translator_controller"
+        self.speech_input = "example speech input text_detection_translator_controller"
+        self.speech_output = "example speech output text_detection_translator_controller"
