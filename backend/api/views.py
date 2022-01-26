@@ -22,10 +22,11 @@ def emotion_detection(request):
     return JsonResponse(
         {
             'success': True,
-            'text_input': convert.text_input,
             'language_selected': convert.language_selected,
             'language_convert': convert.language_convert,
+            'text_input': convert.text_input,
             'text_output': convert.text_output,
+            'speech_input': convert.speech_input,
             'speech_output': convert.speech_output
         }
     )
@@ -42,10 +43,11 @@ def object_detection(request):
     return JsonResponse(
         {
             'success': True,
-            'text_input': convert.text_input,
             'language_selected': convert.language_selected,
             'language_convert': convert.language_convert,
+            'text_input': convert.text_input,
             'text_output': convert.text_output,
+            'speech_input': convert.speech_input,
             'speech_output': convert.speech_output
         }
     )
@@ -62,10 +64,11 @@ def speech_converter(request):
     return JsonResponse(
         {
             'success': True,
-            'text_input': convert.text_input,
             'language_selected': convert.language_selected,
             'language_convert': convert.language_convert,
+            'text_input': convert.text_input,
             'text_output': convert.text_output,
+            'speech_input': convert.speech_input,
             'speech_output': convert.speech_output
         }
     )
@@ -82,10 +85,11 @@ def text_converter(request):
     return JsonResponse(
         {
             'success': True,
-            'text_input': convert.text_input,
             'language_selected': convert.language_selected,
             'language_convert': convert.language_convert,
+            'text_input': convert.text_input,
             'text_output': convert.text_output,
+            'speech_input': convert.speech_input,
             'speech_output': convert.speech_output
         }
     )
@@ -102,10 +106,11 @@ def text_detection_translator(request):
     return JsonResponse(
         {
             'success': True,
-            'text_input': convert.text_input,
             'language_selected': convert.language_selected,
             'language_convert': convert.language_convert,
+            'text_input': convert.text_input,
             'text_output': convert.text_output,
+            'speech_input': convert.speech_input,
             'speech_output': convert.speech_output
         }
     )
