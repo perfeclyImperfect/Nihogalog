@@ -25,7 +25,8 @@ class DrawerScreen extends StatelessWidget {
       for (int i = 0; i < drawerListNames.length; i++)
         NavigationListTile(
           icon: drawerListIcons[i],
-          text: drawerListNames[i].toUpperCase(),
+          text: drawerListNames[i][0].toUpperCase() +
+              drawerListNames[i].substring(1, drawerListNames[i].length),
           onTap: (context) => changeScreen(context, '/' + drawerListNames[i]),
         )
     ];
@@ -42,7 +43,10 @@ class DrawerScreen extends StatelessWidget {
             const Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Text('c 2021 nihogalog'),
+                child: Text(
+                  'c 2021 nihogalog',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             )
           ],
