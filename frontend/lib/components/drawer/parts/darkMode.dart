@@ -7,7 +7,12 @@ class _DarkModeState extends State<DarkMode> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Text('Dark Mode'),
+        const Text(
+          'Dark Mode',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         Switch(
           value: _darkmode,
           onChanged: (onOff) {

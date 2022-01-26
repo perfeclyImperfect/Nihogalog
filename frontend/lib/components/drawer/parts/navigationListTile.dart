@@ -19,7 +19,12 @@ class NavigationListTile extends StatelessWidget {
       title: Row(
         children: [
           Icon(icon),
-          Text(text),
+          Text(
+            text,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
