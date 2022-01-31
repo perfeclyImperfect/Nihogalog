@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/bottomNavigationBar/parts/bottomNavyItem.dart';
 
 import '../../components/drawer/drawer.dart';
-import '../../utility/hexColor.dart';
+import '../../utils/hexColor.dart';
 
 import 'types/text.dart' as text;
 import 'types/speech.dart';

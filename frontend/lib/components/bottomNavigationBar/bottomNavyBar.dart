@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'parts/bottomNavyItem.dart';
 import 'parts/itemWidget.dart';
-import '../../../utility/hexColor.dart';
+import '../../utils/hexColor.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
   const CustomAnimatedBottomBar({
