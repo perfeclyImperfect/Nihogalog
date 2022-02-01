@@ -1,38 +1,53 @@
 import 'package:frontend/models/textTranslation.dart';
+import 'package:frontend/models/translating.dart';
 import 'package:frontend/view_models/textTranslation_view_model.dart';
+import 'package:frontend/view_models/translating_view_%20model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class _TranslationTextFieldState extends State<TranslationTextField> {
-  void clear(TextTranslationViewModel test) {
+  void clear(TextTranslationViewModel textTranslationViewModel) {
     widget.controller.clear();
-    test.setText(TextTranslation(text: ''));
+    textTranslationViewModel.setText(TextTranslation(text: ''));
   }
 
-  void translate(String value, TextTranslationViewModel test) {
-    test.setText(TextTranslation(text: value));
+  void translate(
+    String value,
+    TextTranslationViewModel textTranslationViewModel,
+  ) {
+    textTranslationViewModel.setText(TextTranslation(text: value));
   }
 
   @override
   Widget build(BuildContext context) {
-    var textTranslationViewModel =
+    final TextTranslationViewModel textTranslationViewModel =
         Provider.of<TextTranslationViewModel>(context);
 
-    return TextField(
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      onChanged: (value) => translate(value, textTranslationViewModel),
-      controller: widget.controller,
-      decoration: InputDecoration(
-        hintText: 'Type the text to translate.',
-        suffixIcon: textTranslationViewModel.getText.text.isNotEmpty
-            ? IconButton(
-                splashColor: Colors.transparent,
-                onPressed: () => clear(textTranslationViewModel),
-                icon: const Icon(Icons.clear),
-              )
-            : null,
+    final TranslatingViewModel translatingViewModel =
+        Provider.of<TranslatingViewModel>(context);
+
+    return FocusScope(
+      child: Focus(
+        child: TextField(
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          onChanged: (value) => translate(value, textTranslationViewModel),
+          controller: widget.controller,
+          decoration: InputDecoration(
+            hintText: 'Type the text to translate.',
+            suffixIcon: textTranslationViewModel.getText.text.isNotEmpty
+                ? IconButton(
+                    splashColor: Colors.transparent,
+                    onPressed: () => clear(textTranslationViewModel),
+                    icon: const Icon(Icons.clear),
+                  )
+                : null,
+          ),
+        ),
       ),
+      onFocusChange: (focus) {
+        translatingViewModel.setTranslating(Translating(status: focus));
+      },
     );
   }
 }
