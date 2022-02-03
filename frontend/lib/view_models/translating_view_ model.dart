@@ -10,4 +10,8 @@ class TranslatingViewModel extends ChangeNotifier {
     _translating = translating;
     notifyListeners();
   }
+
+  reset() {
+    setTranslating(const Translating(status: false));
+  }
 }

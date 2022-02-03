@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/text/parts/translation.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:frontend/models/textTranslation.dart';
+import 'package:frontend/screens/text/parts/translation.dart';
 import 'package:frontend/view_models/textTranslation_view_model.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 
@@ -82,16 +84,37 @@ class TextScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(
+                                  text: Provider.of<TextTranslationViewModel>(
+                                          context,
+                                          listen: false)
+                                      .getText
+                                      .text))
+                              .then(
+                            (_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text("Original text copied to clipboard"),
+                                ),
+                              );
+                            },
+                          );
+                        },
                         icon: const Icon(Icons.file_copy),
                         splashColor: Colors.transparent,
                         splashRadius: 1,
+                        iconSize: 35,
+                        color: Colors.grey,
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.star),
+                        icon: const Icon(Icons.star_rounded),
                         splashColor: Colors.transparent,
                         splashRadius: 1,
+                        iconSize: 40,
+                        color: Colors.grey,
                       )
                     ],
                   ),

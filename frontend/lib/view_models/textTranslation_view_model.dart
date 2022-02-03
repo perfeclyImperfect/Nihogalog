@@ -10,4 +10,8 @@ class TextTranslationViewModel extends ChangeNotifier {
     _text = text;
     notifyListeners();
   }
+
+  reset() {
+    setText(TextTranslation(text: ''));
+  }
 }
