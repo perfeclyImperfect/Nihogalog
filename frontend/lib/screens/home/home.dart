@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/bottomNavigationBar/parts/bottomNavyItem.dart';
 
 import '../../components/drawer/drawer.dart';
+import '../../components/bottomNavigationBar/bottomNavyBar.dart';
+import 'package:frontend/components/bottomNavigationBar/parts/bottomNavyItem.dart';
 import '../../utils/hexColor.dart';
 
 import 'types/text.dart' as text;
 import 'types/speech.dart';
 import 'types/camera.dart';
-
-import '../../components/bottomNavigationBar/bottomNavyBar.dart';
 
 class _HomeScreen extends State<HomeScreen> {
   static final List<Widget> _types = [

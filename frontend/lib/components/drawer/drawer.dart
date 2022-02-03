@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view_models/darkMode_view_model.dart';
 
 import 'parts/darkMode.dart';
 import 'parts/navigationListTile.dart';
@@ -37,7 +38,7 @@ class DrawerScreen extends StatelessWidget {
         child: Column(
           children: [
             for (var i in drawerListWidgets) i,
-            const ListTile(
+            ListTile(
               title: DarkMode(),
             ),
             const Expanded(

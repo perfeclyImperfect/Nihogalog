@@ -76,27 +76,28 @@ class TextScreen extends StatelessWidget {
                 visible: status ? true : isThereWord,
               ),
               Visibility(
-                  child: Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.file_copy),
-                          splashColor: Colors.transparent,
-                          splashRadius: 1,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.star),
-                          splashColor: Colors.transparent,
-                          splashRadius: 1,
-                        )
-                      ],
-                    ),
+                child: Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.file_copy),
+                        splashColor: Colors.transparent,
+                        splashRadius: 1,
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.star),
+                        splashColor: Colors.transparent,
+                        splashRadius: 1,
+                      )
+                    ],
                   ),
-                  visible: status ? false : isThereWord)
+                ),
+                visible: status ? false : isThereWord,
+              )
             ],
           ),
         ),

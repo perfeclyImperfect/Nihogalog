@@ -11,10 +11,7 @@ class CustomText extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 65, vertical: 15),
-          child: TranslationHeader(
-            toLanguage: 'Tagalog',
-            fromLanguage: 'Nihongo',
-          ),
+          child: TranslationHeader(),
         ),
         Expanded(
           child: Align(

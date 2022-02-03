@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:frontend/view_models/languageTranslation_view_model.dart';
 
 class _TranslationHeader extends State<TranslationHeader> {
-  void swap() {
-    setState(() {
-      _reverse = !_reverse;
-    });
-  }
-
-  bool _reverse = false;
-
   @override
   Widget build(BuildContext context) {
+    final LanguageTranslationViewModel languageTranslationViewModel =
+        Provider.of<LanguageTranslationViewModel>(context);
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: const [
@@ -30,7 +28,7 @@ class _TranslationHeader extends State<TranslationHeader> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                _reverse ? widget.fromLanguage : widget.toLanguage,
+                languageTranslationViewModel.getFromLanguage,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black),
               ),
@@ -40,7 +38,7 @@ class _TranslationHeader extends State<TranslationHeader> {
             width: 37,
             height: 35,
             child: TextButton(
-              onPressed: () => swap(),
+              onPressed: () => languageTranslationViewModel.swapLanguage(),
               style: TextButton.styleFrom(
                 splashFactory: NoSplash.splashFactory,
               ),
@@ -59,7 +57,7 @@ class _TranslationHeader extends State<TranslationHeader> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                _reverse ? widget.toLanguage : widget.fromLanguage,
+                languageTranslationViewModel.getToLanguage,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black),
               ),
@@ -72,14 +70,7 @@ class _TranslationHeader extends State<TranslationHeader> {
 }
 
 class TranslationHeader extends StatefulWidget {
-  const TranslationHeader({
-    Key? key,
-    required this.fromLanguage,
-    required this.toLanguage,
-  }) : super(key: key);
-
-  final String fromLanguage;
-  final String toLanguage;
+  const TranslationHeader({Key? key}) : super(key: key);
 
   @override
   State<TranslationHeader> createState() => _TranslationHeader();
