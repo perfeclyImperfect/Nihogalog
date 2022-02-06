@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/hexColor.dart';
+import '../../../../utils/hexColor.dart';
 import 'bottomNavyItem.dart';
 
 class ItemWidget extends StatelessWidget {

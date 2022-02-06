@@ -38,7 +38,7 @@ class DrawerScreen extends StatelessWidget {
         child: Column(
           children: [
             for (var i in drawerListWidgets) i,
-            ListTile(
+            const ListTile(
               title: DarkMode(),
             ),
             const Expanded(

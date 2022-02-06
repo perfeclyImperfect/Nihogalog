@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/components/logo/Logo.dart';
 
 import '../../components/drawer/drawer.dart';
 import '../../components/bottomNavigationBar/bottomNavyBar.dart';
-import 'package:frontend/components/bottomNavigationBar/parts/bottomNavyItem.dart';
-import '../../utils/hexColor.dart';
+import 'package:frontend/views/components/bottomNavigationBar/parts/bottomNavyItem.dart';
+import '../../../utils/hexColor.dart';
 
 import 'types/text.dart' as text;
 import 'types/speech.dart';
@@ -49,8 +50,14 @@ class _HomeScreen extends State<HomeScreen> {
             bottom: Radius.circular(30),
           ),
         ),
-        title: const Text('nihogalog'),
+        title: const Logo(
+          padding: EdgeInsets.only(left: 30),
+        ),
         centerTitle: true,
+        iconTheme: const IconThemeData(
+          size: 30,
+          color: Colors.white,
+        ),
       ),
       body: _types.elementAt(_selectedIndex),
       drawer: const DrawerScreen(),

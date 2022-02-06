@@ -1,5 +1,6 @@
 class TextTranslation {
-  TextTranslation({required this.text});
+  TextTranslation({required this.word, required this.translation});
 
-  final String text;
+  final String word;
+  final String translation;
 }

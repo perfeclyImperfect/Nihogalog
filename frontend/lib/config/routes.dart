@@ -1,7 +1,7 @@
-import '../screens/home/home.dart';
-import '../screens/history.dart';
-import '../screens/favorite.dart';
-import '../screens/text/text.dart';
+import '../views/screens/home/home.dart';
+import '../views/screens/history/history.dart';
+import '../views/screens/favorite.dart';
+import '../views/screens/text/text.dart';
 
 getRoutes() {
   return {
