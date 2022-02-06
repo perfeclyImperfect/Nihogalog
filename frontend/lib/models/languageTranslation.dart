@@ -1,49 +1,25 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
 class LanguageTranslation {
-  late SharedPreferences _localStorage;
+  String? _fromLanguage;
+  String? _toLanguage;
 
-  final String _kFromLanguageKey = 'fromLanguage';
-  final String _kToLanguageKey = 'toLanguage';
+  LanguageTranslation(
+    this._fromLanguage,
+    this._toLanguage,
+  );
 
-  Future<void> setFromLanguage(value) async {
-    _localStorage = await SharedPreferences.getInstance();
+  LanguageTranslation.fromJSON(Map<String, dynamic> json)
+      : _fromLanguage = json['fromLanguage'],
+        _toLanguage = json['toLanguage'];
 
-    await _localStorage.setString(_kFromLanguageKey, value);
+  String? get getFromLanguage => _fromLanguage;
+
+  void setFromLanguage(String? fromLanguage) async {
+    _fromLanguage = fromLanguage;
   }
 
-  Future<void> setToLanguage(value) async {
-    _localStorage = await SharedPreferences.getInstance();
+  String? get getToLanguage => _toLanguage;
 
-    await _localStorage.setString(_kToLanguageKey, value);
-  }
-
-  Future<String> getFromLanguage() async {
-    _localStorage = await SharedPreferences.getInstance();
-
-    String? fromLanguageKey = _localStorage.getString(_kFromLanguageKey);
-
-    if (fromLanguageKey == null) {
-      const defaultValue = 'Tagalog';
-      setFromLanguage(defaultValue);
-      fromLanguageKey = defaultValue;
-    }
-
-    return fromLanguageKey;
-  }
-
-  Future<String> getToLanguage() async {
-    _localStorage = await SharedPreferences.getInstance();
-
-    String? toLanguageKey = _localStorage.getString(_kToLanguageKey);
-
-    if (toLanguageKey == null) {
-      const defaultValue = 'Nihogalog';
-
-      setToLanguage(defaultValue);
-      toLanguageKey = defaultValue;
-    }
-
-    return toLanguageKey;
+  void setToLanguage(String? toLanguage) async {
+    _toLanguage = toLanguage;
   }
 }

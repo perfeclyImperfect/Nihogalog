@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/utils/hexColor.dart';
 import 'package:provider/provider.dart';
 
-import 'package:frontend/models/textTranslation.dart';
-import 'package:frontend/screens/text/parts/translation.dart';
+import 'package:frontend/views/screens/text/parts/translation.dart';
 import 'package:frontend/view_models/textTranslation_view_model.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 
@@ -17,6 +17,24 @@ class TextScreen extends StatelessWidget {
 
   TextScreen({Key? key}) : super(key: key);
 
+  void _copyTranslationToClipBoard(context) {
+    Clipboard.setData(ClipboardData(
+            text: Provider.of<TextTranslationViewModel>(context, listen: false)
+                .getText
+                .word))
+        .then(
+      (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Original text copied to clipboard"),
+          ),
+        );
+      },
+    );
+  }
+
+  void _makeFavorite(context) {}
+
   @override
   Widget build(BuildContext context) {
     final TextTranslationViewModel textTranslationViewModel =
@@ -25,7 +43,10 @@ class TextScreen extends StatelessWidget {
     final TranslatingViewModel translatingViewModel =
         Provider.of<TranslatingViewModel>(context);
 
-    bool isThereWord = textTranslationViewModel.getText.text.isNotEmpty;
+    // final FavoriteViewModel favoriteViewModel =
+    //     Provider.of<FavoriteViewModel>(context);
+
+    bool isThereWord = textTranslationViewModel.getText.word.isNotEmpty;
     bool status = translatingViewModel.getTranslating.status;
 
     return GestureDetector(
@@ -84,24 +105,7 @@ class TextScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(
-                                  text: Provider.of<TextTranslationViewModel>(
-                                          context,
-                                          listen: false)
-                                      .getText
-                                      .text))
-                              .then(
-                            (_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text("Original text copied to clipboard"),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                        onPressed: () => _copyTranslationToClipBoard(context),
                         icon: const Icon(Icons.file_copy),
                         splashColor: Colors.transparent,
                         splashRadius: 1,
@@ -109,12 +113,13 @@ class TextScreen extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => _makeFavorite(context),
                         icon: const Icon(Icons.star_rounded),
                         splashColor: Colors.transparent,
                         splashRadius: 1,
                         iconSize: 40,
-                        color: Colors.grey,
+                        color:
+                            false ? HexColor('#ffbc00') : HexColor('#CECECE'),
                       )
                     ],
                   ),

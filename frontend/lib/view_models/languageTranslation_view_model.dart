@@ -1,40 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/locator.dart';
+import 'package:frontend/models/services/languageTranslationService.dart';
+
 import 'package:frontend/models/languageTranslation.dart';
 
 class LanguageTranslationViewModel extends ChangeNotifier {
-  final LanguageTranslation _languageTranslation = LanguageTranslation();
+  final languageTranslationService = locator<LanguageTranslationSer>();
+
+  late LanguageTranslation _languageTranslation = LanguageTranslation('', '');
 
   LanguageTranslationViewModel() {
     init();
   }
 
-  String _fromLanguage = '';
-  String _toLanguage = '';
-
-  get getFromLanguage => _fromLanguage;
-  get getToLanguage => _toLanguage;
-
   init() async {
-    _fromLanguage = await _languageTranslation.getFromLanguage();
-    _toLanguage = await _languageTranslation.getToLanguage();
+    final temp = await languageTranslationService.getLanguageTranslation();
+
+    await setLanguageTranslation(temp);
+
     notifyListeners();
   }
+
+  LanguageTranslation get getLanguageTranslation => _languageTranslation;
 
   void swapLanguage() async {
-    final temp = getFromLanguage;
+    _languageTranslation = await languageTranslationService.swap();
 
-    await setFromLanguage(getToLanguage);
-    await setToLanguage(temp);
     notifyListeners();
   }
 
-  Future<void> setFromLanguage(String value) async {
-    await _languageTranslation.setFromLanguage(value);
-    _fromLanguage = value;
+  setLanguageTranslation(LanguageTranslation languageTranslation) {
+    languageTranslationService.setLanguageTranslation(languageTranslation);
+    _languageTranslation = languageTranslation;
+
+    notifyListeners();
   }
 
-  Future<void> setToLanguage(String value) async {
-    await _languageTranslation.setToLanguage(value);
-    _toLanguage = value;
+  void reset() async {
+    languageTranslationService.reset();
+
+    notifyListeners();
   }
 }

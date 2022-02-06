@@ -3,11 +3,6 @@ import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:provider/provider.dart';
 
 class _DarkModeState extends State<DarkMode> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   bool _darkmode = false;
 
   darkmodeInit(final DarkModeViewModel darkModeViewModel) async {

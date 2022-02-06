@@ -1,5 +1,7 @@
+import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/textTranslation.dart';
 import 'package:frontend/models/translating.dart';
+import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/textTranslation_view_model.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 import 'package:provider/provider.dart';
@@ -8,14 +10,16 @@ import 'package:flutter/material.dart';
 class _TranslationTextFieldState extends State<TranslationTextField> {
   void clear(TextTranslationViewModel textTranslationViewModel) {
     widget.controller.clear();
-    textTranslationViewModel.setText(TextTranslation(text: ''));
+    textTranslationViewModel
+        .setText(TextTranslation(word: '', translation: ''));
   }
 
   void translate(
     String value,
     TextTranslationViewModel textTranslationViewModel,
   ) {
-    textTranslationViewModel.setText(TextTranslation(text: value));
+    textTranslationViewModel
+        .setText(TextTranslation(word: value, translation: ''));
   }
 
   @override
@@ -35,7 +39,7 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
           controller: widget.controller,
           decoration: InputDecoration(
             hintText: 'Type the text to translate.',
-            suffixIcon: textTranslationViewModel.getText.text.isNotEmpty
+            suffixIcon: textTranslationViewModel.getText.word.isNotEmpty
                 ? IconButton(
                     splashColor: Colors.transparent,
                     onPressed: () => clear(textTranslationViewModel),
@@ -47,6 +51,13 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
       ),
       onFocusChange: (focus) {
         translatingViewModel.setTranslating(Translating(status: focus));
+
+        if (textTranslationViewModel.getText.word.isNotEmpty) {
+          Provider.of<HistoryViewModel>(context, listen: false).add(
+            HistoryWord(textTranslationViewModel.getText.word,
+                textTranslationViewModel.getText.translation),
+          );
+        }
       },
     );
   }

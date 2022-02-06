@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/textTranslation.dart';
 
 class TextTranslationViewModel extends ChangeNotifier {
-  TextTranslation _text = TextTranslation(text: '');
+  TextTranslation _text = TextTranslation(word: '', translation: '');
 
   TextTranslation get getText => _text;
 
@@ -12,6 +12,6 @@ class TextTranslationViewModel extends ChangeNotifier {
   }
 
   reset() {
-    setText(TextTranslation(text: ''));
+    setText(TextTranslation(word: '', translation: ''));
   }
 }
