@@ -16,9 +16,8 @@ class LanguageTranslationViewModel extends ChangeNotifier {
   init() async {
     final temp = await languageTranslationService.getLanguageTranslation();
 
+    _languageTranslation = temp;
     await setLanguageTranslation(temp);
-
-    notifyListeners();
   }
 
   LanguageTranslation get getLanguageTranslation => _languageTranslation;
