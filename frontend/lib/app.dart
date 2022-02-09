@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/locator.dart';
+import 'package:frontend/config/locator/locator.dart';
 
 import 'views/screens/main.dart';
 

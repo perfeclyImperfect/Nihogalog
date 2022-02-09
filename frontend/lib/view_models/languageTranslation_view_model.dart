@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/locator.dart';
-import 'package:frontend/models/services/languageTranslationService.dart';
+import 'package:frontend/config/locator/locator.dart';
+import 'package:frontend/models/services/languageTranslationSer.dart';
 
 import 'package:frontend/models/languageTranslation.dart';
 
 class LanguageTranslationViewModel extends ChangeNotifier {
   final languageTranslationService = locator<LanguageTranslationSer>();
 
-  late LanguageTranslation _languageTranslation = LanguageTranslation('', '');
+  LanguageTranslation _languageTranslation = LanguageTranslation('', '');
 
   LanguageTranslationViewModel() {
     init();
@@ -23,7 +23,8 @@ class LanguageTranslationViewModel extends ChangeNotifier {
   LanguageTranslation get getLanguageTranslation => _languageTranslation;
 
   void swapLanguage() async {
-    _languageTranslation = await languageTranslationService.swap();
+    final temp = await languageTranslationService.swap();
+    _languageTranslation = temp;
 
     notifyListeners();
   }

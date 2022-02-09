@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/models/repositories/languageTranslationRepo.dart';
 import 'package:frontend/models/repositories/sharedPreferencesRepo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/utils/constants.dart';
 
 class LanguageTranslationRepoImp extends LanguageTranslationRepo {
   SharedPreferencesRepo sharedPreferencesRepo;
@@ -14,31 +14,17 @@ class LanguageTranslationRepoImp extends LanguageTranslationRepo {
 
   @override
   init() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
+    LanguageTranslation? tempLanguageTranslation = await getLanguageTranslation;
 
-    final String? tempString = await sharedPreferencesRepo.getString(_key);
-
-    LanguageTranslation tempLanguageTranslation;
-
-    if (tempString == null) {
+    if (tempLanguageTranslation == null) {
       final Map<String, dynamic> defaultValues = {
-        'fromLanguage': 'Tagalog',
-        'toLanguage': 'Nihongo',
+        'fromLanguage': kDefaultFromLanguage,
+        'toLanguage': kDefaultToLanguage,
       };
 
       sharedPreferencesRepo.setString(_key, jsonEncode(defaultValues));
 
       tempLanguageTranslation = LanguageTranslation.fromJSON(defaultValues);
-    } else {
-      final Map<String, dynamic> temp = jsonDecode(tempString);
-
-      tempLanguageTranslation = LanguageTranslation.fromJSON(
-        {
-          'fromLanguage': temp['fromLanguage'],
-          'toLanguage': temp['toLanguage']
-        },
-      );
     }
 
     setLanguageTranslation(tempLanguageTranslation);
@@ -55,7 +41,7 @@ class LanguageTranslationRepoImp extends LanguageTranslationRepo {
   }
 
   @override
-  getPrivateLT() async {
+  Future<LanguageTranslation?> getPrivateLT() async {
     String? tempString = await sharedPreferencesRepo.getString(_key);
 
     if (tempString != null) {
@@ -67,6 +53,6 @@ class LanguageTranslationRepoImp extends LanguageTranslationRepo {
       );
     }
 
-    return throw Exception('Error ');
+    return null;
   }
 }

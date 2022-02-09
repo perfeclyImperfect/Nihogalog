@@ -5,20 +5,12 @@ import 'package:provider/provider.dart';
 
 import '../../components/drawer/drawer.dart';
 
-class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
-
-  static String route = '/history';
-
+class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
-    HistoryViewModel historyViewModel = Provider.of<HistoryViewModel>(context);
+    final historyViewModel = Provider.of<HistoryViewModel>(context);
 
     final tempHistory = historyViewModel.getHistory;
-
-    for (int i = 0; i < tempHistory.length; i++) {
-      print(tempHistory[i].getOriginalWord);
-    }
 
     final historyListTileWidgets = [
       for (int i = 0; i < tempHistory.length; i++)
@@ -73,4 +65,13 @@ class HistoryScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
+
+  static String route = '/history';
+
+  @override
+  State<StatefulWidget> createState() => _HistoryScreenState();
 }

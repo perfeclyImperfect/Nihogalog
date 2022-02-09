@@ -43,7 +43,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       position: BadgePosition.topEnd(end: 30, top: -35),
       toAnimate: false,
       borderSide: BorderSide.none,
-      elevation: 1,
+      elevation: 4,
       badgeContent: Container(
         margin: const EdgeInsets.all(5),
         child: MaterialButton(
@@ -84,8 +84,8 @@ class CustomAnimatedBottomBar extends StatelessWidget {
           boxShadow: [
             if (showElevation)
               const BoxShadow(
-                color: Colors.black12,
-                blurRadius: 2,
+                color: Colors.black26,
+                blurRadius: 4,
               ),
           ],
         ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/models/historyWord.dart';
+import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/utils/hexColor.dart';
 import 'package:provider/provider.dart';
 
 import 'package:frontend/views/screens/text/parts/translation.dart';
-import 'package:frontend/view_models/textTranslation_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 
 import 'parts/textAppBar.dart';
@@ -13,13 +15,16 @@ import 'parts/translationTextField.dart';
 class TextScreen extends StatelessWidget {
   static String route = '/home/text';
 
-  final _translationController = TextEditingController();
+  TextScreen({Key? key, required var initialData}) : super(key: key) {
+    _textEditingController = TextEditingController(text: initialData);
+  }
 
-  TextScreen({Key? key}) : super(key: key);
+  late var _textEditingController =
+      TextEditingController(text: 'Initial Value');
 
   void _copyTranslationToClipBoard(context) {
     Clipboard.setData(ClipboardData(
-            text: Provider.of<TextTranslationViewModel>(context, listen: false)
+            text: Provider.of<WordTranslatingViewModel>(context, listen: false)
                 .getText
                 .word))
         .then(
@@ -37,14 +42,17 @@ class TextScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTranslationViewModel textTranslationViewModel =
-        Provider.of<TextTranslationViewModel>(context);
+    final textTranslationViewModel =
+        Provider.of<WordTranslatingViewModel>(context);
 
-    final TranslatingViewModel translatingViewModel =
-        Provider.of<TranslatingViewModel>(context);
+    // Future.delayed(const Duration(microseconds: 1), () {
+    //   if (historyWord != null) {
+    //     textTranslationViewModel.setText(WordTranslating(
+    //         historyWord!.getOriginalWord, historyWord!.getTranslationWord));
+    //   }
+    // });
 
-    // final FavoriteViewModel favoriteViewModel =
-    //     Provider.of<FavoriteViewModel>(context);
+    final translatingViewModel = Provider.of<TranslatingViewModel>(context);
 
     bool isThereWord = textTranslationViewModel.getText.word.isNotEmpty;
     bool status = translatingViewModel.getTranslating.status;
@@ -90,7 +98,7 @@ class TextScreen extends StatelessWidget {
                 visible: status ? false : isThereWord,
               ),
               TranslationTextField(
-                controller: _translationController,
+                controller: _textEditingController,
               ),
               Visibility(
                 child: Translation(
