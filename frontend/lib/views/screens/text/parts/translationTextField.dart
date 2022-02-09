@@ -1,34 +1,33 @@
 import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/textTranslation.dart';
+import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/models/translating.dart';
 import 'package:frontend/view_models/history_view_model.dart';
-import 'package:frontend/view_models/textTranslation_view_model.dart';
+import 'package:frontend/view_models/languageTranslation_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class _TranslationTextFieldState extends State<TranslationTextField> {
-  void clear(TextTranslationViewModel textTranslationViewModel) {
+  void clear(WordTranslatingViewModel textTranslationViewModel) {
     widget.controller.clear();
-    textTranslationViewModel
-        .setText(TextTranslation(word: '', translation: ''));
+    textTranslationViewModel.reset();
   }
 
   void translate(
-    String value,
-    TextTranslationViewModel textTranslationViewModel,
-  ) {
-    textTranslationViewModel
-        .setText(TextTranslation(word: value, translation: ''));
+      String value, WordTranslatingViewModel textTranslationViewModel) {
+    textTranslationViewModel.setText(WordTranslating(value, '', ''));
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextTranslationViewModel textTranslationViewModel =
-        Provider.of<TextTranslationViewModel>(context);
+    final textTranslationViewModel =
+        Provider.of<WordTranslatingViewModel>(context);
 
-    final TranslatingViewModel translatingViewModel =
-        Provider.of<TranslatingViewModel>(context);
+    final translatingViewModel = Provider.of<TranslatingViewModel>(context);
+
+    final languageTranslationViewModel =
+        Provider.of<LanguageTranslationViewModel>(context);
 
     return FocusScope(
       child: Focus(
@@ -54,8 +53,16 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
 
         if (textTranslationViewModel.getText.word.isNotEmpty) {
           Provider.of<HistoryViewModel>(context, listen: false).add(
-            HistoryWord(textTranslationViewModel.getText.word,
-                textTranslationViewModel.getText.translation),
+            HistoryWord(
+                textTranslationViewModel.getText.word,
+                textTranslationViewModel.getText.translation,
+                languageTranslationViewModel
+                        .getLanguageTranslation.getFromLanguage ??
+                    'Tagalog',
+                languageTranslationViewModel
+                        .getLanguageTranslation.getToLanguage ??
+                    'Nihogalog',
+                false),
           );
         }
       },

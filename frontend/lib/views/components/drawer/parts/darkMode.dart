@@ -3,22 +3,9 @@ import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:provider/provider.dart';
 
 class _DarkModeState extends State<DarkMode> {
-  bool _darkmode = false;
-
-  darkmodeInit(final DarkModeViewModel darkModeViewModel) async {
-    _darkmode = await darkModeViewModel.isEmpty()
-        ? false
-        : await darkModeViewModel.getStatus();
-
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    final DarkModeViewModel darkModeViewModel =
-        Provider.of<DarkModeViewModel>(context);
-
-    darkmodeInit(darkModeViewModel);
+    final darkModeViewModel = Provider.of<DarkModeViewModel>(context);
 
     return Row(
       children: [
@@ -29,11 +16,9 @@ class _DarkModeState extends State<DarkMode> {
           ),
         ),
         Switch(
-          value: _darkmode,
-          onChanged: (value) {
-            _darkmode = value;
-
-            darkModeViewModel.toggle(value);
+          value: darkModeViewModel.getStatus(),
+          onChanged: (value) async {
+            await darkModeViewModel.toggle(value);
           },
           activeColor: Colors.green,
           inactiveTrackColor: Colors.grey,

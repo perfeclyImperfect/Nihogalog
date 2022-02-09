@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
+import 'package:provider/provider.dart';
 
 class Translation extends StatelessWidget {
   const Translation({Key? key, required this.micVisibility}) : super(key: key);
@@ -7,6 +9,9 @@ class Translation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTranslationViewModel =
+        Provider.of<WordTranslatingViewModel>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(
@@ -36,11 +41,11 @@ class Translation extends StatelessWidget {
               ),
             ),
           ),
-          const Text(
-            'こんにちは元気ですか',
-            style: TextStyle(fontSize: 25),
+          Text(
+            textTranslationViewModel.getText.translation,
+            style: const TextStyle(fontSize: 25),
           ),
-          const Text("Kon'nichiwa genkidesuka")
+          Text(textTranslationViewModel.getText.translationPronounciation)
         ],
       ),
     );

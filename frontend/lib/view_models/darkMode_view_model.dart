@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/config/locator/locator.dart';
+import 'package:frontend/models/services/darkModeSer.dart';
 
 class DarkModeViewModel extends ChangeNotifier {
-  late SharedPreferences _localStorage;
+  final darkModeService = locator<DarkModeSer>();
 
-  final _key = 'darkmode';
+  bool _darkmode = false;
 
-  toggle(bool value) async {
-    _localStorage = await SharedPreferences.getInstance();
+  DarkModeViewModel() {
+    init();
+  }
 
-    await _localStorage.setBool(_key, value);
+  void init() async {
+    _darkmode = await darkModeService.getDarkMode();
 
     notifyListeners();
   }
 
-  getStatus() async {
-    _localStorage = await SharedPreferences.getInstance();
+  toggle(bool value) async {
+    _darkmode = await darkModeService.toggle();
 
-    return _localStorage.getBool(_key);
+    notifyListeners();
+  }
+
+  getStatus() {
+    return _darkmode;
   }
 
   isEmpty() async {
-    _localStorage = await SharedPreferences.getInstance();
-
-    return !_localStorage.containsKey(_key);
+    return await darkModeService.getDarkMode();
   }
 }

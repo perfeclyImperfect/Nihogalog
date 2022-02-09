@@ -81,9 +81,7 @@ class _HomeScreen extends State<HomeScreen> {
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.camera_alt),
-            title: const Text(
-              'Camera ',
-            ),
+            title: const Text('Camera '),
             textAlign: TextAlign.center,
           ),
         ],

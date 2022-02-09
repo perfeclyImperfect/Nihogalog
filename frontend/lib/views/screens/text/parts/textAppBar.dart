@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/textTranslation.dart';
+import 'package:frontend/config/locator/locator.dart';
+import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/models/translating.dart';
-import 'package:frontend/view_models/textTranslation_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/translationHeader/translationHeader.dart';
@@ -22,7 +23,7 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          Provider.of<TextTranslationViewModel>(context, listen: false).reset();
+          Provider.of<WordTranslatingViewModel>(context, listen: false).reset();
           Provider.of<TranslatingViewModel>(context, listen: false).reset();
 
           Navigator.of(context).pop();

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/languageTranslation.dart';
-import 'package:frontend/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
@@ -8,7 +6,7 @@ import 'package:frontend/view_models/languageTranslation_view_model.dart';
 class _TranslationHeader extends State<TranslationHeader> {
   @override
   Widget build(BuildContext context) {
-    final LanguageTranslationViewModel languageTranslationViewModel =
+    final languageTranslationViewModel =
         Provider.of<LanguageTranslationViewModel>(context);
 
     return Container(
@@ -35,22 +33,7 @@ class _TranslationHeader extends State<TranslationHeader> {
                       'Tagalog',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black),
-                )
-
-                // FutureBuilder(
-                //   future: languageTranslationViewModel.getLanguageTranslation,
-                //   builder:
-                //       (context, AsyncSnapshot<LanguageTranslation> snapshot) {
-                //     return Text(
-                //       snapshot.data != null
-                //           ? snapshot.data?.getFromLanguage ?? 'Tagalog'
-                //           : 'Tagalog',
-                //       style: const TextStyle(
-                //           fontWeight: FontWeight.bold, color: Colors.black),
-                //     );
-                //   },
-                // ),
-                ),
+                )),
           ),
           SizedBox(
             width: 37,
@@ -75,29 +58,15 @@ class _TranslationHeader extends State<TranslationHeader> {
           ),
           Expanded(
             child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  languageTranslationViewModel
-                          .getLanguageTranslation.getToLanguage ??
-                      'Nihongo',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
-                )
-
-                // FutureBuilder(
-                //   future: languageTranslationViewModel.getLanguageTranslation,
-                //   builder:
-                //       (context, AsyncSnapshot<LanguageTranslation> snapshot) {
-                //     return Text(
-                //       snapshot.data != null
-                //           ? snapshot.data?.getFromLanguage! ?? 'Nihogalog'
-                //           : 'Nihogalog',
-                //       style: const TextStyle(
-                //           fontWeight: FontWeight.bold, color: Colors.black),
-                //     );
-                //   },
-                // ),
-                ),
+              alignment: Alignment.center,
+              child: Text(
+                languageTranslationViewModel
+                        .getLanguageTranslation.getToLanguage ??
+                    'Nihongo',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+            ),
           ),
         ],
       ),

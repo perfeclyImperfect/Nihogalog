@@ -1,20 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
+import 'package:frontend/models/services/historySer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryViewModel extends ChangeNotifier {
-  late SharedPreferences _localStorage;
+  HistorySer historySer = locator<HistorySer>();
 
   List<HistoryWord> _history = [];
-
-  final String _key = 'history';
 
   List<HistoryWord> get getHistory => _history;
 
   void setHistory(List<HistoryWord> history) {
+    historySer.setHistoryWords(history);
     _history = history;
+
     notifyListeners();
   }
 
@@ -23,54 +23,20 @@ class HistoryViewModel extends ChangeNotifier {
   }
 
   void init() async {
-    _localStorage = await SharedPreferences.getInstance();
+    List<HistoryWord>? temp = await historySer.getHistoryWords() ?? [];
 
-    final List<String>? temp = _localStorage.getStringList(_key);
-
-    if (temp == null) {
-      await _localStorage.setStringList(_key, []);
-      setHistory([]);
-    } else {
-      setHistory(temp
-          .map((e) => HistoryWord(
-              jsonDecode(e)['originalWord'], jsonDecode(e)['translationWord']))
-          .toList());
-    }
-  }
-
-  void set(List<HistoryWord> history) {
-    _history = history;
-
-    notifyListeners();
+    setHistory(temp);
   }
 
   void add(HistoryWord historyWord) async {
-    _localStorage = await SharedPreferences.getInstance();
-
-    final tempLocalHistory = _localStorage.getStringList(_key);
-
-    if (tempLocalHistory != null) {
-      _history.add(historyWord);
-
-      tempLocalHistory.add(
-        jsonEncode(
-          {
-            'originalWord': historyWord.getOriginalWord,
-            'translationWord': historyWord.getTranslationWord
-          },
-        ),
-      );
-
-      await _localStorage.setStringList(_key, tempLocalHistory);
-    }
+    _history = await historySer.addHistoryWord(historyWord) ?? [historyWord];
 
     notifyListeners();
   }
 
   void reset() async {
-    _localStorage = await SharedPreferences.getInstance();
+    _history = await historySer.reset() ?? [];
 
-    _localStorage.setStringList(_key, []);
-    setHistory([]);
+    notifyListeners();
   }
 }

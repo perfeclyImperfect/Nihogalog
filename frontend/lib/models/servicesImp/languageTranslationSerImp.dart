@@ -1,6 +1,7 @@
 import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/models/repositories/languageTranslationRepo.dart';
-import 'package:frontend/models/services/languageTranslationService.dart';
+import 'package:frontend/models/services/languageTranslationSer.dart';
+import 'package:frontend/utils/constants.dart';
 
 class LanguageTranslationSerImp extends LanguageTranslationSer {
   LanguageTranslationRepo languageTranslationRepository;
@@ -9,22 +10,29 @@ class LanguageTranslationSerImp extends LanguageTranslationSer {
 
   @override
   Future<LanguageTranslation> getLanguageTranslation() async {
-    return await languageTranslationRepository.getLanguageTranslation;
+    return await languageTranslationRepository.getLanguageTranslation ??
+        LanguageTranslation(kDefaultFromLanguage, kDefaultToLanguage);
   }
 
   @override
   void setLanguageTranslation(LanguageTranslation languageTranslation) async {
-    await languageTranslationRepository
-        .setLanguageTranslation(languageTranslation);
+    languageTranslationRepository.setLanguageTranslation(languageTranslation);
   }
 
   @override
-  swap() async {
-    final LanguageTranslation temp =
+  Future<LanguageTranslation> swap() async {
+    final LanguageTranslation? temp =
         await languageTranslationRepository.getLanguageTranslation;
 
-    LanguageTranslation languageTranslation =
-        LanguageTranslation(temp.getToLanguage, temp.getFromLanguage);
+    LanguageTranslation? languageTranslation;
+
+    if (temp != null) {
+      languageTranslation =
+          LanguageTranslation(temp.getToLanguage, temp.getFromLanguage);
+    } else {
+      languageTranslation =
+          LanguageTranslation(kDefaultFromLanguage, kDefaultToLanguage);
+    }
 
     setLanguageTranslation(languageTranslation);
 
@@ -32,7 +40,8 @@ class LanguageTranslationSerImp extends LanguageTranslationSer {
   }
 
   @override
-  reset() {
+  Future<LanguageTranslation> reset() async {
     print('resetting');
+    return LanguageTranslation('', '');
   }
 }

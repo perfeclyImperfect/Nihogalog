@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/historyWord.dart';
+import 'package:frontend/models/repositories/sharedPreferencesRepo.dart';
+import 'package:frontend/views/screens/text/text.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home/home.dart';
 
@@ -18,7 +22,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: kMaterialAppTitle,
         initialRoute: HomeScreen.route,
-        routes: getRoutes(),
+        routes: getNamedRoutes(),
+        onGenerateRoute: (settings) => getOnGenerateRoute(settings),
       ),
     );
   }

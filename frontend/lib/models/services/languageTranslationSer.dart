@@ -4,6 +4,6 @@ abstract class LanguageTranslationSer {
   Future<LanguageTranslation> getLanguageTranslation();
   void setLanguageTranslation(LanguageTranslation languageTranslation);
 
-  swap();
-  reset();
+  Future<LanguageTranslation> swap();
+  Future<LanguageTranslation> reset();
 }
