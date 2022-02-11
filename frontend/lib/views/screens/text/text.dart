@@ -19,14 +19,13 @@ class TextScreen extends StatelessWidget {
     _textEditingController = TextEditingController(text: initialData);
   }
 
-  late var _textEditingController =
-      TextEditingController(text: 'Initial Value');
+  late var _textEditingController = TextEditingController();
 
   void _copyTranslationToClipBoard(context) {
     Clipboard.setData(ClipboardData(
             text: Provider.of<WordTranslatingViewModel>(context, listen: false)
                 .getText
-                .word))
+                .translation))
         .then(
       (_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -44,13 +43,6 @@ class TextScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTranslationViewModel =
         Provider.of<WordTranslatingViewModel>(context);
-
-    // Future.delayed(const Duration(microseconds: 1), () {
-    //   if (historyWord != null) {
-    //     textTranslationViewModel.setText(WordTranslating(
-    //         historyWord!.getOriginalWord, historyWord!.getTranslationWord));
-    //   }
-    // });
 
     final translatingViewModel = Provider.of<TranslatingViewModel>(context);
 

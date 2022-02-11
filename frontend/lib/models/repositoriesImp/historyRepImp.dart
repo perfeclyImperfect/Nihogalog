@@ -4,12 +4,12 @@ import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/repositories/historyRep.dart';
 import 'package:frontend/models/repositories/sharedPreferencesRepo.dart';
 
-class HistoryRepImp extends HistoryRep {
+class HistoryRepoImp extends HistoryRep {
   SharedPreferencesRepo sharedPreferencesRepo;
 
   final String _key = 'history';
 
-  HistoryRepImp(this.sharedPreferencesRepo);
+  HistoryRepoImp(this.sharedPreferencesRepo);
 
   @override
   Future<List<HistoryWord>?> getPrivateHistoryWords() async {
@@ -24,6 +24,7 @@ class HistoryRepImp extends HistoryRep {
             {
               'originalWord': json['originalWord'],
               'translationWord': json['translationWord'],
+              'pronounciation': json['pronounciation'],
               'fromLanguage': json['fromLanguage'],
               'toLanguage': json['toLanguage']
             },
@@ -70,13 +71,11 @@ class HistoryRepImp extends HistoryRep {
 
   @override
   Future<bool> contains(HistoryWord historyWord) async {
-    var tempHistoryWords = await getHistoryWords;
+    var tempHistoryWords = await getHistoryWords ?? [];
 
-    if (tempHistoryWords != null) {
-      for (var i = 0; i < tempHistoryWords.length; i++) {
-        if (tempHistoryWords[i].compare(historyWord)) {
-          return true;
-        }
+    for (var i = 0; i < tempHistoryWords.length; i++) {
+      if (tempHistoryWords[i].compare(historyWord)) {
+        return true;
       }
     }
 
@@ -94,19 +93,7 @@ class HistoryRepImp extends HistoryRep {
         }
       }
 
-      tempHistoryWords.forEach((element) {
-        print(element.toJson());
-      });
-
       setHistoryWords(tempHistoryWords);
-
-      final sheesh = await getHistoryWords;
-
-      print('source deleted');
-
-      sheesh?.forEach((element) {
-        print(element.toJson());
-      });
     }
   }
 }

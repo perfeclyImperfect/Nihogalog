@@ -1,6 +1,6 @@
 import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/models/translating.dart';
+import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
@@ -15,13 +15,16 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
   }
 
   void translate(
-      String value, WordTranslatingViewModel textTranslationViewModel) {
-    textTranslationViewModel.setText(WordTranslating(value, '', ''));
+      String value,
+      WordTranslatingViewModel wordTranslatingViewModel,
+      LanguageTranslationViewModel languageTranslationViewModel) async {
+    wordTranslatingViewModel.translate(
+        value, languageTranslationViewModel.getLanguageTranslation);
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTranslationViewModel =
+    final wordTranslatingViewModel =
         Provider.of<WordTranslatingViewModel>(context);
 
     final translatingViewModel = Provider.of<TranslatingViewModel>(context);
@@ -34,14 +37,15 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
         child: TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,
-          onChanged: (value) => translate(value, textTranslationViewModel),
+          onChanged: (value) => translate(
+              value, wordTranslatingViewModel, languageTranslationViewModel),
           controller: widget.controller,
           decoration: InputDecoration(
             hintText: 'Type the text to translate.',
-            suffixIcon: textTranslationViewModel.getText.word.isNotEmpty
+            suffixIcon: wordTranslatingViewModel.getText.word.isNotEmpty
                 ? IconButton(
                     splashColor: Colors.transparent,
-                    onPressed: () => clear(textTranslationViewModel),
+                    onPressed: () => clear(wordTranslatingViewModel),
                     icon: const Icon(Icons.clear),
                   )
                 : null,
@@ -50,12 +54,20 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
       ),
       onFocusChange: (focus) {
         translatingViewModel.setTranslating(Translating(status: focus));
+        print(focus);
 
-        if (textTranslationViewModel.getText.word.isNotEmpty) {
+        print(wordTranslatingViewModel.getText.word);
+        print(wordTranslatingViewModel.getText.translation);
+
+        print(wordTranslatingViewModel.getText.word.isNotEmpty);
+
+        if (wordTranslatingViewModel.getText.word.isNotEmpty) {
+          print('come heres');
           Provider.of<HistoryViewModel>(context, listen: false).add(
             HistoryWord(
-                textTranslationViewModel.getText.word,
-                textTranslationViewModel.getText.translation,
+                wordTranslatingViewModel.getText.word,
+                wordTranslatingViewModel.getText.translation,
+                wordTranslatingViewModel.getText.translationPronounciation,
                 languageTranslationViewModel
                         .getLanguageTranslation.getFromLanguage ??
                     'Tagalog',

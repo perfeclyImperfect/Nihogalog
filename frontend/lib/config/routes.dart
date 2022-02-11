@@ -12,7 +12,6 @@ getNamedRoutes() {
     HomeScreen.route: (context) => const HomeScreen(),
     HistoryScreen.route: (context) => const HistoryScreen(),
     FavoriteScreen.route: (context) => const FavoriteScreen(),
-    // TextScreen.route: (context) => TextScreen()
   };
 }
 

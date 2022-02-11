@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/languageTranslation.dart';
-import 'package:frontend/models/wordTranslating.dart';
-import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +9,6 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tempLanguages = Provider.of<LanguageTranslationViewModel>(context);
-
     return Column(
       children: [
         const Padding(
@@ -29,9 +23,6 @@ class CustomText extends StatelessWidget {
                 splashFactory: NoSplash.splashFactory,
               ),
               onPressed: () {
-                // Provider.of<WordTranslatingViewModel>(context, listen: false)
-                //     .setText(WordTranslating('', '', ''));
-
                 Navigator.pushNamed(context, '/home/text',
                     arguments: Provider.of<WordTranslatingViewModel>(context,
                             listen: false)
