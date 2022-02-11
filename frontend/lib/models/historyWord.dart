@@ -1,16 +1,18 @@
 class HistoryWord {
   late String _originalWord;
   late String _translationWord;
+  late String _pronounciation;
   late String _fromLanguage;
   late String _toLanguage;
   late bool? _favorite;
 
-  HistoryWord(this._originalWord, this._translationWord, this._fromLanguage,
-      this._toLanguage, this._favorite);
+  HistoryWord(this._originalWord, this._translationWord, this._pronounciation,
+      this._fromLanguage, this._toLanguage, this._favorite);
 
   HistoryWord.fromJson(Map<String, dynamic> json) {
     _originalWord = json['originalWord'];
     _translationWord = json['translationWord'];
+    _pronounciation = json['pronounciation'];
     _fromLanguage = json['fromLanguage'];
     _toLanguage = json['toLanguage'];
     _favorite = false;
@@ -18,6 +20,7 @@ class HistoryWord {
 
   String get getOriginalWord => _originalWord;
   String get getTranslationWord => _translationWord;
+  String get getPronounciation => _pronounciation;
   String get getFromLanguage => _fromLanguage;
   String get getToLanguage => _toLanguage;
   bool? get getFavorite => _favorite;
@@ -28,6 +31,10 @@ class HistoryWord {
 
   void setTranslationWord(final String translationWord) {
     _translationWord = translationWord;
+  }
+
+  void setPronounciation(final String pronounciation) {
+    _pronounciation = pronounciation;
   }
 
   void setFavoriteWord(final bool favorite) {
@@ -46,6 +53,7 @@ class HistoryWord {
     Map<String, dynamic> json = {
       'originalWord': _originalWord,
       'translationWord': _translationWord,
+      'pronounciation': _pronounciation,
       'fromLanguage': _fromLanguage,
       'toLanguage': _toLanguage,
       'favorite': _favorite
@@ -58,6 +66,7 @@ class HistoryWord {
     if (_originalWord.compareTo(historyWord.getOriginalWord) == 0 &&
         _translationWord.compareTo(historyWord.getTranslationWord) == 0 &&
         _fromLanguage.compareTo(historyWord.getFromLanguage) == 0 &&
+        _pronounciation.compareTo(historyWord._pronounciation) == 0 &&
         _toLanguage.compareTo(historyWord.getToLanguage) == 0) {
       return true;
     }

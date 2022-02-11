@@ -8,4 +8,5 @@ abstract class HistorySer {
   Future<List<HistoryWord>?> reset();
   Future<bool> contains(HistoryWord historyWord);
   void delete(HistoryWord historyWord);
+  Future<List<HistoryWord>> deleteMultiple(List<HistoryWord> historyWords);
 }

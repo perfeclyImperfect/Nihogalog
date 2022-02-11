@@ -1,6 +1,8 @@
 const String kMaterialAppTitle = 'nihogalog';
 
-const kTheme = '';
+const String kTheme = '';
 
-const kDefaultFromLanguage = 'Tagalog';
-const kDefaultToLanguage = 'Nihongo';
+const String kDefaultFromLanguage = 'Tagalog';
+const String kDefaultToLanguage = 'Nihongo';
+
+const Map<String, String> kLanguageCodes = {'Tagalog': 'tl', 'Nihongo': 'ja'};

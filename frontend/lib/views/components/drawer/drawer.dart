@@ -8,8 +8,8 @@ class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
 
   changeScreen(context, routeName) {
-    Navigator.pop(context);
-    Navigator.pushNamed(context, routeName);
+    Navigator.pushNamedAndRemoveUntil(
+        context, routeName, (Route<dynamic> route) => false);
   }
 
   @override

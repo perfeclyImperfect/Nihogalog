@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/locator/locator.dart';
+import 'package:frontend/models/languageTranslation.dart';
+import 'package:frontend/models/services/wordTranslatingSer.dart';
 import 'package:frontend/models/wordTranslating.dart';
 
 class WordTranslatingViewModel extends ChangeNotifier {
-  WordTranslating _text = WordTranslating('', '', '');
+  WordTranslatingSer wordTranslatingSer = locator<WordTranslatingSer>();
 
-  WordTranslating get getText => _text;
+  WordTranslating get getText => wordTranslatingSer.getWordTranslating();
 
-  translate(WordTranslating text) {
-    init();
+  translate(String text, LanguageTranslation languageTranslation) async {
+    // WordTranslating tempWordTransating =
+    //     await wordTranslatingSer.translate(text, languageTranslation);
+
+    wordTranslatingSer.setWordTranslating(
+        WordTranslating(text, 'translation', 'translationPronounciation'));
+
+    notifyListeners();
   }
 
-  init() {}
-
   setText(WordTranslating text) {
-    _text = text;
+    wordTranslatingSer.setWordTranslating(text);
+
     notifyListeners();
   }
 
   reset() {
-    setText(WordTranslating('', '', ''));
+    wordTranslatingSer.reset();
 
     notifyListeners();
   }

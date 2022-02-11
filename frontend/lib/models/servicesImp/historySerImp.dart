@@ -24,12 +24,11 @@ class HistorySerImp extends HistorySer {
 
       final temp = await historyRep.getHistoryWords;
 
-      print("After deletion:");
-      temp?.forEach((element) {
-        print(element.toJson());
-      });
+      print('oh yeah');
+      print(temp);
     }
 
+    print('not oh yeah');
     await historyRep.addHistoryWord(historyWord);
 
     return await historyRep.getHistoryWords;
@@ -50,5 +49,23 @@ class HistorySerImp extends HistorySer {
   @override
   void delete(HistoryWord historyWord) async {
     await historyRep.delete(historyWord);
+  }
+
+  @override
+  Future<List<HistoryWord>> deleteMultiple(
+      List<HistoryWord> historyWords) async {
+    final temp = await historyRep.getHistoryWords ?? [];
+
+    for (int i = 0; i < historyWords.length; i++) {
+      for (int j = 0; j < temp.length; j++) {
+        if (historyWords[i].compare(temp[j])) {
+          temp.removeAt(j);
+        }
+      }
+    }
+
+    await setHistoryWords(temp);
+
+    return temp;
   }
 }
