@@ -63,11 +63,11 @@ class HistoryWord {
   }
 
   bool compare(HistoryWord historyWord) {
-    if (_originalWord.compareTo(historyWord.getOriginalWord) == 0 &&
-        _translationWord.compareTo(historyWord.getTranslationWord) == 0 &&
-        _fromLanguage.compareTo(historyWord.getFromLanguage) == 0 &&
-        _pronounciation.compareTo(historyWord._pronounciation) == 0 &&
-        _toLanguage.compareTo(historyWord.getToLanguage) == 0) {
+    if (_originalWord == historyWord.getOriginalWord &&
+        _translationWord == historyWord._translationWord &&
+        _fromLanguage == historyWord._fromLanguage &&
+        _toLanguage == historyWord._toLanguage &&
+        _favorite == historyWord._favorite) {
       return true;
     }
 
