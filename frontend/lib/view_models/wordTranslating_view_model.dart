@@ -10,11 +10,9 @@ class WordTranslatingViewModel extends ChangeNotifier {
   WordTranslating get getText => wordTranslatingSer.getWordTranslating();
 
   translate(String text, LanguageTranslation languageTranslation) async {
-    // WordTranslating tempWordTransating =
-    //     await wordTranslatingSer.translate(text, languageTranslation);
-
     wordTranslatingSer.setWordTranslating(
-        WordTranslating(text, 'translation', 'translationPronounciation'));
+      WordTranslating(text, 'translation', 'translationPronounciation'),
+    );
 
     notifyListeners();
   }

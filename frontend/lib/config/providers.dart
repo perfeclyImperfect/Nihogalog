@@ -26,6 +26,9 @@ getProviders() {
     ),
     ChangeNotifierProvider(
       create: (_) => HistoryViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => FavoriteViewModel(),
     )
   ];
 }

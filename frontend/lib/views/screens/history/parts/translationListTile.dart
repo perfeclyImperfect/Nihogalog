@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/utils/hexColor.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:provider/provider.dart';
@@ -6,17 +7,13 @@ import 'package:provider/provider.dart';
 class TranslationListTile extends StatelessWidget {
   const TranslationListTile({
     Key? key,
+    required this.historyWord,
     required this.onTap,
-    required this.originalWord,
-    required this.translationWord,
     required this.isSelected,
-    this.isFavorite = false,
   }) : super(key: key);
 
   final Function onTap;
-  final String originalWord;
-  final String translationWord;
-  final bool isFavorite;
+  final HistoryWord historyWord;
   final bool isSelected;
 
   @override
@@ -51,7 +48,7 @@ class TranslationListTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        originalWord,
+                        historyWord.getOriginalWord,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -59,7 +56,7 @@ class TranslationListTile extends StatelessWidget {
                       ),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 1)),
                       Text(
-                        translationWord,
+                        historyWord.getTranslationWord,
                         style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
@@ -74,10 +71,12 @@ class TranslationListTile extends StatelessWidget {
                       child: editStatus
                           ? null
                           : IconButton(
-                              onPressed: () {},
+                              onPressed: () =>
+                                  historyViewModel.toggleFavorite(historyWord),
                               icon: const Icon(Icons.star_rounded),
+                              splashRadius: 15,
                               iconSize: 30,
-                              color: isFavorite
+                              color: historyWord.getFavorite ?? false
                                   ? HexColor('#ffbc00')
                                   : HexColor('#CECECE'),
                               splashColor: Colors.transparent,

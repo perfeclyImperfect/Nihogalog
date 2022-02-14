@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/wordTranslating.dart';
 
 import '../views/screens/home/home.dart';
 import '../views/screens/history/history.dart';
-import '../views/screens/favorite.dart';
+import '../views/screens/favorite/favorite.dart';
 import '../views/screens/text/text.dart';
 
 getNamedRoutes() {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/utils/hexColor.dart';
 import 'package:provider/provider.dart';
 

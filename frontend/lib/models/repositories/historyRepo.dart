@@ -1,10 +1,10 @@
 import 'package:frontend/models/historyWord.dart';
 
-abstract class HistoryRep {
+abstract class HistoryRepo {
   Future<void> setHistoryWords(List<HistoryWord> historyWords);
   Future<List<HistoryWord>?> get getHistoryWords => getPrivateHistoryWords();
 
-  HistoryRep() {
+  HistoryRepo() {
     init();
   }
 

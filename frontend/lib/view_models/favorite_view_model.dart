@@ -1,67 +1,34 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/models/services/favoriteSer.dart';
 
 class FavoriteViewModel extends ChangeNotifier {
-  // List<HistoryWord> _favorites = [];
+  final FavoriteSer favoriteSer = locator<FavoriteSer>();
+
+  List<HistoryWord> _favorites = [];
 
   FavoriteViewModel() {
     init();
   }
 
-  // List<HistoryWord> get getFavorites => _favorites;
-
-  // void setFavorites(List<HistoryWord> favorites) {
-  //   _favorites = favorites;
-
-  //   notifyListeners();
-  // }
+  List<HistoryWord> get getFavorites => _favorites;
 
   void init() async {
-    // _localStorage = await SharedPreferences.getInstance();
+    _favorites = await favoriteSer.getFavorites() ?? [];
 
-    // final List<String>? temp = _localStorage.getStringList(_key);
-
-    // if (temp == null) {
-    //   await _localStorage.setStringList(_key, []);
-    //   setFavorites([]);
-    // } else {
-    //   setFavorites(temp
-    //       .map(
-    //         (e) => HistoryWord(jsonDecode(e)['originalWord'],
-    //             jsonDecode(e)['translationWord']),
-    //       )
-    //       .where((element) => element.isFavorite != null)
-    //       .toList());
-    // }
+    notifyListeners();
   }
 
-  void addFavorite(index) async {
-    // _localStorage = await SharedPreferences.getInstance();
+  void toggleFavorite(HistoryWord historyWord) async {
+    _favorites = await favoriteSer.toggleFavorite(historyWord) ?? [];
 
-    // final rawTempLocalFavorites = _localStorage.getStringList(_key);
+    notifyListeners();
+  }
 
-    // if (rawTempLocalFavorites != null) {
-    //   final fixTempLocalFavorites = rawTempLocalFavorites
-    //       .map((e) => HistoryWord(
-    //           jsonDecode(e)['originalWord'], jsonDecode(e)['translationWord']))
-    //       .toList();
+  void remove(HistoryWord historyWord) async {
+    _favorites = await favoriteSer.delete(historyWord);
 
-    //   fixTempLocalFavorites[index].setFavoriteWord(true);
-
-    //   fixTempLocalFavorites.map(
-    //     (e) => jsonEncode(
-    //       {
-    //         'originalWord': e.getOriginalWord,
-    //         'translationWord': e.getTranslationWord,
-    //         'isFavorite': e.isFavorite
-    //       },
-    //     ),
-    //   );
-    // }
-
-    // notifyListeners();
+    notifyListeners();
   }
 }
