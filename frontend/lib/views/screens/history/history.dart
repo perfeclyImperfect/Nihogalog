@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/wordTranslating.dart';
+import 'package:frontend/view_models/favorite_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/views/screens/history/parts/historyAppBar.dart';
 import 'package:frontend/views/screens/history/parts/translationListTile.dart';
@@ -8,7 +9,11 @@ import 'package:provider/provider.dart';
 
 import '../../components/drawer/drawer.dart';
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class HistoryScreen extends StatelessWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
+
+  static String route = '/history';
+
   @override
   Widget build(BuildContext context) {
     final historyViewModel = Provider.of<HistoryViewModel>(context);
@@ -20,7 +25,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       for (int i = 0; i < tempHistory.length; i++)
         TranslationListTile(
           onTap: editStatus
-              ? () => historyViewModel.selectToggle(i)
+              ? () => historyViewModel.toggleSelect(i)
               : () {
                   Provider.of<WordTranslatingViewModel>(context, listen: false)
                       .setText(
@@ -33,8 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Navigator.pushNamed(context, '/home/text',
                       arguments: tempHistory[i].getOriginalWord);
                 },
-          originalWord: tempHistory[i].getOriginalWord,
-          translationWord: tempHistory[i].getTranslationWord,
+          historyWord: tempHistory[i],
           isSelected: historyViewModel.getSelected.contains(i),
         )
     ];
@@ -59,13 +63,4 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
     );
   }
-}
-
-class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
-
-  static String route = '/history';
-
-  @override
-  State<StatefulWidget> createState() => _HistoryScreenState();
 }

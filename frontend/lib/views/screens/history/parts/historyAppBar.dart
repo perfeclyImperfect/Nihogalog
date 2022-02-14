@@ -38,13 +38,17 @@ class HistoryAppBar extends StatelessWidget {
                         icon: const Icon(Icons.cancel_outlined),
                         iconSize: 23,
                       ),
-                      const HistoryLabel(color: Colors.white),
+                      const HistoryLabel(
+                        color: Colors.white,
+                        label: 'History',
+                      ),
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             style: const ButtonStyle(
-                                splashFactory: NoSplash.splashFactory),
+                              splashFactory: NoSplash.splashFactory,
+                            ),
                             child: const Text(
                               'Delete',
                               style: TextStyle(color: Colors.white),
@@ -60,7 +64,10 @@ class HistoryAppBar extends StatelessWidget {
             )
           : Row(
               children: [
-                HistoryLabel(color: editStatus ? Colors.white : Colors.black),
+                HistoryLabel(
+                  color: editStatus ? Colors.white : Colors.black,
+                  label: 'History',
+                ),
                 Expanded(
                   child: Align(
                     alignment: Alignment.centerRight,

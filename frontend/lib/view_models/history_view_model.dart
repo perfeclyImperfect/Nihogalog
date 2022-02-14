@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/repositories/sharedPreferencesRepo.dart';
 import 'package:frontend/models/services/historySer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryViewModel extends ChangeNotifier {
   HistorySer historySer = locator<HistorySer>();
@@ -28,26 +26,29 @@ class HistoryViewModel extends ChangeNotifier {
   }
 
   void init() async {
-    // final yup = await SharedPreferences.getInstance();
-    // yup.clear();
-
     List<HistoryWord>? temp = await historySer.getHistoryWords() ?? [];
 
     setHistory(temp);
   }
 
-  void selectToggle(int index) {
+  void toggleSelect(int index) {
     _selected.contains(index) ? _selected.remove(index) : _selected.add(index);
 
     notifyListeners();
   }
 
-  toggleEdit() {
+  void toggleEdit() {
     _edit = !_edit;
 
     if (_edit == false) {
       _selected.clear();
     }
+
+    notifyListeners();
+  }
+
+  void toggleFavorite(HistoryWord historyWord) async {
+    _history = await historySer.toggleFavorite(historyWord);
 
     notifyListeners();
   }

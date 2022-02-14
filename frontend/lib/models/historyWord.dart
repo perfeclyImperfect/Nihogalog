@@ -15,7 +15,7 @@ class HistoryWord {
     _pronounciation = json['pronounciation'];
     _fromLanguage = json['fromLanguage'];
     _toLanguage = json['toLanguage'];
-    _favorite = false;
+    _favorite = json['favorite'];
   }
 
   String get getOriginalWord => _originalWord;

@@ -9,4 +9,5 @@ abstract class HistorySer {
   Future<bool> contains(HistoryWord historyWord);
   void delete(HistoryWord historyWord);
   Future<List<HistoryWord>> deleteMultiple(List<HistoryWord> historyWords);
+  Future<List<HistoryWord>> toggleFavorite(HistoryWord historyWord);
 }

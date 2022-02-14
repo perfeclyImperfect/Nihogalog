@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/drawer/drawer.dart';
+import 'package:frontend/views/components/drawer/drawer.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);

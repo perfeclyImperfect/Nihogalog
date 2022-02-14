@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:frontend/models/historyWord.dart';
-import 'package:frontend/models/repositories/historyRep.dart';
+import 'package:frontend/models/repositories/historyRepo.dart';
 import 'package:frontend/models/repositories/sharedPreferencesRepo.dart';
 
-class HistoryRepoImp extends HistoryRep {
+class HistoryRepoImp extends HistoryRepo {
   SharedPreferencesRepo sharedPreferencesRepo;
 
   final String _key = 'history';
@@ -26,7 +26,8 @@ class HistoryRepoImp extends HistoryRep {
               'translationWord': json['translationWord'],
               'pronounciation': json['pronounciation'],
               'fromLanguage': json['fromLanguage'],
-              'toLanguage': json['toLanguage']
+              'toLanguage': json['toLanguage'],
+              'favorite': json['favorite']
             },
           );
         },
@@ -48,7 +49,7 @@ class HistoryRepoImp extends HistoryRep {
     if (tempStringHistoryWords == null) {
       tempHistoryWords = [];
 
-      setHistoryWords(tempHistoryWords);
+      await setHistoryWords(tempHistoryWords);
     }
   }
 
@@ -66,23 +67,15 @@ class HistoryRepoImp extends HistoryRep {
 
     tempHistoryWords.add(historyWord);
 
-    setHistoryWords(tempHistoryWords);
+    await setHistoryWords(tempHistoryWords);
   }
 
   @override
   Future<bool> contains(HistoryWord historyWord) async {
     var tempHistoryWords = await getHistoryWords ?? [];
 
-    print('does it containts: ${historyWord.toJson()}');
-    tempHistoryWords.forEach((element) {
-      print(element.toJson());
-    });
-
     for (var i = 0; i < tempHistoryWords.length; i++) {
-      print(
-          "Compare ${historyWord.toJson()} to ${tempHistoryWords[i].toJson()}");
       if (tempHistoryWords[i].compare(historyWord)) {
-        print('THIS IS TRUE');
         return true;
       }
     }
@@ -101,7 +94,7 @@ class HistoryRepoImp extends HistoryRep {
         }
       }
 
-      setHistoryWords(tempHistoryWords);
+      await setHistoryWords(tempHistoryWords);
     }
   }
 }
