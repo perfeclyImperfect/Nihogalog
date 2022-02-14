@@ -21,14 +21,8 @@ class HistorySerImp extends HistorySer {
   Future<List<HistoryWord>?> addHistoryWord(HistoryWord historyWord) async {
     if (await historyRep.contains(historyWord)) {
       await historyRep.delete(historyWord);
-
-      final temp = await historyRep.getHistoryWords;
-
-      print('oh yeah');
-      print(temp);
     }
 
-    print('not oh yeah');
     await historyRep.addHistoryWord(historyWord);
 
     return await historyRep.getHistoryWords;

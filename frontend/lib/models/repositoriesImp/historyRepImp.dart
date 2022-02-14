@@ -73,8 +73,16 @@ class HistoryRepoImp extends HistoryRep {
   Future<bool> contains(HistoryWord historyWord) async {
     var tempHistoryWords = await getHistoryWords ?? [];
 
+    print('does it containts: ${historyWord.toJson()}');
+    tempHistoryWords.forEach((element) {
+      print(element.toJson());
+    });
+
     for (var i = 0; i < tempHistoryWords.length; i++) {
+      print(
+          "Compare ${historyWord.toJson()} to ${tempHistoryWords[i].toJson()}");
       if (tempHistoryWords[i].compare(historyWord)) {
+        print('THIS IS TRUE');
         return true;
       }
     }
