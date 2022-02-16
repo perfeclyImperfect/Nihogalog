@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/wordTranslating.dart';
-import 'package:frontend/view_models/groups/editableViewModel.dart';
+import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class CustomList extends StatelessWidget {
 
   final List<HistoryWord> tempList;
   final bool favoritable;
-  final EditableViewModel viewModel;
+  final HistoryViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/utils/hexColor.dart';
-import 'package:frontend/view_models/groups/editableViewModel.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +16,7 @@ class CustomListTile extends StatelessWidget {
 
   final Function onTap;
   final HistoryWord historyWord;
-  final EditableViewModel viewModel;
+  final HistoryViewModel viewModel;
   final bool isSelected;
   final bool favoritable;
 

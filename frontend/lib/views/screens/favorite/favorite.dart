@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/views/components/appbar/customAppBar.dart';
-import 'package:frontend/view_models/favorite_view_model.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 
 import 'package:frontend/views/components/list/CustomList.dart';

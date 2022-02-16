@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/services/historySer.dart';
-import 'package:frontend/view_models/groups/editableViewModel.dart';
 
-class HistoryViewModel extends ChangeNotifier with EditableViewModel {
+class HistoryViewModel extends ChangeNotifier {
   HistorySer historySer = locator<HistorySer>();
 
   List<HistoryWord> _history = [];
   List<int> _selected = [];
+
+  List<int> get getSelected => _selected;
+
+  bool _edit = false;
+  bool get getEditStatus => _edit;
 
   List<HistoryWord> get getHistory => _history;
 
@@ -47,9 +51,6 @@ class HistoryViewModel extends ChangeNotifier with EditableViewModel {
     notifyListeners();
   }
 
-  @override
-  List<int> get getSelected => _selected;
-
   void setHistory(List<HistoryWord> history) {
     historySer.setHistoryWords(history);
     _history = history;
@@ -67,16 +68,18 @@ class HistoryViewModel extends ChangeNotifier with EditableViewModel {
     setHistory(temp);
   }
 
-  @override
   void toggleSelect(int index) {
     _selected.contains(index) ? _selected.remove(index) : _selected.add(index);
 
     notifyListeners();
   }
 
-  @override
   void toggleEdit() {
-    super.privateToggleEdit(_selected);
+    _edit = !_edit;
+
+    if (_edit == false) {
+      _selected.clear();
+    }
 
     notifyListeners();
   }
@@ -93,7 +96,6 @@ class HistoryViewModel extends ChangeNotifier with EditableViewModel {
     notifyListeners();
   }
 
-  @override
   void delete() async {
     final List<HistoryWord> temp = [];
     for (int i = 0; i < _selected.length; i++) {
@@ -112,7 +114,6 @@ class HistoryViewModel extends ChangeNotifier with EditableViewModel {
     notifyListeners();
   }
 
-  @override
   void selectAll() {
     _selected = _selected.isNotEmpty
         ? []

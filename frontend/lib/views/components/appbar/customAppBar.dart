@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/groups/editableViewModel.dart';
+import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/views/components/label/label.dart';
 
 import 'package:frontend/utils/hexColor.dart';
@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       : super(key: key);
 
   final String label;
-  final EditableViewModel viewModel;
+  final HistoryViewModel viewModel;
   final Function deleteMethod;
   final Function selectAllMethod;
 

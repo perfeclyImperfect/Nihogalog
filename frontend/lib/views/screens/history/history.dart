@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/wordTranslating.dart';
-import 'package:frontend/view_models/favorite_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/views/components/appbar/customAppBar.dart';
 import 'package:frontend/views/components/list/CustomList.dart';
-import 'package:frontend/views/screens/history/parts/historyAppBar.dart';
 import 'package:frontend/views/screens/history/parts/translationListTile.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:provider/provider.dart';
