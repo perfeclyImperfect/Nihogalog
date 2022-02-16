@@ -66,8 +66,7 @@ class HistoryWord {
     if (_originalWord == historyWord.getOriginalWord &&
         _translationWord == historyWord._translationWord &&
         _fromLanguage == historyWord._fromLanguage &&
-        _toLanguage == historyWord._toLanguage &&
-        _favorite == historyWord._favorite) {
+        _toLanguage == historyWord._toLanguage) {
       return true;
     }
 

@@ -1,6 +1,5 @@
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/translating.dart';
-import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
@@ -17,9 +16,10 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
   void translate(
       String value,
       WordTranslatingViewModel wordTranslatingViewModel,
-      LanguageTranslationViewModel languageTranslationViewModel) async {
+      LanguageTranslationViewModel languageTranslationViewModel,
+      bool favorite) async {
     wordTranslatingViewModel.translate(
-        value, languageTranslationViewModel.getLanguageTranslation);
+        value, languageTranslationViewModel.getLanguageTranslation, favorite);
   }
 
   @override
@@ -38,7 +38,10 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
           keyboardType: TextInputType.multiline,
           maxLines: null,
           onChanged: (value) => translate(
-              value, wordTranslatingViewModel, languageTranslationViewModel),
+              value,
+              wordTranslatingViewModel,
+              languageTranslationViewModel,
+              wordTranslatingViewModel.getText.favorite),
           controller: widget.controller,
           decoration: InputDecoration(
             hintText: 'Type the text to translate.',
@@ -54,28 +57,25 @@ class _TranslationTextFieldState extends State<TranslationTextField> {
       ),
       onFocusChange: (focus) {
         translatingViewModel.setTranslating(Translating(status: focus));
-        print(focus);
 
-        print(wordTranslatingViewModel.getText.word);
-        print(wordTranslatingViewModel.getText.translation);
+        final currentText = wordTranslatingViewModel.getText;
+        if (currentText.word.isNotEmpty) {
+          HistoryWord tempHistoryWord = HistoryWord(
+              currentText.word,
+              currentText.translation,
+              currentText.translationPronounciation,
+              languageTranslationViewModel
+                      .getLanguageTranslation.getFromLanguage ??
+                  'Tagalog',
+              languageTranslationViewModel
+                      .getLanguageTranslation.getToLanguage ??
+                  'Nihogalog',
+              false);
 
-        print(wordTranslatingViewModel.getText.word.isNotEmpty);
+          Provider.of<HistoryViewModel>(context, listen: false)
+              .add(tempHistoryWord);
 
-        if (wordTranslatingViewModel.getText.word.isNotEmpty) {
-          print('come heres');
-          Provider.of<HistoryViewModel>(context, listen: false).add(
-            HistoryWord(
-                wordTranslatingViewModel.getText.word,
-                wordTranslatingViewModel.getText.translation,
-                wordTranslatingViewModel.getText.translationPronounciation,
-                languageTranslationViewModel
-                        .getLanguageTranslation.getFromLanguage ??
-                    'Tagalog',
-                languageTranslationViewModel
-                        .getLanguageTranslation.getToLanguage ??
-                    'Nihogalog',
-                false),
-          );
+          wordTranslatingViewModel.fromHistory(tempHistoryWord);
         }
       },
     );

@@ -7,12 +7,49 @@ class HistoryViewModel extends ChangeNotifier {
   HistorySer historySer = locator<HistorySer>();
 
   List<HistoryWord> _history = [];
-  final List<int> _selected = [];
+  List<int> _selected = [];
+
+  List<int> get getSelected => _selected;
+
   bool _edit = false;
+  bool get getEditStatus => _edit;
 
   List<HistoryWord> get getHistory => _history;
-  bool get getEditStatus => _edit;
-  List<int> get getSelected => _selected;
+
+  List<HistoryWord> getFavorites() {
+    return _history.where((element) => element.getFavorite ?? false).toList();
+  }
+
+  void deleteFavorites() async {
+    final List<HistoryWord> temp = [];
+    for (int i = 0; i < _selected.length; i++) {
+      temp.add(getFavorites()[_selected[i]]);
+    }
+
+    _history = await historySer.removeFavorites(temp);
+    _selected = [];
+
+    notifyListeners();
+  }
+
+  void selectAllFavorites() {
+    if (getSelected.isNotEmpty) {
+      _selected = [];
+    } else {
+      final List<HistoryWord> tempFavorites = getFavorites();
+      final List<int> temp = [];
+
+      for (int i = 0; i < tempFavorites.length; i++) {
+        if (tempFavorites[i].getFavorite ?? false) {
+          temp.add(i);
+        }
+      }
+
+      _selected = temp;
+    }
+
+    notifyListeners();
+  }
 
   void setHistory(List<HistoryWord> history) {
     historySer.setHistoryWords(history);
@@ -73,6 +110,14 @@ class HistoryViewModel extends ChangeNotifier {
 
   void reset() async {
     _history = await historySer.reset() ?? [];
+
+    notifyListeners();
+  }
+
+  void selectAll() {
+    _selected = _selected.isNotEmpty
+        ? []
+        : [for (int i = 0; i < _history.length; i++) i];
 
     notifyListeners();
   }

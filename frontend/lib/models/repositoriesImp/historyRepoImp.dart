@@ -97,4 +97,17 @@ class HistoryRepoImp extends HistoryRepo {
       await setHistoryWords(tempHistoryWords);
     }
   }
+
+  @override
+  Future<HistoryWord?> get(HistoryWord historyWord) async {
+    final List<HistoryWord> tempHistoryWords = await getHistoryWords ?? [];
+
+    for (int i = 0; i < tempHistoryWords.length; i++) {
+      if (tempHistoryWords[i].compare(historyWord)) {
+        return tempHistoryWords[i];
+      }
+    }
+
+    return null;
+  }
 }

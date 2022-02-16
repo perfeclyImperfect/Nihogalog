@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/config/environment.dart';

@@ -10,4 +10,6 @@ abstract class HistorySer {
   void delete(HistoryWord historyWord);
   Future<List<HistoryWord>> deleteMultiple(List<HistoryWord> historyWords);
   Future<List<HistoryWord>> toggleFavorite(HistoryWord historyWord);
+  Future<HistoryWord?> get(HistoryWord historyWord);
+  Future<List<HistoryWord>> removeFavorites(List<HistoryWord> favorites);
 }
