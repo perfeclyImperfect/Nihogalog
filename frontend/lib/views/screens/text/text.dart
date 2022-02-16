@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/utils/hexColor.dart';
+import 'package:frontend/view_models/history_view_model.dart';
+import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:frontend/views/screens/text/parts/translation.dart';
@@ -35,16 +38,35 @@ class TextScreen extends StatelessWidget {
     );
   }
 
-  void _makeFavorite(context) {}
+  void _makeFavorite(
+      context, WordTranslatingViewModel wordTranslatingViewModel) {
+    final languageTranslationViewModel =
+        Provider.of<LanguageTranslationViewModel>(context, listen: false);
+
+    final tempWord = wordTranslatingViewModel.getText;
+    final tempLanguage = languageTranslationViewModel.getLanguageTranslation;
+
+    HistoryWord tempHistoryWord = HistoryWord(
+        tempWord.word,
+        tempWord.translation,
+        tempWord.translationPronounciation,
+        tempLanguage.getFromLanguage ?? 'Tagalog',
+        tempLanguage.getToLanguage ?? 'Nihogalog',
+        tempWord.favorite);
+
+    wordTranslatingViewModel.toggleFavorite();
+    Provider.of<HistoryViewModel>(context, listen: false)
+        .toggleFavorite(tempHistoryWord);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textTranslationViewModel =
+    final wordTranslationViewModel =
         Provider.of<WordTranslatingViewModel>(context);
 
     final translatingViewModel = Provider.of<TranslatingViewModel>(context);
 
-    bool isThereWord = textTranslationViewModel.getText.word.isNotEmpty;
+    bool isThereWord = wordTranslationViewModel.getText.word.isNotEmpty;
     bool status = translatingViewModel.getTranslating.status;
 
     return GestureDetector(
@@ -111,13 +133,15 @@ class TextScreen extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       IconButton(
-                        onPressed: () => _makeFavorite(context),
+                        onPressed: () =>
+                            _makeFavorite(context, wordTranslationViewModel),
                         icon: const Icon(Icons.star_rounded),
                         splashColor: Colors.transparent,
                         splashRadius: 1,
                         iconSize: 40,
-                        color:
-                            false ? HexColor('#ffbc00') : HexColor('#CECECE'),
+                        color: wordTranslationViewModel.getText.favorite
+                            ? HexColor('#ffbc00')
+                            : HexColor('#CECECE'),
                       )
                     ],
                   ),

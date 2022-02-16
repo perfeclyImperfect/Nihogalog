@@ -2,16 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/services/historySer.dart';
+import 'package:frontend/view_models/groups/editableViewModel.dart';
 
-class HistoryViewModel extends ChangeNotifier {
+class HistoryViewModel extends ChangeNotifier with EditableViewModel {
   HistorySer historySer = locator<HistorySer>();
 
   List<HistoryWord> _history = [];
-  final List<int> _selected = [];
-  bool _edit = false;
+  List<int> _selected = [];
 
   List<HistoryWord> get getHistory => _history;
-  bool get getEditStatus => _edit;
+
+  List<HistoryWord> getFavorites() {
+    return _history.where((element) => element.getFavorite ?? false).toList();
+  }
+
+  void deleteFavorites() async {
+    final List<HistoryWord> temp = [];
+    for (int i = 0; i < _selected.length; i++) {
+      temp.add(getFavorites()[_selected[i]]);
+    }
+
+    _history = await historySer.removeFavorites(temp);
+    _selected = [];
+
+    notifyListeners();
+  }
+
+  void selectAllFavorites() {
+    if (getSelected.isNotEmpty) {
+      _selected = [];
+    } else {
+      final List<HistoryWord> tempFavorites = getFavorites();
+      final List<int> temp = [];
+
+      for (int i = 0; i < tempFavorites.length; i++) {
+        if (tempFavorites[i].getFavorite ?? false) {
+          temp.add(i);
+        }
+      }
+
+      _selected = temp;
+    }
+
+    notifyListeners();
+  }
+
+  @override
   List<int> get getSelected => _selected;
 
   void setHistory(List<HistoryWord> history) {
@@ -31,18 +67,16 @@ class HistoryViewModel extends ChangeNotifier {
     setHistory(temp);
   }
 
+  @override
   void toggleSelect(int index) {
     _selected.contains(index) ? _selected.remove(index) : _selected.add(index);
 
     notifyListeners();
   }
 
+  @override
   void toggleEdit() {
-    _edit = !_edit;
-
-    if (_edit == false) {
-      _selected.clear();
-    }
+    super.privateToggleEdit(_selected);
 
     notifyListeners();
   }
@@ -59,6 +93,7 @@ class HistoryViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   void delete() async {
     final List<HistoryWord> temp = [];
     for (int i = 0; i < _selected.length; i++) {
@@ -73,6 +108,15 @@ class HistoryViewModel extends ChangeNotifier {
 
   void reset() async {
     _history = await historySer.reset() ?? [];
+
+    notifyListeners();
+  }
+
+  @override
+  void selectAll() {
+    _selected = _selected.isNotEmpty
+        ? []
+        : [for (int i = 0; i < _history.length; i++) i];
 
     notifyListeners();
   }

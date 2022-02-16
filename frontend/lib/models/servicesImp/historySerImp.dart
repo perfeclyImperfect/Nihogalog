@@ -19,11 +19,14 @@ class HistorySerImp extends HistorySer {
 
   @override
   Future<List<HistoryWord>?> addHistoryWord(HistoryWord historyWord) async {
-    if (await historyRep.contains(historyWord)) {
+    HistoryWord? tempHistoryWord = await historyRep.get(historyWord);
+
+    final bool condition = tempHistoryWord != null;
+    if (condition) {
       await historyRep.delete(historyWord);
     }
 
-    await historyRep.addHistoryWord(historyWord);
+    await historyRep.addHistoryWord(condition ? tempHistoryWord : historyWord);
 
     return await historyRep.getHistoryWords;
   }
@@ -79,5 +82,29 @@ class HistorySerImp extends HistorySer {
     await setHistoryWords(temp);
 
     return temp;
+  }
+
+  @override
+  Future<HistoryWord?> get(HistoryWord historyWord) async {
+    return await historyRep.get(historyWord);
+  }
+
+  @override
+  Future<List<HistoryWord>> removeFavorites(List<HistoryWord> favorites) async {
+    final List<HistoryWord> tempHistoryWords =
+        await historyRep.getHistoryWords ?? [];
+
+    for (int i = 0; i < tempHistoryWords.length; i++) {
+      for (int j = 0; j < favorites.length; j++) {
+        if (tempHistoryWords[i].compare(favorites[j])) {
+          tempHistoryWords[i].setFavoriteWord(false);
+          break;
+        }
+      }
+    }
+
+    await historyRep.setHistoryWords(tempHistoryWords);
+
+    return tempHistoryWords;
   }
 }

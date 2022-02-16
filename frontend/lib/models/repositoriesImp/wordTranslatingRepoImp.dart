@@ -11,7 +11,7 @@ class WordTranslatingRepoImp extends WordTranslatingRepo {
 
   @override
   init() {
-    _wordTranslating = WordTranslating('', '', '');
+    _wordTranslating = WordTranslating('', '', '', false);
   }
 
   @override

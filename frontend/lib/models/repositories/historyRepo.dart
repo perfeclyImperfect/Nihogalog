@@ -14,4 +14,5 @@ abstract class HistoryRepo {
   Future<void> addHistoryWord(HistoryWord historyWord);
   Future<bool> contains(HistoryWord historyWord);
   Future<void> delete(HistoryWord historyWord);
+  Future<HistoryWord?> get(HistoryWord historyWord);
 }

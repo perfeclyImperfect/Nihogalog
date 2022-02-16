@@ -1,6 +1,5 @@
 import 'package:frontend/models/repositories/wordTranslatingRepo.dart';
 import 'package:frontend/models/services/wordTranslatingSer.dart';
-import 'package:frontend/models/servicesImp/translationSerImp.dart';
 import 'package:frontend/models/wordTranslating.dart';
 
 import '../languageTranslation.dart';
@@ -28,11 +27,11 @@ class WordTranslatingSerImp extends WordTranslatingSer {
     //     languageTranslation.getFromLanguage ?? 'Tagalog',
     //     languageTranslation.getToLanguage ?? 'Nihogalog');
 
-    return WordTranslating(text.word, '', '');
+    return WordTranslating(text.word, '', '', text.favorite);
   }
 
   @override
   void reset() {
-    setWordTranslating(WordTranslating('', '', ''));
+    setWordTranslating(WordTranslating('', '', '', false));
   }
 }

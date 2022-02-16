@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/view_models/favorite_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
+import 'package:frontend/views/components/appbar/customAppBar.dart';
+import 'package:frontend/views/components/list/CustomList.dart';
 import 'package:frontend/views/screens/history/parts/historyAppBar.dart';
 import 'package:frontend/views/screens/history/parts/translationListTile.dart';
 import 'package:frontend/view_models/history_view_model.dart';
@@ -32,7 +34,8 @@ class HistoryScreen extends StatelessWidget {
                     WordTranslating(
                         tempHistory[i].getOriginalWord,
                         tempHistory[i].getTranslationWord,
-                        tempHistory[i].getToLanguage),
+                        tempHistory[i].getToLanguage,
+                        tempHistory[i].getFavorite ?? false),
                   );
 
                   Navigator.pushNamed(context, '/home/text',
@@ -44,22 +47,17 @@ class HistoryScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(editStatus ? 100 : 56),
-        child: const HistoryAppBar(),
+      appBar: CustomAppBar(
+        label: "History",
+        viewModel: historyViewModel,
+        deleteMethod: () => historyViewModel.delete(),
+        selectAllMethod: () => historyViewModel.selectAll(),
       ),
       drawer: editStatus ? null : const DrawerScreen(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          children: [
-            for (var i in historyListTileWidgets)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: i,
-              ),
-          ],
-        ),
+      body: CustomList(
+        tempList: historyViewModel.getHistory,
+        favoritable: true,
+        viewModel: historyViewModel,
       ),
     );
   }

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/locator/locator.dart';
-import 'package:frontend/models/wordTranslating.dart';
-import 'package:frontend/models/translating.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:provider/provider.dart';
 
