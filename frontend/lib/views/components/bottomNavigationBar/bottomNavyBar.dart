@@ -48,7 +48,9 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: MaterialButton(
             shape: const CircleBorder(),
-            onPressed: items[selectedIndex].active ? () {} : null,
+            onPressed: items[selectedIndex].active
+                ? () => Navigator.pushNamed(context, items[selectedIndex].route)
+                : null,
             child: Ink(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(80.0)),

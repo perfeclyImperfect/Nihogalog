@@ -11,7 +11,7 @@ import 'types/speech.dart';
 import 'types/camera.dart';
 
 class _HomeScreen extends State<HomeScreen> {
-  static final List<Widget> _types = [
+  final List<Widget> _types = [
     const text.CustomText(),
     const Speech(),
     const Camera(),
@@ -73,16 +73,19 @@ class _HomeScreen extends State<HomeScreen> {
             title: const Text('Text'),
             textAlign: TextAlign.center,
             active: false,
+            route: "",
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.mic_outlined),
             title: const Text('Speech'),
             textAlign: TextAlign.center,
+            route: "/speech",
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.camera_alt),
             title: const Text('Camera '),
             textAlign: TextAlign.center,
+            route: "/camera",
           ),
         ],
       ),

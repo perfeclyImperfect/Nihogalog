@@ -7,7 +7,8 @@ class BottomNavyBarItem {
       this.activeColor = Colors.white,
       this.textAlign,
       this.inactiveColor = Colors.grey,
-      this.active = true});
+      this.active = true,
+      required this.route});
 
   final Widget icon;
   final Widget title;
@@ -15,4 +16,5 @@ class BottomNavyBarItem {
   final Color? inactiveColor;
   final TextAlign? textAlign;
   final bool active;
+  final String route;
 }
