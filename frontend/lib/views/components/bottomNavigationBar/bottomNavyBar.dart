@@ -47,34 +47,35 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       badgeContent: Container(
         margin: const EdgeInsets.all(5),
         child: MaterialButton(
-            shape: const CircleBorder(),
-            onPressed: items[selectedIndex].active
-                ? () => Navigator.pushNamed(context, items[selectedIndex].route)
-                : null,
-            child: Ink(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(80.0)),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    HexColor('#F0B831'),
-                    HexColor('#962F4A'),
-                    HexColor('#1E307C'),
-                  ],
-                ),
+          shape: const CircleBorder(),
+          onPressed: items[selectedIndex].active
+              ? () => Navigator.pushNamed(context, items[selectedIndex].route)
+              : null,
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(80.0)),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  HexColor('#F0B831'),
+                  HexColor('#962F4A'),
+                  HexColor('#1E307C'),
+                ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: IconTheme(
-                  data: IconThemeData(
-                    size: iconSize,
-                    color: Colors.white,
-                  ),
-                  child: items[selectedIndex].icon,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: IconTheme(
+                data: IconThemeData(
+                  size: iconSize,
+                  color: Colors.white,
                 ),
+                child: items[selectedIndex].icon,
               ),
-            )),
+            ),
+          ),
+        ),
       ),
       child: Container(
         decoration: BoxDecoration(
