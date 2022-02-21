@@ -1,6 +1,7 @@
 from ..helper.translator import *
 
 
+
 class text_converter_controller:
 
     def __init__(self, text_input, language_selected, language_convert):
@@ -14,5 +15,4 @@ class text_converter_controller:
 
         self.text_input = text_input
         self.text_output = translator.text_to_text(self.text_input)
-        self.speech_input = translator.text_to_speech(self.text_input)
-        self.speech_output = "example speech output text_converter_controller"
+        self.text_romaji = translator.text_to_romaji(self.text_output)
