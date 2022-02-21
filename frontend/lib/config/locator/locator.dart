@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:frontend/models/repositories/darkModeRepo.dart';
 import 'package:frontend/models/repositories/historyRepo.dart';
 import 'package:frontend/models/repositories/languageTranslationRepo.dart';
@@ -15,6 +16,7 @@ import 'package:frontend/models/services/historySer.dart';
 import 'package:frontend/models/services/languageTranslationSer.dart';
 import 'package:frontend/models/services/translatingSer.dart';
 import 'package:frontend/models/services/wordTranslatingSer.dart';
+import 'package:frontend/models/servicesImp/audioRecorderSerImp.dart';
 import 'package:frontend/models/servicesImp/darkModeServiceImp.dart';
 import 'package:frontend/models/servicesImp/historySerImp.dart';
 import 'package:frontend/models/servicesImp/languageTranslationSerImp.dart';
@@ -30,6 +32,7 @@ void getItSetup() {
       () => SharedPreferencesRepoImp());
 
   // Repositories
+  locator.registerLazySingleton<Dio>(() => Dio());
 
   locator.registerLazySingleton<LanguageTranslationRepo>(
       () => LanguageTranslationRepoImp(locator()));
@@ -54,6 +57,9 @@ void getItSetup() {
 
   locator.registerLazySingleton<WordTranslatingSer>(
       () => WordTranslatingSerImp(locator()));
+
+  locator.registerLazySingleton<AudioRecorderServiceImp>(
+      () => AudioRecorderServiceImp());
 
   // ViewModels
 
