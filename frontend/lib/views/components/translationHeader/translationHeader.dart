@@ -10,6 +10,8 @@ class _TranslationHeader extends State<TranslationHeader> {
         Provider.of<LanguageTranslationViewModel>(context);
 
     return Container(
+      height: widget.height,
+      width: widget.width,
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -26,14 +28,15 @@ class _TranslationHeader extends State<TranslationHeader> {
         children: [
           Expanded(
             child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  languageTranslationViewModel
-                          .getLanguageTranslation.getFromLanguage ??
-                      'Tagalog',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
-                )),
+              alignment: Alignment.center,
+              child: Text(
+                languageTranslationViewModel
+                        .getLanguageTranslation.getFromLanguage ??
+                    'Tagalog',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+            ),
           ),
           SizedBox(
             width: 37,
@@ -59,12 +62,15 @@ class _TranslationHeader extends State<TranslationHeader> {
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Text(
-                languageTranslationViewModel
-                        .getLanguageTranslation.getToLanguage ??
-                    'Nihongo',
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+              child: RotatedBox(
+                quarterTurns: widget.upDown ? 2 : 0,
+                child: Text(
+                  languageTranslationViewModel
+                          .getLanguageTranslation.getToLanguage ??
+                      'Nihongo',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               ),
             ),
           ),
@@ -75,7 +81,13 @@ class _TranslationHeader extends State<TranslationHeader> {
 }
 
 class TranslationHeader extends StatefulWidget {
-  const TranslationHeader({Key? key}) : super(key: key);
+  const TranslationHeader(
+      {Key? key, this.height = 37.0, this.width = 300.0, this.upDown = false})
+      : super(key: key);
+
+  final double height;
+  final double width;
+  final bool upDown;
 
   @override
   State<TranslationHeader> createState() => _TranslationHeader();

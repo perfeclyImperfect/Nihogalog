@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/screens/camera/camera.dart';
+import 'package:frontend/views/screens/speech/speech.dart';
 
 import '../views/screens/home/home.dart';
-import '../views/screens/history/history.dart';
-import '../views/screens/favorite/favorite.dart';
+import '../views/screens/history.dart';
+import '../views/screens/favorite.dart';
 import '../views/screens/text/text.dart';
 
 getNamedRoutes() {
@@ -10,6 +12,8 @@ getNamedRoutes() {
     HomeScreen.route: (context) => const HomeScreen(),
     HistoryScreen.route: (context) => const HistoryScreen(),
     FavoriteScreen.route: (context) => const FavoriteScreen(),
+    SpeechScreen.route: (context) => const SpeechScreen(),
+    CameraScreen.route: (context) => const CameraScreen()
   };
 }
 
