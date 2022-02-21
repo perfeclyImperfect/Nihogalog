@@ -4,7 +4,6 @@ import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/models/services/historySer.dart';
 import 'package:frontend/models/services/wordTranslatingSer.dart';
-import 'package:frontend/models/servicesImp/translationSerImp.dart';
 import 'package:frontend/models/wordTranslating.dart';
 
 class WordTranslatingViewModel extends ChangeNotifier {
@@ -15,15 +14,10 @@ class WordTranslatingViewModel extends ChangeNotifier {
 
   translate(String text, LanguageTranslation languageTranslation,
       bool favorite) async {
-    final tempTranslation = await TranslationSerImp.translate(
-        text,
-        languageTranslation.getFromLanguage ?? 'Tagalog',
-        languageTranslation.getToLanguage ?? 'Nihongo');
+    final tempTranslation = await _wordTranslatingSer.translate(
+        WordTranslating(text, "", "", favorite), languageTranslation);
 
-    _wordTranslatingSer.setWordTranslating(
-      WordTranslating(text, tempTranslation['text_output'],
-          tempTranslation['text_romaji'], favorite),
-    );
+    _wordTranslatingSer.setWordTranslating(tempTranslation);
 
     notifyListeners();
   }
