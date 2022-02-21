@@ -16,3 +16,4 @@ class text_converter_controller:
         self.text_input = text_input
         self.text_output = translator.text_to_text(self.text_input)
         self.text_romaji = translator.text_to_romaji(self.text_output)
+        self.text_emotion = translator.text_to_emoition(self.text_input)

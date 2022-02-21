@@ -4,7 +4,12 @@ from googletrans import Translator
 import cutlet
 from django.http import FileResponse
 import os
+import nltk
+nltk.download('omw-1.4')
 
+
+import json
+import text2emotion as te
 
 class translator_helper:
 
@@ -16,10 +21,18 @@ class translator_helper:
         katsu = cutlet.Cutlet()
         return katsu.romaji(text_input)
 
+    def text_to_emoition(self, text_input):
+        translator = Translator()
+        text_to_emotion = translator.translate( text_input, dest='en')
+        return te.get_emotion(text_to_emotion.text)
+
     def text_to_text(self, text_input):
         translator = Translator()
-        translator = translator.translate( text_input, dest=self.language_convert)
-        return translator.text
+        translate_text = translator.translate( text_input, dest=self.language_convert)
+        
+        
+
+        return translate_text.text
 
     def text_to_speech(self, text_input):
         TTS = gTTS(text=text_input, lang=self.language_selected)

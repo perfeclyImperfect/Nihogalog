@@ -63,6 +63,8 @@ def text_converter(request):
             'text_input': convert.text_input,
             'text_output': convert.text_output,
             'text_romaji': convert.text_romaji,
+
+            'text_emotion': convert.text_emotion,
         }
     )
 
