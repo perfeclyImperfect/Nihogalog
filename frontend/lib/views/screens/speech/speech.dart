@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/hexColor.dart';
+import 'package:frontend/view_models/speech_view_model.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
+import 'package:provider/provider.dart';
 
 class SpeechScreen extends StatelessWidget {
   const SpeechScreen({Key? key}) : super(key: key);
@@ -12,6 +14,14 @@ class SpeechScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SpeechViewModel speechViewModel = Provider.of<SpeechViewModel>(context);
+
+    bool topAudioStatus = speechViewModel.topAudioRecordStatus;
+    bool bottomAudioStatus = speechViewModel.bottomAudioRecordStatus;
+
+    final icon = Icon(!bottomAudioStatus ? Icons.mic : Icons.stop);
+    const iconColor = Colors.white;
+
     return Scaffold(
       // appBar: AppBar(),
       body: Stack(
@@ -186,7 +196,8 @@ class SpeechScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: MaterialButton(
                             shape: const CircleBorder(),
-                            onPressed: () {},
+                            onPressed: () =>
+                                speechViewModel.toggleBottomRecord(),
                             child: Ink(
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(
@@ -201,14 +212,14 @@ class SpeechScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(20),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
                                 child: IconTheme(
                                   data: IconThemeData(
                                     size: 35,
-                                    color: Colors.white,
+                                    color: iconColor,
                                   ),
-                                  child: Icon(Icons.mic),
+                                  child: icon,
                                 ),
                               ),
                             ),

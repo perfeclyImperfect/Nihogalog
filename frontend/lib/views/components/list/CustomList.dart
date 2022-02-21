@@ -34,7 +34,7 @@ class CustomList extends StatelessWidget {
                     WordTranslating(
                         tempList[i].getOriginalWord,
                         tempList[i].getTranslationWord,
-                        tempList[i].getToLanguage,
+                        tempList[i].getPronounciation,
                         tempList[i].getFavorite ?? false),
                   );
 
