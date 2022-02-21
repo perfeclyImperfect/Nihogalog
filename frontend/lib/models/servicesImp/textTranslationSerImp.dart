@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:frontend/config/environment.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/services/apiSer.dart';
 import 'package:frontend/utils/constants.dart';
 
-class TranslationSerImp extends ApiSer {
-  static Future<Map> translate(
+class TextTranslationSerImp extends ApiSer {
+  Future<Map> translate(
       String word, String fromLanguage, String toLanguage) async {
     final url = "${Environment.baseURL}/api/text-converter/";
 
@@ -19,7 +17,7 @@ class TranslationSerImp extends ApiSer {
       'language_convert': kLanguageCodes[toLanguage]
     });
 
-    print(response);
+    print("Response $response");
 
     return response.data;
   }

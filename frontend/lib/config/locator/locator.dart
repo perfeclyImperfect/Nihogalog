@@ -20,7 +20,9 @@ import 'package:frontend/models/servicesImp/audioRecorderSerImp.dart';
 import 'package:frontend/models/servicesImp/darkModeServiceImp.dart';
 import 'package:frontend/models/servicesImp/historySerImp.dart';
 import 'package:frontend/models/servicesImp/languageTranslationSerImp.dart';
+import 'package:frontend/models/servicesImp/speechTranslationSerImp.dart';
 import 'package:frontend/models/servicesImp/translatingSerImp.dart';
+import 'package:frontend/models/servicesImp/textTranslationSerImp.dart';
 import 'package:frontend/models/servicesImp/wordTranslatingSerImp.dart';
 
 import 'package:get_it/get_it.dart';
@@ -60,6 +62,12 @@ void getItSetup() {
 
   locator.registerLazySingleton<AudioRecorderServiceImp>(
       () => AudioRecorderServiceImp());
+
+  locator.registerLazySingleton<TextTranslationSerImp>(
+      () => TextTranslationSerImp());
+
+  locator.registerLazySingleton<SpeechTranslationSerImp>(
+      () => SpeechTranslationSerImp());
 
   // ViewModels
 
