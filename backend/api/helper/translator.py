@@ -4,6 +4,7 @@ from googletrans import Translator
 import cutlet
 from django.http import FileResponse
 import os
+import speech_recognition as sr
 import nltk
 nltk.download('omw-1.4')
 
@@ -29,9 +30,6 @@ class translator_helper:
     def text_to_text(self, text_input):
         translator = Translator()
         translate_text = translator.translate( text_input, dest=self.language_convert)
-        
-        
-
         return translate_text.text
 
     def text_to_speech(self, text_input):
@@ -42,8 +40,17 @@ class translator_helper:
         pass
 
     def speech_to_text(self, speech_input):
-        pass
-
+        r = sr.Recognizer()
+        with sr.AudioFile(speech_input) as source:
+            audio_text = r.listen(source)
+            try:
+                text = r.recognize_google(audio_text)
+                translator = Translator()
+                translate_text = translator.translate( text, dest=self.language_selected)
+                return translate_text.text
+            except:
+                return 'Sorry.. run again...'
+                
     def object_to_text(self, image_input):
         pass
 

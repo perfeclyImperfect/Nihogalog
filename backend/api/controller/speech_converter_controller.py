@@ -8,14 +8,11 @@ class speech_converter_controller:
         self.language_selected = language_selected
         self.language_convert = language_convert
 
-        self.created()
-        self.text_input = "example text input speech_converter_controller"
-        self.text_output = "example text output speech_converter_controller"
-        self.speech_input = "example speech input speech_converter_controller"
-        self.speech_output = "example speech output speech_converter_controller"
-
-    def created(self):
         translator = translator_helper(
             language_selected=self.language_selected,
             language_convert=self.language_convert
         )
+        self.text_input = translator.speech_to_text( speech_input )
+        self.text_output = translator.text_to_text( self.text_input )
+        self.text_romaji = translator.text_to_romaji(self.text_output)
+        self.text_emotion = translator.text_to_emoition(self.text_input) 
