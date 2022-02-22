@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/utils/hexColor.dart';
+import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/speech_view_model.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +18,17 @@ class SpeechScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SpeechViewModel speechViewModel = Provider.of<SpeechViewModel>(context);
 
-    bool topAudioStatus = speechViewModel.topAudioRecordStatus;
-    bool bottomAudioStatus = speechViewModel.bottomAudioRecordStatus;
+    final languageTranslationViewModel =
+        Provider.of<LanguageTranslationViewModel>(context, listen: false);
+
+    bool topAudioStatus = speechViewModel.getTopAudioRecordStatus;
+    bool bottomAudioStatus = speechViewModel.getBottomAudioRecordStatus;
 
     final icon = Icon(!bottomAudioStatus ? Icons.mic : Icons.stop);
     const iconColor = Colors.white;
+
+    final languageTranslation =
+        languageTranslationViewModel.getLanguageTranslation;
 
     return Scaffold(
       // appBar: AppBar(),
@@ -181,12 +189,12 @@ class SpeechScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'sad',
-                            style: TextStyle(
+                            speechViewModel.getBottomWordTranslating.word,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 25),
                           ),
                         ),
@@ -196,8 +204,10 @@ class SpeechScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: MaterialButton(
                             shape: const CircleBorder(),
-                            onPressed: () =>
-                                speechViewModel.toggleBottomRecord(),
+                            onPressed: () => speechViewModel.toggleBottomRecord(
+                              languageTranslation.getFromLanguage,
+                              languageTranslation.getToLanguage,
+                            ),
                             child: Ink(
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(
@@ -215,7 +225,7 @@ class SpeechScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: IconTheme(
-                                  data: IconThemeData(
+                                  data: const IconThemeData(
                                     size: 35,
                                     color: iconColor,
                                   ),

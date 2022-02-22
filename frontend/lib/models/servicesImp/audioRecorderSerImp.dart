@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:frontend/utils/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-const String pathToSaveAudio = "/foo.wav";
 
 class AudioRecorderServiceImp {
   FlutterSoundRecorder? _audioRecorder;
@@ -30,13 +27,14 @@ class AudioRecorderServiceImp {
 
   Future _record() async {
     Directory tempDir = await getTemporaryDirectory();
-    String tempFullPath = "${tempDir.path}$pathToSaveAudio";
+    String tempFullPath = "${tempDir.path}/$temporaryAudioFilename";
+
+    print("FULL PATH $tempFullPath");
 
     if (!_isRecorderInitialized) {
       return;
     }
 
-    print('recording');
     await _audioRecorder?.startRecorder(
       toFile: tempFullPath,
       codec: Codec.pcm16WAV,
@@ -48,7 +46,6 @@ class AudioRecorderServiceImp {
       return;
     }
 
-    print('stop recording');
     await _audioRecorder?.stopRecorder();
   }
 
