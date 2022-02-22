@@ -4,7 +4,6 @@ from googletrans import Translator
 import cutlet
 from django.http import FileResponse
 import os
-import speech_recognition as sr
 import nltk
 
 nltk.download('omw-1.4')
@@ -12,8 +11,6 @@ nltk.download('omw-1.4')
 
 import json
 import text2emotion as te
-
-
 import json
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
