@@ -1,19 +1,24 @@
-from gtts import gTTS
-from django.core.files.storage import default_storage
-from googletrans import Translator
-import cutlet
-from django.http import FileResponse
-import os
-import nltk
 
+import cutlet
+import speech_recognition as sr
+import text2emotion as te
+import os
+import json
+import numpy as np
+import cv2
+import nltk
+import matplotlib.pyplot as plt
 nltk.download('omw-1.4')
 
-
-import json
-import text2emotion as te
-import json
+from django.core.files.storage import default_storage
+from django.http import FileResponse
+from gtts import gTTS
+from googletrans import Translator
+# from pytesseract import Output
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+
 
 
 class translator_helper:
@@ -103,11 +108,23 @@ class translator_helper:
                 translator = Translator()
                 translate_text = translator.translate( text, dest=self.language_selected)
                 return translate_text.text
-            except:
+            except Exception as e:
+                print('------------------------------')
+                print(e)
+                print('------------------------------')
                 return 'Sorry.. run again...'
                 
     def object_to_text(self, image_input):
-        pass
+        # image = cv2.imread(image_input, cv2.IMREAD_GRAYSCALE) 
+        # plt.figure(figsize=(16,10))
+        # plt.imshow(image, cmap='Greys_r')
+        # data = image_input.read()
+        # image = np.asarray(bytearray(data), dtype="uint8")
+        # image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+
+        # extracted_text = pytesseract.image_to_string(image)
+        # print(extracted_text)
+        return "with my wings will fly"
 
     # Text = "ありがとうございました"
     # print("please wait...processing")
