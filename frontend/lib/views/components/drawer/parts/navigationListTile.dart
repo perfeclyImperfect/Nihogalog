@@ -28,8 +28,9 @@ class NavigationListTile extends StatelessWidget {
           Text(
             text,
             style: const TextStyle(
+              fontFamily: 'AdobeClean',
               fontWeight: FontWeight.bold,
-              fontSize: 17,
+              fontSize: 18,
             ),
           ),
         ],

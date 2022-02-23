@@ -67,7 +67,10 @@ flutter:
   fonts:
     - family: AdobeClean
       fonts: 
-        - assets: assets/fonts/AdobeCleanRegular.otf
+        - asset: assets/fonts/AdobeCleanRegular.otf
+    - family:  DrawerIcons
+      fonts:
+        - asset: assets/icons/DrawerIcons.ttf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

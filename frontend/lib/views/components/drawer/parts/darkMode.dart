@@ -11,20 +11,20 @@ class _DarkModeState extends State<DarkMode> {
       children: [
         const Text(
           'Dark Mode',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+              fontFamily: 'AdobeClean'),
         ),
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Switch(
-            value: darkModeViewModel.getStatus(),
-            onChanged: (value) async {
-              await darkModeViewModel.toggle(value);
-            },
-            activeColor: Colors.green,
-            inactiveTrackColor: Colors.white,
-            inactiveThumbColor: Colors.white,
-          ),
-        )
+        Switch(
+          value: darkModeViewModel.getStatus(),
+          onChanged: (value) async {
+            await darkModeViewModel.toggle(value);
+          },
+          activeColor: Colors.green,
+          inactiveTrackColor: Colors.grey,
+          inactiveThumbColor: Colors.white,
+        ),
       ],
     );
   }
