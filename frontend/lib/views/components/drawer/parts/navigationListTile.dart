@@ -18,11 +18,18 @@ class NavigationListTile extends StatelessWidget {
       onTap: () => onTap(context),
       title: Row(
         children: [
-          Icon(icon),
+          Icon(
+            icon,
+            size: 40,
+          ),
+          Container(
+            width: 20,
+          ),
           Text(
             text,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 17,
             ),
           ),
         ],

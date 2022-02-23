@@ -17,8 +17,6 @@ class TextTranslationSerImp extends ApiSer {
       'language_convert': kLanguageCodes[toLanguage]
     });
 
-    print("Response $response");
-
     return response.data;
   }
 }

@@ -16,11 +16,7 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> drawerListNames = ['home', 'history', 'favorites'];
 
-    final List<IconData> drawerListIcons = [
-      Icons.house,
-      Icons.history,
-      Icons.favorite
-    ];
+    final List<IconData> drawerListIcons = [Icons.home, Icons.book, Icons.star];
 
     final drawerListWidgets = [
       for (int i = 0; i < drawerListNames.length; i++)
@@ -34,7 +30,7 @@ class DrawerScreen extends StatelessWidget {
 
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 7.5),
+        padding: const EdgeInsets.fromLTRB(8, 30, 0, 0),
         child: Column(
           children: [
             for (var i in drawerListWidgets) i,

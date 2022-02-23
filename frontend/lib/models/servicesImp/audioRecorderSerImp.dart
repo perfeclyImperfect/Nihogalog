@@ -29,16 +29,14 @@ class AudioRecorderServiceImp {
     Directory tempDir = await getTemporaryDirectory();
     String tempFullPath = "${tempDir.path}/$temporaryAudioFilename";
 
-    print("FULL PATH $tempFullPath");
-
     if (!_isRecorderInitialized) {
       return;
     }
 
-    await _audioRecorder?.startRecorder(
-      toFile: tempFullPath,
-      codec: Codec.pcm16WAV,
-    );
+    // await _audioRecorder?.startRecorder(
+    //   toFile: tempFullPath,
+    //   codec: Codec.pcm16WAV,
+    // );
   }
 
   Future _stop() async {
