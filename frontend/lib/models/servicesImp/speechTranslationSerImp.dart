@@ -28,16 +28,21 @@ class SpeechTranslationSerImp extends ApiSer {
       String filename, String fromLanguage, String toLanguage) async {
     final String tempFullPath = "$temporaryAudioPath$filename";
 
-    print("TRANSLATION FULL PATH $tempFullPath");
-    final formData = FormData.fromMap({
-      "language_selected": fromLanguage,
-      "language_convert": toLanguage,
-      "speech_input": MultipartFile.fromFile(tempFullPath, filename: filename)
-    });
+    var formData = FormData();
+
+    formData.files.addAll([
+      MapEntry(
+        'speech_input',
+        MultipartFile.fromFileSync(tempFullPath,
+            filename: temporaryAudioFilename),
+      ),
+      MapEntry('language_selected',
+          MultipartFile.fromString(kLanguageCodes[fromLanguage] ?? 'tl')),
+      MapEntry('language_convert',
+          MultipartFile.fromString(kLanguageCodes[toLanguage] ?? "ja")),
+    ]);
 
     final response = await dio.post(url, data: formData);
-
-    print("test $response");
 
     return response.data;
   }
