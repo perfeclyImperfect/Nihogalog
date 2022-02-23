@@ -42,7 +42,10 @@ class SpeechScreen extends StatelessWidget {
                   quarterTurns: 2,
                   child: Container(
                     padding: EdgeInsets.only(
-                        top: topPad, left: horizotalPad, right: horizotalPad),
+                      top: topPad,
+                      left: horizotalPad,
+                      right: horizotalPad,
+                    ),
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(color: Colors.black, width: 0.5),
@@ -105,7 +108,7 @@ class SpeechScreen extends StatelessWidget {
                             alignment: Alignment.center,
                             child: MaterialButton(
                               shape: const CircleBorder(),
-                              onPressed: () {},
+                              onPressed: bottomAudioStatus ? null : () {},
                               child: Ink(
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(
@@ -204,10 +207,12 @@ class SpeechScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: MaterialButton(
                             shape: const CircleBorder(),
-                            onPressed: () => speechViewModel.toggleBottomRecord(
-                              languageTranslation.getFromLanguage,
-                              languageTranslation.getToLanguage,
-                            ),
+                            onPressed: topAudioStatus
+                                ? null
+                                : () => speechViewModel.toggleBottomRecord(
+                                      languageTranslation.getFromLanguage,
+                                      languageTranslation.getToLanguage,
+                                    ),
                             child: Ink(
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(
