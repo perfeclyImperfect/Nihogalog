@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/drawer_icons_icons.dart';
-import 'package:frontend/drawer_icons_icons.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
 
 import 'parts/darkMode.dart';

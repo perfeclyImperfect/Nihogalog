@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class _DarkModeState extends State<DarkMode> {
@@ -9,12 +10,12 @@ class _DarkModeState extends State<DarkMode> {
 
     return Row(
       children: [
-        const Text(
+        Text(
           'Dark Mode',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-              fontFamily: 'AdobeClean'),
+          style: GoogleFonts.openSans(
+              textStyle: Theme.of(context).textTheme.bodyLarge,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
         Switch(
           value: darkModeViewModel.getStatus(),
