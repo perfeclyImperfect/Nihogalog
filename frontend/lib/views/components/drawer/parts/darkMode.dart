@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class _DarkModeState extends State<DarkMode> {
@@ -9,22 +10,22 @@ class _DarkModeState extends State<DarkMode> {
 
     return Row(
       children: [
-        const Text(
+        Text(
           'Dark Mode',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          style: GoogleFonts.openSans(
+              textStyle: Theme.of(context).textTheme.bodyLarge,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
-        Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Switch(
-            value: darkModeViewModel.getStatus(),
-            onChanged: (value) async {
-              await darkModeViewModel.toggle(value);
-            },
-            activeColor: Colors.green,
-            inactiveTrackColor: Colors.white,
-            inactiveThumbColor: Colors.white,
-          ),
-        )
+        Switch(
+          value: darkModeViewModel.getStatus(),
+          onChanged: (value) async {
+            await darkModeViewModel.toggle(value);
+          },
+          activeColor: Colors.green,
+          inactiveTrackColor: Colors.grey,
+          inactiveThumbColor: Colors.white,
+        ),
       ],
     );
   }

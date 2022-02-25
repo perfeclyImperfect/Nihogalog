@@ -7,25 +7,29 @@ from .forms import UploadFileForm
 from .controller.object_detection_controller import *
 from .controller.speech_converter_controller import *
 from .controller.text_converter_controller import *
+# from gensim.summarization.summarizer import summarize
 
 
 @csrf_exempt
 def object_detection(request):
-    data = json.loads(request.body.decode())
-    convert = object_detection_controller(
-        image_input=data['image_input'],
-        language_selected=data['language_selected'],
-        language_convert=data['language_convert']
-    )
-    return JsonResponse(
-        {
-            'success': True,
-            'language_selected': convert.language_selected,
-            'language_convert': convert.language_convert,
-            'text_input': convert.text_input,
-            'text_output': convert.text_output,
-        }
-    )
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        convert = object_detection_controller(
+            image_input=request.FILES['image_input'],
+            language_selected=request.POST['language_selected'],
+            language_convert=request.POST['language_convert']
+        )
+        return JsonResponse(
+            {
+                'success': True,
+                'language_selected': convert.language_selected,
+                'language_convert': convert.language_convert,
+                'text_input': convert.text_input,
+                'text_output': convert.text_output,
+                'text_emotion': convert.text_emotion ,
+                'text_romaji': convert.text_romaji,
+            }
+        )
 
 
 @csrf_exempt

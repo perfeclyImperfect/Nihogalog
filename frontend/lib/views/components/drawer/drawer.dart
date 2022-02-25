@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/drawer_icons_icons.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
 
 import 'parts/darkMode.dart';
@@ -16,7 +17,11 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> drawerListNames = ['home', 'history', 'favorites'];
 
-    final List<IconData> drawerListIcons = [Icons.home, Icons.book, Icons.star];
+    final List<IconData> drawerListIcons = [
+      DrawerIcons.home,
+      Icons.book,
+      DrawerIcons.star
+    ];
 
     final drawerListWidgets = [
       for (int i = 0; i < drawerListNames.length; i++)

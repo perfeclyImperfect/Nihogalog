@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NavigationListTile extends StatelessWidget {
   const NavigationListTile({
@@ -27,10 +28,10 @@ class NavigationListTile extends StatelessWidget {
           ),
           Text(
             text,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-            ),
+            style: GoogleFonts.openSans(
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 17,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),
