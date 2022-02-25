@@ -4,13 +4,66 @@ import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/models/services/historySer.dart';
 import 'package:frontend/models/services/wordTranslatingSer.dart';
+import 'package:frontend/models/servicesImp/textToSpeechSerImp.dart';
 import 'package:frontend/models/wordTranslating.dart';
 
 class WordTranslatingViewModel extends ChangeNotifier {
   final WordTranslatingSer _wordTranslatingSer = locator<WordTranslatingSer>();
   final HistorySer _historySer = locator<HistorySer>();
+  final TextToSpeechSerImp _textToSpeechSerImp = locator<TextToSpeechSerImp>();
 
   WordTranslating get getText => _wordTranslatingSer.getWordTranslating();
+
+  List<bool> isSpeaking = [false, false];
+  late int _index;
+
+  WordTranslatingViewModel() {
+    _init();
+  }
+
+  _init() {
+    _textToSpeechSerImp.getFlutterTts.setStartHandler(() {
+      isSpeaking[_index] = true;
+      notifyListeners();
+    });
+
+    _textToSpeechSerImp.getFlutterTts.setCompletionHandler(() {
+      isSpeaking[_index] = false;
+      notifyListeners();
+    });
+
+    _textToSpeechSerImp.getFlutterTts.setErrorHandler((message) {
+      isSpeaking[_index] = false;
+      notifyListeners();
+    });
+  }
+
+  void swap(LanguageTranslation languageTranslation) {
+    WordTranslating translatedWordTranslating = _wordTranslatingSer.translate(
+        WordTranslating(
+          getText.translation,
+          "",
+          "",
+          getText.favorite,
+        ),
+        languageTranslation);
+
+    setText(translatedWordTranslating);
+  }
+
+  speak(String text, int index) {
+    _index = index;
+
+    _textToSpeechSerImp.speak(text);
+    notifyListeners();
+  }
+
+  stop() {
+    isSpeaking[_index] = false;
+    _textToSpeechSerImp.stop();
+
+    notifyListeners();
+  }
 
   translate(String text, LanguageTranslation languageTranslation,
       bool favorite) async {

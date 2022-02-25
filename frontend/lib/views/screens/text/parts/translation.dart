@@ -9,8 +9,11 @@ class Translation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTranslationViewModel =
+    final wordTranslationViewModel =
         Provider.of<WordTranslatingViewModel>(context);
+
+    bool isTopTalking = wordTranslationViewModel.isSpeaking[0];
+    bool isBotTalking = wordTranslationViewModel.isSpeaking[1];
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -23,10 +26,15 @@ class Translation extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: OutlinedButton(
-                onPressed: () {},
-                child: const Icon(
-                  Icons.volume_up,
-                  color: Colors.black,
+                onPressed: isTopTalking
+                    ? null
+                    : () => isBotTalking
+                        ? wordTranslationViewModel.stop()
+                        : wordTranslationViewModel.speak(
+                            wordTranslationViewModel.getText.translation, 1),
+                child: Icon(
+                  isBotTalking ? Icons.stop : Icons.volume_up,
+                  color: isTopTalking ? Colors.grey : Colors.black,
                 ),
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
@@ -42,10 +50,10 @@ class Translation extends StatelessWidget {
             ),
           ),
           Text(
-            textTranslationViewModel.getText.translation,
+            wordTranslationViewModel.getText.translation,
             style: const TextStyle(fontSize: 25),
           ),
-          Text(textTranslationViewModel.getText.translationPronounciation)
+          Text(wordTranslationViewModel.getText.translationPronounciation)
         ],
       ),
     );
