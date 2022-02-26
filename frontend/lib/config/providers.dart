@@ -1,4 +1,3 @@
-import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/speech_view_model.dart';
@@ -14,9 +13,6 @@ getProviders() {
     ),
     ChangeNotifierProvider(
       create: (_) => TranslatingViewModel(),
-    ),
-    ChangeNotifierProvider(
-      create: (_) => DarkModeViewModel(),
     ),
     ChangeNotifierProvider(
       create: (_) => LanguageTranslationViewModel(),

@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
 class HistoryLabel extends StatelessWidget {
   final Color color;
@@ -11,9 +13,10 @@ class HistoryLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: TextStyle(
-        color: color,
+      style: GoogleFonts.openSans(
+        color: Colors.black,
         fontWeight: FontWeight.bold,
+        fontSize: 19,
       ),
     );
   }

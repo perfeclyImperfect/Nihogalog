@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/utils/hexColor.dart';
 import 'package:frontend/view_models/history_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CustomListTile extends StatelessWidget {
@@ -51,18 +52,19 @@ class CustomListTile extends StatelessWidget {
                     children: [
                       Text(
                         historyWord.getOriginalWord,
-                        style: const TextStyle(
+                        style: GoogleFonts.openSans(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 1)),
                       Text(
                         historyWord.getTranslationWord,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: GoogleFonts.openSans(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:frontend/theme_provider.dart';
+import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home.dart';
@@ -13,20 +14,23 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: getProviders(),
-      child: MaterialApp(
-        theme: ThemeData(
-          textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme,
-          ),
-        ),
-        title: kMaterialAppTitle,
-        initialRoute: HomeScreen.route,
-        routes: getNamedRoutes(),
-        onGenerateRoute: (settings) => getOnGenerateRoute(settings),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => DarkModeViewModel(),
+        builder: (context, _) {
+          final darkModeViewModel = Provider.of<DarkModeViewModel>(context);
+
+          return MultiProvider(
+            providers: getProviders(),
+            child: MaterialApp(
+              themeMode: darkModeViewModel.getThemeMode,
+              darkTheme: MyThemes.darkTheme,
+              theme: MyThemes.lightTheme,
+              title: kMaterialAppTitle,
+              initialRoute: HomeScreen.route,
+              routes: getNamedRoutes(),
+              onGenerateRoute: (settings) => getOnGenerateRoute(settings),
+            ),
+          );
+        },
+      );
 }
