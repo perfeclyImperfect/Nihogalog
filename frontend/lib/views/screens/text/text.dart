@@ -81,7 +81,9 @@ class TextScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: const TextAppBar(),
+        appBar: TextAppBar(
+          controller: _textEditingController,
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 25,

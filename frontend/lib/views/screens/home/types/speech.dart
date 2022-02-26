@@ -7,12 +7,14 @@ class Speech extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 65, vertical: 15),
-          child: TranslationHeader(),
+          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 15),
+          child: TranslationHeader(
+            additionalFunction: () {},
+          ),
         ),
-        Expanded(
+        const Expanded(
           child: Align(
             alignment: Alignment.center,
             child: Text('Tap the microphone and start speaking.',

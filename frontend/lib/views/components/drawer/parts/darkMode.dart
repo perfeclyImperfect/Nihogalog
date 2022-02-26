@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'package:frontend/view_models/darkMode_view_model.dart';
 
 class _DarkModeState extends State<DarkMode> {
   @override

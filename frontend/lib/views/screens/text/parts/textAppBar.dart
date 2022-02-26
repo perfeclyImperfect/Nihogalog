@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/languageTranslation.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +7,12 @@ import '../../../components/translationHeader/translationHeader.dart';
 import 'package:frontend/view_models/translating_view_%20model.dart';
 
 class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TextAppBar({Key? key, this.preferredHeight = 40}) : super(key: key);
+  const TextAppBar(
+      {Key? key, this.preferredHeight = 40, required this.controller})
+      : super(key: key);
 
   final double preferredHeight;
+  final TextEditingController controller;
 
   swap(context) {
     Provider.of<WordTranslatingViewModel>(context, listen: false).swap(
@@ -19,6 +21,11 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
         listen: false,
       ).getLanguageTranslation,
     );
+
+    controller.text =
+        Provider.of<WordTranslatingViewModel>(context, listen: false)
+            .getText
+            .word;
   }
 
   @override
@@ -44,7 +51,7 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: TranslationHeader(
-            additionalFunction: swap(context),
+            additionalFunction: () => swap(context),
           ),
         ),
       ),

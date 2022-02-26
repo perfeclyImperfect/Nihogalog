@@ -82,18 +82,18 @@ class _TranslationHeader extends State<TranslationHeader> {
 }
 
 class TranslationHeader extends StatefulWidget {
-  const TranslationHeader(
+  TranslationHeader(
       {Key? key,
       this.height = 37.0,
       this.width = 300.0,
       this.upDown = false,
-      this.additionalFunction})
+      required this.additionalFunction})
       : super(key: key);
 
   final double height;
   final double width;
   final bool upDown;
-  final additionalFunction;
+  final Function additionalFunction;
 
   @override
   State<TranslationHeader> createState() => _TranslationHeader();
