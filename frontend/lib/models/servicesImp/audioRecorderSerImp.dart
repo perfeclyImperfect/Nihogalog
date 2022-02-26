@@ -33,10 +33,10 @@ class AudioRecorderServiceImp {
       return;
     }
 
-    // await _audioRecorder?.startRecorder(
-    //   toFile: tempFullPath,
-    //   codec: Codec.pcm16WAV,
-    // );
+    await _audioRecorder?.startRecorder(
+      toFile: tempFullPath,
+      codec: Codec.pcm16WAV,
+    );
   }
 
   Future _stop() async {

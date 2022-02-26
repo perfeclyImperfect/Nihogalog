@@ -49,7 +49,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         child: MaterialButton(
           shape: const CircleBorder(),
           onPressed: items[selectedIndex].active
-              ? () => Navigator.pushNamed(context, items[selectedIndex].route)
+              ? () => items[selectedIndex].topRightFunction()
               : null,
           child: Ink(
             decoration: BoxDecoration(
