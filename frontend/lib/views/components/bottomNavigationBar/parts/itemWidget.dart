@@ -51,11 +51,11 @@ class ItemWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           child: Container(
-            width: isSelected ? 100 : 50,
+            width: isSelected ? 200 : 50,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               // mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 IconTheme(

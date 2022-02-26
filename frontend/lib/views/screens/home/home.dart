@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/components/logo/Logo.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../components/drawer/drawer.dart';
 import '../../components/bottomNavigationBar/bottomNavyBar.dart';
@@ -69,21 +70,49 @@ class _HomeScreen extends State<HomeScreen> {
         onItemSelected: (index) => setState(() => _selectedIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: const Icon(Icons.text_fields),
-            title: const Text('Text'),
+            icon: const Icon(
+              Icons.text_fields,
+              size: 30,
+            ),
+            title: Text(
+              'Text',
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             textAlign: TextAlign.center,
             active: false,
             route: "",
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.mic_outlined),
-            title: const Text('Speech'),
+            title: Text(
+              'Speech',
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             textAlign: TextAlign.center,
             route: "/speech",
           ),
           BottomNavyBarItem(
-            icon: const Icon(Icons.camera_alt),
-            title: const Text('Camera '),
+            icon: const Icon(
+              Icons.camera_alt,
+              size: 30,
+            ),
+            title: Text(
+              'Camera',
+              style: GoogleFonts.openSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             textAlign: TextAlign.center,
             route: "/camera",
           ),

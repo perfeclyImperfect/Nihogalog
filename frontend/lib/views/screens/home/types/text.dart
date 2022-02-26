@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/translationHeader/translationHeader.dart';
@@ -33,7 +34,13 @@ class CustomText extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black54,
                 ),
-                child: const Text('Type the text to translate.'),
+                child: Text(
+                  'Type the text to translate.',
+                  style: GoogleFonts.openSans(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ),
           ),

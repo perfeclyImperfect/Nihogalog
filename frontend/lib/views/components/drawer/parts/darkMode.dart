@@ -10,12 +10,15 @@ class _DarkModeState extends State<DarkMode> {
 
     return Row(
       children: [
-        Text(
-          'Dark Mode',
-          style: GoogleFonts.openSans(
-              textStyle: Theme.of(context).textTheme.bodyLarge,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
+        Padding(
+          padding: EdgeInsets.fromLTRB(9, 0, 0, 0),
+          child: Text(
+            'Dark Mode',
+            style: GoogleFonts.openSans(
+                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontSize: 17,
+                fontWeight: FontWeight.bold),
+          ),
         ),
         Switch(
           value: darkModeViewModel.getStatus(),

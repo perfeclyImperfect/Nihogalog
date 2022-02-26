@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 
 class _TranslationHeader extends State<TranslationHeader> {
@@ -33,8 +33,11 @@ class _TranslationHeader extends State<TranslationHeader> {
                 languageTranslationViewModel
                         .getLanguageTranslation.getFromLanguage ??
                     'Tagalog',
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+                style: GoogleFonts.raleway(
+                  textStyle: Theme.of(context).textTheme.bodyLarge,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
@@ -68,8 +71,11 @@ class _TranslationHeader extends State<TranslationHeader> {
                   languageTranslationViewModel
                           .getLanguageTranslation.getToLanguage ??
                       'Nihongo',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                  style: GoogleFonts.raleway(
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ),

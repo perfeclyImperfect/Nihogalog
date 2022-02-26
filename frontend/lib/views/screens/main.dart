@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home.dart';
@@ -16,6 +17,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: getProviders(),
       child: MaterialApp(
+        theme: ThemeData(
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
         title: kMaterialAppTitle,
         initialRoute: HomeScreen.route,
         routes: getNamedRoutes(),

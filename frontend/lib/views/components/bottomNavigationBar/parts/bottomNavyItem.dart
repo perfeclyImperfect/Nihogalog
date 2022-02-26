@@ -6,7 +6,7 @@ class BottomNavyBarItem {
       required this.title,
       this.activeColor = Colors.white,
       this.textAlign,
-      this.inactiveColor = Colors.grey,
+      this.inactiveColor = Colors.black,
       this.active = true,
       required this.route});
 
