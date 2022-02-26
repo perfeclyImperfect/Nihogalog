@@ -12,9 +12,11 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 65, vertical: 15),
-          child: TranslationHeader(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 15),
+          child: TranslationHeader(
+            additionalFunction: () {},
+          ),
         ),
         Expanded(
           child: Align(

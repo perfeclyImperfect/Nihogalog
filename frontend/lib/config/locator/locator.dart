@@ -21,6 +21,7 @@ import 'package:frontend/models/servicesImp/darkModeServiceImp.dart';
 import 'package:frontend/models/servicesImp/historySerImp.dart';
 import 'package:frontend/models/servicesImp/languageTranslationSerImp.dart';
 import 'package:frontend/models/servicesImp/speechTranslationSerImp.dart';
+import 'package:frontend/models/servicesImp/textToSpeechSerImp.dart';
 import 'package:frontend/models/servicesImp/translatingSerImp.dart';
 import 'package:frontend/models/servicesImp/textTranslationSerImp.dart';
 import 'package:frontend/models/servicesImp/wordTranslatingSerImp.dart';
@@ -68,6 +69,8 @@ void getItSetup() {
 
   locator.registerLazySingleton<SpeechTranslationSerImp>(
       () => SpeechTranslationSerImp());
+
+  locator.registerLazySingleton<TextToSpeechSerImp>(() => TextToSpeechSerImp());
 
   // ViewModels
 

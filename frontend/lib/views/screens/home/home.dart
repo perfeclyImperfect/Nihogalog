@@ -85,7 +85,7 @@ class _HomeScreen extends State<HomeScreen> {
             ),
             textAlign: TextAlign.center,
             active: false,
-            route: "",
+            topRightFunction: () => Navigator.pushNamed(context, "/home"),
           ),
           BottomNavyBarItem(
             icon: const Icon(Icons.mic_outlined),
@@ -99,7 +99,7 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             textAlign: TextAlign.center,
-            route: "/speech",
+            topRightFunction: () => Navigator.pushNamed(context, "/speech"),
           ),
           BottomNavyBarItem(
             icon: const Icon(
@@ -114,7 +114,7 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             textAlign: TextAlign.center,
-            route: "/camera",
+            topRightFunction: () => Navigator.pushNamed(context, ""),
           ),
         ],
       ),

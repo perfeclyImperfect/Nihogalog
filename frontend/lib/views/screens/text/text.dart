@@ -69,6 +69,9 @@ class TextScreen extends StatelessWidget {
     bool isThereWord = wordTranslationViewModel.getText.word.isNotEmpty;
     bool status = translatingViewModel.getTranslating.status;
 
+    bool isTopTalking = wordTranslationViewModel.isSpeaking[0];
+    bool isBotTalking = wordTranslationViewModel.isSpeaking[1];
+
     return GestureDetector(
       onTap: () {
         final currentFocus = FocusScope.of(context);
@@ -78,7 +81,9 @@ class TextScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: const TextAppBar(),
+        appBar: TextAppBar(
+          controller: _textEditingController,
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 25,
@@ -90,10 +95,15 @@ class TextScreen extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: OutlinedButton(
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.volume_up,
-                      color: Colors.black,
+                    onPressed: isBotTalking
+                        ? null
+                        : () => isTopTalking
+                            ? wordTranslationViewModel.stop()
+                            : wordTranslationViewModel.speak(
+                                wordTranslationViewModel.getText.word, 0),
+                    child: Icon(
+                      isTopTalking ? Icons.stop : Icons.volume_up,
+                      color: isBotTalking ? Colors.grey : Colors.black,
                     ),
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(

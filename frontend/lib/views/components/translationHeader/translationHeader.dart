@@ -46,6 +46,7 @@ class _TranslationHeader extends State<TranslationHeader> {
             height: 35,
             child: TextButton(
               onPressed: () {
+                widget.additionalFunction();
                 languageTranslationViewModel.swapLanguage();
               },
               style: TextButton.styleFrom(
@@ -87,13 +88,18 @@ class _TranslationHeader extends State<TranslationHeader> {
 }
 
 class TranslationHeader extends StatefulWidget {
-  const TranslationHeader(
-      {Key? key, this.height = 37.0, this.width = 300.0, this.upDown = false})
+  TranslationHeader(
+      {Key? key,
+      this.height = 37.0,
+      this.width = 300.0,
+      this.upDown = false,
+      required this.additionalFunction})
       : super(key: key);
 
   final double height;
   final double width;
   final bool upDown;
+  final Function additionalFunction;
 
   @override
   State<TranslationHeader> createState() => _TranslationHeader();

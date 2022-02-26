@@ -8,11 +8,11 @@ import 'package:frontend/utils/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SpeechTranslationSerImp extends ApiSer {
-  final url = "${Environment.baseURL}/api/speech-converter/";
-  final dio = locator<Dio>();
+  final _url = "${Environment.baseURL}/api/speech-converter/";
+  final _dio = locator<Dio>();
 
   // ignore: prefer_typing_uninitialized_variables
-  late var temporaryAudioPath;
+  late var _temporaryAudioPath;
 
   SpeechTranslationSerImp() {
     init();
@@ -21,28 +21,21 @@ class SpeechTranslationSerImp extends ApiSer {
   init() async {
     Directory tempDirectory = await getTemporaryDirectory();
 
-    temporaryAudioPath = "${tempDirectory.path}/";
+    _temporaryAudioPath = "${tempDirectory.path}/";
   }
 
   Future<Map> translate(
       String filename, String fromLanguage, String toLanguage) async {
-    final String tempFullPath = "$temporaryAudioPath$filename";
+    final String tempFullPath = "$_temporaryAudioPath$filename";
 
-    var formData = FormData();
+    final formData = FormData.fromMap({
+      "language_selected": kLanguageCodes[fromLanguage],
+      "language_convert": kLanguageCodes[toLanguage],
+      "speech_input": MultipartFile.fromFileSync(tempFullPath,
+          filename: temporaryAudioFilename)
+    });
 
-    formData.files.addAll([
-      MapEntry(
-        'speech_input',
-        MultipartFile.fromFileSync(tempFullPath,
-            filename: temporaryAudioFilename),
-      ),
-      MapEntry('language_selected',
-          MultipartFile.fromString(kLanguageCodes[fromLanguage] ?? 'tl')),
-      MapEntry('language_convert',
-          MultipartFile.fromString(kLanguageCodes[toLanguage] ?? "ja")),
-    ]);
-
-    final response = await dio.post(url, data: formData);
+    final response = await _dio.post(_url, data: formData);
 
     return response.data;
   }

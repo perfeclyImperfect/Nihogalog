@@ -247,10 +247,11 @@ class SpeechScreen extends StatelessWidget {
               ),
             ],
           ),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: TranslationHeader(
               upDown: true,
+              additionalFunction: () {},
             ),
           )
         ],
