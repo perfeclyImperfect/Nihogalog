@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/components/camera/camera_screen.dart';
 import 'package:frontend/views/components/logo/Logo.dart';
+import 'package:frontend/views/screens/camera/camera.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../components/drawer/drawer.dart';
@@ -15,7 +17,7 @@ class _HomeScreen extends State<HomeScreen> {
   final List<Widget> _types = [
     const text.CustomText(),
     const Speech(),
-    const Camera(),
+    CameraScreen(),
   ];
 
   int _selectedIndex = 0;
