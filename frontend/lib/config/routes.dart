@@ -12,8 +12,12 @@ getNamedRoutes() {
     HomeScreen.route: (context) => const HomeScreen(),
     HistoryScreen.route: (context) => const HistoryScreen(),
     FavoriteScreen.route: (context) => const FavoriteScreen(),
+<<<<<<< HEAD
     SpeechScreen.route: (context) => SpeechScreen(),
     CameraScreen.route: (context) => const CameraScreen()
+=======
+    SpeechScreen.route: (context) => const SpeechScreen(),
+>>>>>>> c74959c71f6064353b9979463459a6d11139e234
   };
 }
 
