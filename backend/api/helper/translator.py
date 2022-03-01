@@ -17,7 +17,7 @@ from googletrans import Translator
 # from pytesseract import Output
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-
+from google.cloud import translate
 
 
 
