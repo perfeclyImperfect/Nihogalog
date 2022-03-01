@@ -90,7 +90,10 @@ class _HomeScreen extends State<HomeScreen> {
             topRightFunction: () => Navigator.pushNamed(context, "/home"),
           ),
           BottomNavyBarItem(
-            icon: const Icon(Icons.mic_outlined),
+            icon: const Icon(
+              Icons.mic_outlined,
+              size: 30,
+            ),
             title: Text(
               'Speech',
               style: GoogleFonts.openSans(

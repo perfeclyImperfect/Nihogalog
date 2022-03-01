@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             providers: getProviders(),
             child: MaterialApp(
+              supportedLocales: supportedLocales,
               themeMode: darkModeViewModel.getThemeMode,
               darkTheme: MyThemes.darkTheme,
               theme: MyThemes.lightTheme,
