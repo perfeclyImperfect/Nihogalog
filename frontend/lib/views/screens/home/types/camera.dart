@@ -7,14 +7,8 @@ class Camera extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    WidgetsFlutterBinding.ensureInitialized();
-
-    return Container();
-=======
     return Container(
       child: CameraScreen(),
     );
->>>>>>> c74959c71f6064353b9979463459a6d11139e234
   }
 }
