@@ -10,9 +10,9 @@ class TextToSpeechSerImp {
   }
 
   void _init() {
-    _flutterTts.setStartHandler(() {});
-    _flutterTts.setCompletionHandler(() {});
-    _flutterTts.setErrorHandler((message) {});
+    // _flutterTts.setStartHandler(() {});
+    // _flutterTts.setCompletionHandler(() {});
+    // _flutterTts.setErrorHandler((message) {});
   }
 
   void speak(String? text) async {
