@@ -2,7 +2,6 @@
 import cutlet
 import speech_recognition as sr
 import urllib3
-import nltk
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from google.cloud import translate_v2 as translate
@@ -13,9 +12,11 @@ from google.cloud import translate_v2 as translate
 # import matplotlib.pyplot as plt
 # from gtts import gTTS
 # from pytesseract import Output
+# import nltk
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-nltk.download('omw-1.4')
+# nltk.download('omw-1.4')
+
 class translator_helper:
 
     def __init__(self, language_selected, language_convert):
@@ -88,7 +89,7 @@ class translator_helper:
             audio_text = r.listen(source)
             text = r.recognize_google(audio_text)
             translator = translate.Client()
-            translate_text = translator.translate(text, target_language=self.language_selected)
+            translate_text = translator.translate(text, source_language='en' ,target_language=self.language_selected)
             print(translate_text)
             return translate_text['translatedText']
                 
