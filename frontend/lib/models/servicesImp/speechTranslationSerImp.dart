@@ -31,12 +31,17 @@ class SpeechTranslationSerImp extends ApiSer {
     final formData = FormData.fromMap({
       "language_selected": kLanguageCodes[fromLanguage],
       "language_convert": kLanguageCodes[toLanguage],
-      "speech_input": MultipartFile.fromFileSync(tempFullPath,
-          filename: temporaryAudioFilename)
+      "speech_input":
+          MultipartFile.fromFileSync(tempFullPath, filename: filename)
     });
 
-    final response = await _dio.post(_url, data: formData);
+    // final response = await _dio.post(_url, data: formData);
 
-    return response.data;
+    // return response.data;
+    return {
+      "text_output": 'test',
+      'text_input': 'of course',
+      'text_romaji': 'anu bayan'
+    };
   }
 }

@@ -107,7 +107,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                         width: 35,
                         child: IconButton(
                           onPressed: () => selectAllMethod(),
-                          icon: const Icon(Icons.check_circle_outline),
+                          icon: viewModel.getSelected.isEmpty
+                              ? const Icon(Icons.check_circle_outline)
+                              : const Icon(Icons.cancel_outlined),
                           iconSize: 23,
                           splashRadius: 12.5,
                           color: Colors.white,
@@ -116,14 +118,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                         ),
                       ),
                       Expanded(
-                          child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        child: Text(
-                          "${viewModel.getSelected.length} Selected",
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          child: Text(
+                            "${viewModel.getSelected.length} Selected",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
+                          ),
                         ),
-                      ))
+                      ),
                     ],
                   ),
                 ),

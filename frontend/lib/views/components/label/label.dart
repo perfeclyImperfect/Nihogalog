@@ -14,7 +14,7 @@ class HistoryLabel extends StatelessWidget {
     return Text(
       label,
       style: GoogleFonts.openSans(
-        color: Colors.black,
+        color: color,
         fontWeight: FontWeight.bold,
         fontSize: 19,
       ),

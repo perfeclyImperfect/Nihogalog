@@ -27,6 +27,7 @@ class AudioRecorderServiceImp {
 
   Future _record() async {
     Directory tempDir = await getTemporaryDirectory();
+
     String tempFullPath = "${tempDir.path}/$temporaryAudioFilename";
 
     if (!_isRecorderInitialized) {
@@ -37,6 +38,12 @@ class AudioRecorderServiceImp {
       toFile: tempFullPath,
       codec: Codec.pcm16WAV,
     );
+
+    print('Full path $tempFullPath');
+
+    File file = File(tempFullPath);
+    bool temp = await file.exists();
+    print('size ${await file.length()}');
   }
 
   Future _stop() async {
