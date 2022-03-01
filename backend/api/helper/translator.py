@@ -13,11 +13,10 @@ nltk.download('omw-1.4')
 from django.core.files.storage import default_storage
 from django.http import FileResponse
 from gtts import gTTS
-from googletrans import Translator
 # from pytesseract import Output
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from google.cloud import translate
+from google.cloud import translate_v2 as translate
 
 
 
@@ -64,59 +63,37 @@ class translator_helper:
 
 
     def text_to_emoition(self, text_input):
-        translator = Translator()
-        text_to_emotion = translator.translate( text_input, dest='en')
-        tone_analysis = self.tone_analyzer_api().tone( {'text': text_to_emotion.text}, content_type='application/json' ).get_result()
+        translator = translate.Client()
+        text_to_emotion = translator.translate(text_input, target_language='en')
+        tone_analysis = self.tone_analyzer_api().tone( {'text': text_to_emotion['translatedText']}, content_type='application/json' ).get_result()
         tone_recognize = {}
         if tone_analysis and 'sentences_tone' in tone_analysis.keys():
             for emotion in tone_analysis['sentences_tone']:
                 for tones in emotion['tones']:
                     if tones['tone_id'] not in tone_recognize.keys():  tone_recognize[tones['tone_id']] = tones['score']
                     else: tone_recognize[tones['tone_id']] += tones['score']
+        if tone_analysis and 'document_tone' in tone_analysis.keys():    
             for tones in tone_analysis['document_tone']['tones']:
-                if tones['tone_id'] not in tone_recognize.keys():  tone_recognize[tones['tone_id']] = tones['score']
-                else: tone_recognize[tones['tone_id']] += tones['score']
+                if tones['tone_id'] not in tone_recognize.keys():  
+                    tone_recognize[tones['tone_id']] = tones['score']
+                else: 
+                    tone_recognize[tones['tone_id']] += tones['score']
         return tone_recognize
 
 
     def text_to_text(self, text_input):
-        # translator_api = self.text_to_text_api()
-        # translation = translator_api.translate(
-        #     text='Hello, how are you today?',
-        #     # model_id= "en-fr",
-        #     source="en",
-        #     target="tl").get_result()
-        # print(json.dumps(translation, indent=2, ensure_ascii=False))
-
-        translator = Translator()
-        translate_text = translator.translate( text_input, dest=self.language_convert)
-        return translate_text.text
-
-    def text_to_speech(self, text_input):
-        TTS = gTTS(text=text_input, lang=self.language_selected)
-        return "example text to speech"
-
-    def speech_to_speech(self, speech_input):
-        pass
+        translate_client = translate.Client()
+        translate_text = translate_client.translate(text_input, target_language=self.language_convert)
+        return  translate_text['translatedText']
 
     def speech_to_text(self, speech_input):
         r = sr.Recognizer()
         with sr.AudioFile(speech_input) as source:
             audio_text = r.listen(source)
             text = r.recognize_google(audio_text)
-            translator = Translator()
-            translate_text = translator.translate( text, dest=self.language_selected)
-            return translate_text.text
-            # try:
-            #     text = r.recognize_google(audio_text)
-            #     translator = Translator()
-            #     translate_text = translator.translate( text, dest=self.language_selected)
-            #     return translate_text.text
-            # except Exception as e:
-            #     print('------------------------------')
-            #     print(e)
-            #     print('------------------------------')
-            #     return 'Sorry.. run again...'
+            translator = translate.Client()
+            translate_text = translator.translate(text, target_language=self.language_convert)
+            return translate_text['translatedText']
                 
     def object_to_text(self, image_input):
         # image = cv2.imread(image_input, cv2.IMREAD_GRAYSCALE) 
@@ -129,9 +106,3 @@ class translator_helper:
         # extracted_text = pytesseract.image_to_string(image)
         # print(extracted_text)
         return "with my wings will fly"
-
-    # Text = "ありがとうございました"
-    # print("please wait...processing")
-    # TTS = gTTS(text=Text, lang='ja')
-    # TTS.save("voice.mp3")
-    # print(TTS)
