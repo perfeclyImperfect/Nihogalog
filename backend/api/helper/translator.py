@@ -5,7 +5,7 @@ import text2emotion as te
 import os
 import json
 import numpy as np
-import cv2
+# import cv2
 import nltk
 import matplotlib.pyplot as plt
 nltk.download('omw-1.4')
@@ -103,16 +103,20 @@ class translator_helper:
         r = sr.Recognizer()
         with sr.AudioFile(speech_input) as source:
             audio_text = r.listen(source)
-            try:
-                text = r.recognize_google(audio_text)
-                translator = Translator()
-                translate_text = translator.translate( text, dest=self.language_selected)
-                return translate_text.text
-            except Exception as e:
-                print('------------------------------')
-                print(e)
-                print('------------------------------')
-                return 'Sorry.. run again...'
+            text = r.recognize_google(audio_text)
+            translator = Translator()
+            translate_text = translator.translate( text, dest=self.language_selected)
+            return translate_text.text
+            # try:
+            #     text = r.recognize_google(audio_text)
+            #     translator = Translator()
+            #     translate_text = translator.translate( text, dest=self.language_selected)
+            #     return translate_text.text
+            # except Exception as e:
+            #     print('------------------------------')
+            #     print(e)
+            #     print('------------------------------')
+            #     return 'Sorry.. run again...'
                 
     def object_to_text(self, image_input):
         # image = cv2.imread(image_input, cv2.IMREAD_GRAYSCALE) 
