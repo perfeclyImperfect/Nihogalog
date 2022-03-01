@@ -1,25 +1,21 @@
 
 import cutlet
 import speech_recognition as sr
-import text2emotion as te
-import os
-import json
-import numpy as np
-# import cv2
+import urllib3
 import nltk
-import matplotlib.pyplot as plt
-nltk.download('omw-1.4')
-
-from django.core.files.storage import default_storage
-from django.http import FileResponse
-from gtts import gTTS
-# from pytesseract import Output
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from google.cloud import translate_v2 as translate
 
 
+# import numpy as np
+# import cv2
+# import matplotlib.pyplot as plt
+# from gtts import gTTS
+# from pytesseract import Output
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+nltk.download('omw-1.4')
 class translator_helper:
 
     def __init__(self, language_selected, language_convert):
@@ -29,7 +25,6 @@ class translator_helper:
     def text_to_romaji(self, text_input):
         katsu = cutlet.Cutlet()
         return katsu.romaji(text_input)
-
 
     def tone_analyzer_api(self):
         authenticator = IAMAuthenticator('y3OpvtsXh5JF3gcKjYbpdY5FrQa30jqHCx8d5GUIXSSh')
@@ -83,6 +78,7 @@ class translator_helper:
 
     def text_to_text(self, text_input):
         translate_client = translate.Client()
+        
         translate_text = translate_client.translate(text_input, target_language=self.language_convert)
         return  translate_text['translatedText']
 
@@ -92,7 +88,8 @@ class translator_helper:
             audio_text = r.listen(source)
             text = r.recognize_google(audio_text)
             translator = translate.Client()
-            translate_text = translator.translate(text, target_language=self.language_convert)
+            translate_text = translator.translate(text, target_language=self.language_selected)
+            print(translate_text)
             return translate_text['translatedText']
                 
     def object_to_text(self, image_input):
