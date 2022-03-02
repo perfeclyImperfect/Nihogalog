@@ -1,21 +1,22 @@
-
+import warnings 
 import cutlet
 import speech_recognition as sr
 import urllib3
 from ibm_watson import ToneAnalyzerV3, SpeechToTextV1, LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from google.cloud import translate_v2 as translate
+import pytesseract as tess
+from PIL import Image
+import tensorflow as tf
+import numpy as np
+from ..helper.utils import *
 
 
-# import numpy as np
-# import cv2
-# import matplotlib.pyplot as plt
-# from gtts import gTTS
-# from pytesseract import Output
-# import nltk
 
+warnings.filterwarnings('ignore')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-# nltk.download('omw-1.4')
+# yolo_loaded = tf.keras.models.load_model('static/yolo-model.h5')
+
 
 class translator_helper:
 
@@ -61,46 +62,58 @@ class translator_helper:
     def text_to_emoition(self, text_input):
         translator = translate.Client()
         text_to_emotion = translator.translate(text_input, target_language='en')
-        tone_analysis = self.tone_analyzer_api().tone( {'text': text_to_emotion['translatedText']}, content_type='application/json' ).get_result()
         tone_recognize = {}
-        if tone_analysis and 'sentences_tone' in tone_analysis.keys():
-            for emotion in tone_analysis['sentences_tone']:
-                for tones in emotion['tones']:
-                    if tones['tone_id'] not in tone_recognize.keys():  tone_recognize[tones['tone_id']] = tones['score']
-                    else: tone_recognize[tones['tone_id']] += tones['score']
-        if tone_analysis and 'document_tone' in tone_analysis.keys():    
-            for tones in tone_analysis['document_tone']['tones']:
-                if tones['tone_id'] not in tone_recognize.keys():  
-                    tone_recognize[tones['tone_id']] = tones['score']
-                else: 
-                    tone_recognize[tones['tone_id']] += tones['score']
+        if text_input:
+            tone_analysis = self.tone_analyzer_api().tone( {'text': text_to_emotion['translatedText']}, content_type='application/json' ).get_result() 
+            if tone_analysis and 'sentences_tone' in tone_analysis.keys():
+                for emotion in tone_analysis['sentences_tone']:
+                    for tones in emotion['tones']:
+                        if tones['tone_id'] not in tone_recognize.keys():  tone_recognize[tones['tone_id']] = tones['score']
+                        else: tone_recognize[tones['tone_id']] += tones['score']
+            if tone_analysis and 'document_tone' in tone_analysis.keys():    
+                for tones in tone_analysis['document_tone']['tones']:
+                    if tones['tone_id'] not in tone_recognize.keys():  
+                        tone_recognize[tones['tone_id']] = tones['score']
+                    else: 
+                        tone_recognize[tones['tone_id']] += tones['score']
         return tone_recognize
-
 
     def text_to_text(self, text_input):
         translate_client = translate.Client()
-        
-        translate_text = translate_client.translate(text_input, target_language=self.language_convert)
+        translate_text = translate_client.translate(text_input,  source_language=self.language_selected,target_language=self.language_convert)
         return  translate_text['translatedText']
 
     def speech_to_text(self, speech_input):
         r = sr.Recognizer()
         with sr.AudioFile(speech_input) as source:
-            audio_text = r.listen(source)
-            text = r.recognize_google(audio_text)
-            translator = translate.Client()
-            translate_text = translator.translate(text, source_language='en' ,target_language=self.language_selected)
-            print(translate_text)
-            return translate_text['translatedText']
-                
-    def object_to_text(self, image_input):
-        # image = cv2.imread(image_input, cv2.IMREAD_GRAYSCALE) 
-        # plt.figure(figsize=(16,10))
-        # plt.imshow(image, cmap='Greys_r')
-        # data = image_input.read()
-        # image = np.asarray(bytearray(data), dtype="uint8")
-        # image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+            try:
+                audio_text = r.listen(source)
+                text = r.recognize_google(audio_text)
+                translator = translate.Client()
+                translate_text = translator.translate(text, source_language='en' ,target_language=self.language_selected)
+                return translate_text['translatedText']
+            except Exception as e:
+                print("==================================")
+                print(e)
+                print("==================================")
+                return "Please try again"
 
-        # extracted_text = pytesseract.image_to_string(image)
-        # print(extracted_text)
-        return "with my wings will fly"
+    def object_to_text(self, image_input):
+        img = Image.open(image_input)
+        text_image = tess.image_to_string(img,'jpn').replace("\n",'').strip().replace("\'",'')
+        result = ""
+        # if len(text_image) == 0:
+        #     # image_array = np.expand_dims (np.asarray( img), axis=0)
+        #     # print(yolo_loaded.predict( image_array))
+        #     img = detect_image(
+        #         yolo_loaded,  
+        #         img , '', 
+        #         input_size=YOLO_INPUT_SIZE, 
+        #         show=True, 
+        #         rectangle_colors=(255, 0, 0)
+        #     )
+        #     print("helo")
+            
+        translator = translate.Client()
+        translate_text = translator.translate(text_image, target_language=self.language_selected)
+        return translate_text['translatedText']
