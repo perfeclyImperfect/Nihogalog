@@ -113,7 +113,6 @@ class translator_helper:
         #         rectangle_colors=(255, 0, 0)
         #     )
         #     print("helo")
-            
         translator = translate.Client()
         translate_text = translator.translate(text_image, target_language=self.language_selected)
         return translate_text['translatedText']
