@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/components/camera/camera_screen.dart';
+import 'package:frontend/view_models/camera_view_model.dart';
+import 'package:frontend/views/components/appbar/homeAppBar.dart';
+import 'package:frontend/views/components/camera/cameraWidget.dart';
 import 'package:frontend/views/components/logo/Logo.dart';
+import 'package:frontend/views/components/translationHeader/translationHeader.dart';
 import 'package:frontend/views/screens/camera/camera.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/drawer/drawer.dart';
 import '../../components/bottomNavigationBar/bottomNavyBar.dart';
@@ -14,12 +19,6 @@ import 'types/speech.dart';
 import 'types/camera.dart';
 
 class _HomeScreen extends State<HomeScreen> {
-  final List<Widget> _types = [
-    const text.CustomText(),
-    const Speech(),
-    CameraScreen(),
-  ];
-
   int _selectedIndex = 0;
 
   void _changeItem(index) {
@@ -28,40 +27,29 @@ class _HomeScreen extends State<HomeScreen> {
     });
   }
 
+  final List<Widget> _types = [
+    const text.CustomText(),
+    const Speech(),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    CameraViewModel cameraViewModel = Provider.of<CameraViewModel>(context);
+
+    for (var i = _types.length; i >= 3; i--) {
+      _types.removeLast();
+    }
+
+    _types.add(CameraScreen(
+      image: cameraViewModel.getImage,
+    ));
+
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                HexColor('#F0B831'),
-                HexColor('#962F4A'),
-                HexColor('#1E307C'),
-              ],
-            ),
-          ),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
-        title: const Logo(
-          padding: EdgeInsets.only(left: 30),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          size: 30,
-          color: Colors.white,
-        ),
-      ),
+      appBar: _selectedIndex != 2
+          ? const HomeAppBar()
+          : cameraViewModel.getImage != null
+              ? const HomeAppBar()
+              : null,
       body: _types.elementAt(_selectedIndex),
       drawer: const DrawerScreen(),
       bottomNavigationBar: CustomAnimatedBottomBar(
@@ -107,20 +95,22 @@ class _HomeScreen extends State<HomeScreen> {
             topRightFunction: () => Navigator.pushNamed(context, "/speech"),
           ),
           BottomNavyBarItem(
-            icon: const Icon(
-              Icons.camera_alt,
-              size: 30,
-            ),
-            title: Text(
-              'Camera',
-              style: GoogleFonts.openSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+              icon: const Icon(
+                Icons.camera_alt,
+                size: 30,
               ),
-            ),
-            textAlign: TextAlign.center,
-            topRightFunction: () => Navigator.pushNamed(context, ""),
-          ),
+              title: Text(
+                'Camera',
+                style: GoogleFonts.openSans(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              textAlign: TextAlign.center,
+              topRightFunction: () {
+                cameraViewModel.pickImage(ImageSource.gallery);
+              },
+              customIcon: const Icon(Icons.image)),
         ],
       ),
     );

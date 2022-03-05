@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:frontend/views/screens/main.dart';
 
-class CameraScreen extends StatefulWidget {
+class CameraWidget extends StatefulWidget {
   CameraController? controller;
   bool _isCameraInitialized = false;
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen>
+class _CameraScreenState extends State<CameraWidget>
     with WidgetsBindingObserver {
   CameraController? controller;
   bool _isCameraInitialized = false;
@@ -90,11 +90,6 @@ class _CameraScreenState extends State<CameraScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final deviceRatio = size.width / size.height;
-    return _isCameraInitialized
-        ? AspectRatio(
-            aspectRatio: 0.67,
-            child: controller!.buildPreview(),
-          )
-        : Container();
+    return _isCameraInitialized ? CameraPreview(controller!) : Container();
   }
 }

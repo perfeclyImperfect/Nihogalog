@@ -8,10 +8,12 @@ class BottomNavyBarItem {
     this.textAlign,
     this.inactiveColor = Colors.grey,
     this.active = true,
+    this.customIcon,
     required this.topRightFunction,
   });
 
   final Widget icon;
+  final Widget? customIcon;
   final Widget title;
   final Color activeColor;
   final Color? inactiveColor;

@@ -39,20 +39,17 @@ class WordTranslatingViewModel extends ChangeNotifier {
   }
 
   void swap(LanguageTranslation languageTranslation) async {
-    WordTranslating translatedWordTranslating = WordTranslating(
+    WordTranslating translatedWordTranslating =
+        await _wordTranslatingSer.translate(
+      WordTranslating(
         getText.translation,
-        "${getText.translation}",
-        "translationPronounciation",
-        getText.favorite);
-
-    // await _wordTranslatingSer.translate(
-    //     WordTranslating(
-    //       getText.translation,
-    //       "",
-    //       "",
-    //       getText.favorite,
-    //     ),
-    //     languageTranslation);
+        "",
+        "",
+        getText.favorite,
+      ),
+      LanguageTranslation(languageTranslation.getToLanguage,
+          languageTranslation.getFromLanguage),
+    );
 
     setText(translatedWordTranslating);
   }
@@ -73,11 +70,8 @@ class WordTranslatingViewModel extends ChangeNotifier {
 
   translate(String text, LanguageTranslation languageTranslation,
       bool favorite) async {
-    // final tempTranslation = await _wordTranslatingSer.translate(
-    //     WordTranslating(text, "", "", favorite), languageTranslation);
-
-    final tempTranslation =
-        WordTranslating(text, "$text", "translationPronounciation", favorite);
+    final tempTranslation = await _wordTranslatingSer.translate(
+        WordTranslating(text, "", "", favorite), languageTranslation);
 
     _wordTranslatingSer.setWordTranslating(tempTranslation);
 
