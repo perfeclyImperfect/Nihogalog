@@ -7,6 +7,9 @@ import 'package:frontend/models/servicesImp/speechTranslationSerImp.dart';
 import 'package:frontend/models/servicesImp/textToSpeechSerImp.dart';
 import 'package:frontend/models/wordTranslating.dart';
 import 'package:frontend/utils/constants.dart';
+import 'package:frontend/view_models/history_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SpeechViewModel extends ChangeNotifier {
   final AudioRecorderServiceImp _audioRecorderServiceImp =
@@ -24,16 +27,12 @@ class SpeechViewModel extends ChangeNotifier {
   bool _topAudioRecordStatus = false;
   bool _bottomAudioRecordStatus = false;
 
-  WordTranslating _bottomWordTranslating = WordTranslating("", "", "", false);
-  WordTranslating _topWordTranslating = WordTranslating("", "", "", false);
-
-  late WordTranslating? _currentWordTranslating =
+  late WordTranslating _currentWordTranslating =
       WordTranslating("", "", "", false);
 
   WordTranslating? get getCurrentWordTranslating => _currentWordTranslating;
-
-  WordTranslating get getBottomWordTranslating => _bottomWordTranslating;
-  WordTranslating get getTopWordTranslating => _topWordTranslating;
+  String _toCopy = '';
+  String get getToCopy => _toCopy;
 
   bool get getBottomAudioRecordStatus => _bottomAudioRecordStatus;
   bool get getTopAudioRecordStatus => _topAudioRecordStatus;
@@ -41,6 +40,23 @@ class SpeechViewModel extends ChangeNotifier {
   SpeechViewModel() {
     _init();
     notifyListeners();
+  }
+
+  toggleFavorite() {
+    _currentWordTranslating.favorite = !_currentWordTranslating.favorite;
+
+    notifyListeners();
+  }
+
+  swap() {
+    final WordTranslating tempWordTranslating = WordTranslating(
+      _currentWordTranslating.translation,
+      _currentWordTranslating.word,
+      _currentWordTranslating.translationPronounciation,
+      false,
+    );
+
+    setCurrentWordTranslating(tempWordTranslating);
   }
 
   _init() {
@@ -68,12 +84,6 @@ class SpeechViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setBottomWordTranslating(WordTranslating wordTranslating) {
-    _bottomWordTranslating = wordTranslating;
-
-    notifyListeners();
-  }
-
   speak(String text, int index) {
     _index = index;
 
@@ -88,22 +98,67 @@ class SpeechViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  toggletTopRecord() {
+  toggletTopRecord(context, fromLanguage, toLanguage) async {
     _topAudioRecordStatus = !_topAudioRecordStatus;
 
     _audioRecorderServiceImp.toggleRecording();
+
+    if (!_topAudioRecordStatus) {
+      final WordTranslating tempTranslation =
+          await _translate(fromLanguage, toLanguage);
+
+      final currentText = tempTranslation.word;
+      if (currentText.isNotEmpty) {
+        HistoryWord tempHistoryWord = HistoryWord(
+            tempTranslation.word,
+            tempTranslation.translation,
+            tempTranslation.translationPronounciation,
+            fromLanguage,
+            toLanguage,
+            false);
+
+        Provider.of<HistoryViewModel>(context, listen: false)
+            .add(tempHistoryWord);
+
+        Provider.of<WordTranslatingViewModel>(context, listen: false)
+            .fromHistory(tempHistoryWord);
+      }
+
+      _toCopy = tempTranslation.translation;
+      setCurrentWordTranslating(WordTranslating(tempTranslation.translation,
+          tempTranslation.word, '', tempTranslation.favorite));
+    }
+
     notifyListeners();
   }
 
-  toggleBottomRecord(fromLanguage, toLanguage) async {
+  toggleBottomRecord(context, fromLanguage, toLanguage) async {
     _bottomAudioRecordStatus = !_bottomAudioRecordStatus;
 
     _audioRecorderServiceImp.toggleRecording();
 
     if (!_bottomAudioRecordStatus) {
-      final tempTranslation = await _translate(fromLanguage, toLanguage);
+      final WordTranslating tempTranslation =
+          await _translate(fromLanguage, toLanguage);
 
-      setBottomWordTranslating(tempTranslation);
+      final currentText = tempTranslation.word;
+      if (currentText.isNotEmpty) {
+        HistoryWord tempHistoryWord = HistoryWord(
+            tempTranslation.word,
+            tempTranslation.translation,
+            tempTranslation.translationPronounciation,
+            fromLanguage,
+            toLanguage,
+            false);
+
+        Provider.of<HistoryViewModel>(context, listen: false)
+            .add(tempHistoryWord);
+
+        Provider.of<WordTranslatingViewModel>(context, listen: false)
+            .fromHistory(tempHistoryWord);
+      }
+
+      _toCopy = tempTranslation.translation;
       setCurrentWordTranslating(tempTranslation);
     }
 
@@ -143,5 +198,15 @@ class SpeechViewModel extends ChangeNotifier {
     );
 
     return tempWordTranslating;
+  }
+
+  reset() {
+    _topAudioRecordStatus = false;
+    _bottomAudioRecordStatus = false;
+    _currentWordTranslating = WordTranslating('', '', '', false);
+    _toCopy = '';
+    isSpeaking = [false, false];
+
+    notifyListeners();
   }
 }

@@ -26,22 +26,24 @@ class SpeechTranslationSerImp extends ApiSer {
 
   Future<Map> translate(
       String filename, String fromLanguage, String toLanguage) async {
-    final String tempFullPath = "$_temporaryAudioPath$filename";
+    final String tempFullPath = "$_temporaryAudioPath$temporaryAudioFilename";
 
     final formData = FormData.fromMap({
       "language_selected": kLanguageCodes[fromLanguage],
       "language_convert": kLanguageCodes[toLanguage],
-      "speech_input":
-          MultipartFile.fromFileSync(tempFullPath, filename: filename)
+      "speech_input": await MultipartFile.fromFile(tempFullPath,
+          filename: temporaryAudioFilename)
     });
 
-    // final response = await _dio.post(_url, data: formData);
+    // final FormData = ;
 
-    // return response.data;
-    return {
-      "text_output": 'test',
-      'text_input': 'of course',
-      'text_romaji': 'anu bayan'
-    };
+    final response = await _dio.post(_url, data: formData);
+
+    return response.data;
+    // return {
+    //   "text_output": 'test',
+    //   'text_input': 'of course',
+    //   'text_romaji': 'anu bayan'
+    // };
   }
 }

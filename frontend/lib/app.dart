@@ -12,6 +12,7 @@ void main() async {
   } on CameraException catch (e) {
     print('Error in fetching the cameras: $e');
   }
+
   await environmentSetup();
   getItSetup();
   runApp(const MyApp());

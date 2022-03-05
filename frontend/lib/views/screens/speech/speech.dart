@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/utils/hexColor.dart';
+import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/speech_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +29,28 @@ class SpeechScreen extends StatelessWidget {
     );
   }
 
+  void _makeFavorite(context, SpeechViewModel speechViewModel,
+      LanguageTranslationViewModel languageTranslationViewModel) {
+    final tempWord = speechViewModel.getCurrentWordTranslating!;
+    final tempLanguage = languageTranslationViewModel.getLanguageTranslation;
+
+    HistoryWord tempHistoryWord = HistoryWord(
+        tempWord.word,
+        tempWord.translation,
+        tempWord.translationPronounciation,
+        tempLanguage.getFromLanguage ?? 'Tagalog',
+        tempLanguage.getToLanguage ?? 'Nihogalog',
+        tempWord.favorite);
+
+    speechViewModel.toggleFavorite();
+    Provider.of<HistoryViewModel>(context, listen: false)
+        .toggleFavorite(tempHistoryWord);
+  }
+
+  getPlayIcon(condition) {
+    return !condition ? Icons.mic : Icons.stop;
+  }
+
   @override
   Widget build(BuildContext context) {
     SpeechViewModel speechViewModel = Provider.of<SpeechViewModel>(context);
@@ -39,7 +64,6 @@ class SpeechScreen extends StatelessWidget {
     bool isTopTalking = speechViewModel.isSpeaking[0];
     bool isBotTalking = speechViewModel.isSpeaking[1];
 
-    final icon = Icon(!bottomAudioStatus ? Icons.mic : Icons.stop);
     const iconColor = Colors.white;
 
     final languageTranslation =
@@ -142,7 +166,13 @@ class SpeechScreen extends StatelessWidget {
                                 alignment: Alignment.center,
                                 child: MaterialButton(
                                   shape: const CircleBorder(),
-                                  onPressed: bottomAudioStatus ? null : () {},
+                                  onPressed: bottomAudioStatus
+                                      ? null
+                                      : () => speechViewModel.toggletTopRecord(
+                                            context,
+                                            languageTranslation.getToLanguage,
+                                            languageTranslation.getFromLanguage,
+                                          ),
                                   child: Ink(
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
@@ -157,14 +187,15 @@ class SpeechScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(20),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20),
                                       child: IconTheme(
-                                        data: IconThemeData(
+                                        data: const IconThemeData(
                                           size: 35,
                                           color: Colors.white,
                                         ),
-                                        child: Icon(Icons.mic),
+                                        child:
+                                            Icon(getPlayIcon(topAudioStatus)),
                                       ),
                                     ),
                                   ),
@@ -225,11 +256,17 @@ class SpeechScreen extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.topRight,
                                   child: IconButton(
-                                    onPressed: () => {},
+                                    onPressed: () => _makeFavorite(
+                                        context,
+                                        speechViewModel,
+                                        languageTranslationViewModel),
                                     icon: const Icon(Icons.star_rounded),
                                     splashRadius: 15,
                                     iconSize: 37.5,
-                                    color: Colors.yellow,
+                                    color: speechViewModel
+                                            .getCurrentWordTranslating!.favorite
+                                        ? HexColor('#ffbc00')
+                                        : HexColor('#CECECE'),
                                     splashColor: Colors.transparent,
                                   ),
                                 ),
@@ -254,6 +291,7 @@ class SpeechScreen extends StatelessWidget {
                                 onPressed: topAudioStatus
                                     ? null
                                     : () => speechViewModel.toggleBottomRecord(
+                                          context,
                                           languageTranslation.getFromLanguage,
                                           languageTranslation.getToLanguage,
                                         ),
@@ -278,7 +316,8 @@ class SpeechScreen extends StatelessWidget {
                                         size: 35,
                                         color: iconColor,
                                       ),
-                                      child: icon,
+                                      child:
+                                          Icon(getPlayIcon(bottomAudioStatus)),
                                     ),
                                   ),
                                 ),
@@ -295,7 +334,7 @@ class SpeechScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: TranslationHeader(
                   upDown: true,
-                  additionalFunction: () {},
+                  additionalFunction: () => speechViewModel.swap(),
                 ),
               )
             ],
@@ -304,7 +343,10 @@ class SpeechScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                speechViewModel.reset();
+                Navigator.pop(context);
+              },
               iconSize: 25,
               splashRadius: 12.5,
               splashColor: Colors.transparent,

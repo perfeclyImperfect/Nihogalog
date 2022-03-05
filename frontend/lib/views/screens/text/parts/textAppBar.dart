@@ -25,7 +25,7 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
     controller.text =
         Provider.of<WordTranslatingViewModel>(context, listen: false)
             .getText
-            .word;
+            .translation;
   }
 
   @override
