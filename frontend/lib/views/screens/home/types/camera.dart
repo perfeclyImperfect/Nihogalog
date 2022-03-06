@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/views/components/camera/camera_screen.dart';
+import 'package:frontend/views/components/camera/cameraWidget.dart';
 
 class Camera extends StatelessWidget {
   const Camera({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class Camera extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: CameraScreen(),
+      child: CameraWidget(),
     );
   }
 }

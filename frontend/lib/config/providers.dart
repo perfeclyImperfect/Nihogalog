@@ -1,3 +1,4 @@
+import 'package:frontend/view_models/camera_view_model.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/view_models/languageTranslation_view_model.dart';
 import 'package:frontend/view_models/speech_view_model.dart';
@@ -22,6 +23,9 @@ getProviders() {
     ),
     ChangeNotifierProvider(
       create: (_) => SpeechViewModel(),
-    )
+    ),
+    ChangeNotifierProvider(
+      create: (_) => CameraViewModel(),
+    ),
   ];
 }

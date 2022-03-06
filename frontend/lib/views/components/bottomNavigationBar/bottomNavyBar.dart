@@ -45,7 +45,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
       borderSide: BorderSide.none,
       elevation: 4,
       badgeContent: Container(
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.all(2),
         child: MaterialButton(
           shape: const CircleBorder(),
           onPressed: items[selectedIndex].active
@@ -67,11 +67,12 @@ class CustomAnimatedBottomBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: IconTheme(
-                data: IconThemeData(
-                  size: iconSize,
+                data: const IconThemeData(
+                  size: 25,
                   color: Colors.white,
                 ),
-                child: items[selectedIndex].icon,
+                child: items[selectedIndex].customIcon ??
+                    items[selectedIndex].icon,
               ),
             ),
           ),
