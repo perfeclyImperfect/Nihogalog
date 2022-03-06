@@ -1,3 +1,5 @@
+pathlib
+PyQtWebEngine
 absl-py==1.0.0
 aiohttp
 aiosignal
