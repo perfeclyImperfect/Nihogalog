@@ -96,7 +96,9 @@ class translator_helper:
                 print("==================================")
                 print(e)
                 print("==================================")
-                return "Please try again"
+                translator = translate.Client()
+                translate_text = translator.translate("Please try again", source_language='en' ,target_language=self.language_selected)
+                return translate_text['translatedText']
 
     def object_to_text(self, image_input):
         img = Image.open(image_input)
