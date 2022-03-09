@@ -93,34 +93,14 @@ class translator_helper:
                 translate_text = translator.translate(text, source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
             except Exception as e:
-                print("==================================")
-                print(e)
-                print("==================================")
                 translator = translate.Client()
                 translate_text = translator.translate("Please try again", source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
 
-    """
-        object-detection
-        image-classification
-        text-detection
-    """
     def image_text_to_text(self, image_input):
         img = Image.open(image_input)
         text_image = tess.image_to_string(img,'jpn').replace("\n",'').strip().replace("\'",'')
         result = ""
-        
-        # if len(text_image) == 0:
-        #     # image_array = np.expand_dims (np.asarray( img), axis=0)
-        #     # print(yolo_loaded.predict( image_array))
-        #     img = detect_image(
-        #         yolo_loaded,  
-        #         img , '', 
-        #         input_size=YOLO_INPUT_SIZE, 
-        #         show=True, 
-        #         rectangle_colors=(255, 0, 0)
-        #     )
-        #     print("helo")
         translator = translate.Client()
         translate_text = translator.translate(text_image, target_language=self.language_selected)
         return translate_text['translatedText']
