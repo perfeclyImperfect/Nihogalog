@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view_models/camera_view_model.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
+import 'package:provider/provider.dart';
 
 class Speech extends StatelessWidget {
   const Speech({Key? key}) : super(key: key);
@@ -17,10 +19,9 @@ class Speech extends StatelessWidget {
         const Expanded(
           child: Align(
             alignment: Alignment.center,
-            child: Text('Tap the microphone and start speaking.',
-                style: TextStyle(
-                  color: Colors.black54,
-                )),
+            child: Text(
+              'Tap the microphone and start speaking.',
+            ),
           ),
         )
       ],

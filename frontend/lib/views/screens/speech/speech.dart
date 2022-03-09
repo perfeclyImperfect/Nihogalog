@@ -344,6 +344,8 @@ class SpeechScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
+                Provider.of<WordTranslatingViewModel>(context, listen: false)
+                    .reset();
                 speechViewModel.reset();
                 Navigator.pop(context);
               },

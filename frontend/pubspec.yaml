@@ -48,8 +48,9 @@ dependencies:
   flutter_native_splash: ^2.0.5
 
 flutter_native_splash:
-  color: '#d0d1ac'
-  image: assets/images/opening_logo.png
+  # color: '#d0d1ac'
+  background_image: assets/images/opening_background.png
+  image: assets/images/opening_background.png
   android: true
   ios: true
 
@@ -78,6 +79,7 @@ flutter:
     - family:  DrawerIcons
       fonts:
         - asset: assets/icons/DrawerIcons.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

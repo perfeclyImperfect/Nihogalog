@@ -29,7 +29,7 @@ class DarkModeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getStatus() {
+  bool? getStatus() {
     return _darkmode;
   }
 
