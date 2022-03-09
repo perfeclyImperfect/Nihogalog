@@ -16,6 +16,8 @@ class CameraViewModel extends ChangeNotifier {
     final File tempImage = await _imagePickerSerImp.pickImage(source);
 
     _image = tempImage;
+    print('Imaggio:');
+    print(_image);
 
     notifyListeners();
   }

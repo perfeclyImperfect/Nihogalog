@@ -167,4 +167,4 @@ if __name__ =='__main__':
     # set the model weights into the model
     weight_reader.load_weights(model)
     # save the model to file
-    model.save('./data/model.h5')
+    model.save('./data/yolov3_model')

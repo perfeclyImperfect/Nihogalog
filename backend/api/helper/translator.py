@@ -7,7 +7,6 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from google.cloud import translate_v2 as translate
 import pytesseract as tess
 from PIL import Image
-import tensorflow as tf
 import numpy as np
 from ..helper.utils import *
 
@@ -25,7 +24,7 @@ class translator_helper:
         self.language_convert = language_convert
 
     def text_to_romaji(self, text_input):
-        katsu = x   .Cutlet()
+        katsu = cutlet.Cutlet()
         return katsu.romaji(text_input)
 
     def tone_analyzer_api(self):
@@ -93,28 +92,20 @@ class translator_helper:
                 translate_text = translator.translate(text, source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
             except Exception as e:
-                print("==================================")
-                print(e)
-                print("==================================")
                 translator = translate.Client()
                 translate_text = translator.translate("Please try again", source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
 
-    def object_to_text(self, image_input):
+    def image_text_to_text(self, image_input):
         img = Image.open(image_input)
         text_image = tess.image_to_string(img,'jpn').replace("\n",'').strip().replace("\'",'')
         result = ""
-        # if len(text_image) == 0:
-        #     # image_array = np.expand_dims (np.asarray( img), axis=0)
-        #     # print(yolo_loaded.predict( image_array))
-        #     img = detect_image(
-        #         yolo_loaded,  
-        #         img , '', 
-        #         input_size=YOLO_INPUT_SIZE, 
-        #         show=True, 
-        #         rectangle_colors=(255, 0, 0)
-        #     )
-        #     print("helo")
         translator = translate.Client()
         translate_text = translator.translate(text_image, target_language=self.language_selected)
         return translate_text['translatedText']
+
+    def object_image_detection( self, image_input):
+        return image_input
+
+    def image_classification_detection(self, image_input):
+        return "Hello testing"

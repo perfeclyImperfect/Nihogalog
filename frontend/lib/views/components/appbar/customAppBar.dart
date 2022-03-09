@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:frontend/view_models/history_view_model.dart';
 import 'package:frontend/views/components/label/label.dart';
 
 import 'package:frontend/utils/hexColor.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBar(
@@ -28,10 +30,13 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 1,
       iconTheme: const IconThemeData(
-        color: Colors.black,
         size: 30,
       ),
-      backgroundColor: editStatus ? HexColor('#FFBC00') : Colors.white,
+      backgroundColor: editStatus
+          ? HexColor('#FFBC00')
+          : Provider.of<DarkModeViewModel>(context).getStatus() ?? false
+              ? null
+              : Colors.white,
       title: editStatus
           ? Column(
               children: [
@@ -78,7 +83,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           : Row(
               children: [
                 HistoryLabel(
-                  color: editStatus ? Colors.white : Colors.black,
+                  color: Theme.of(context).textTheme.bodyText1!.color,
                   label: label,
                 ),
                 Expanded(

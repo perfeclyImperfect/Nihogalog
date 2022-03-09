@@ -1,6 +1,7 @@
 from ..helper.translator import *
 
-class object_detection_controller:
+
+class text_detection_controller:
     def __init__(self, image_input, language_selected, language_convert):
         self.image_input = image_input
         self.language_selected = language_selected
@@ -9,4 +10,7 @@ class object_detection_controller:
             language_selected=self.language_selected,
             language_convert=self.language_convert
         )
-        self.output_image = translator.object_image_detection(self.image_input)
+        self.text_input = translator.image_text_to_text( image_input )
+        self.text_output = translator.text_to_text( self.text_input )
+        self.text_romaji = translator.text_to_romaji(self.text_output)
+        self.text_emotion = translator.text_to_emoition(self.text_input) 

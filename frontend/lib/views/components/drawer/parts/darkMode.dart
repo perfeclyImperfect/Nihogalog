@@ -22,7 +22,7 @@ class _DarkModeState extends State<DarkMode> {
           ),
         ),
         Switch(
-          value: darkModeViewModel.getStatus(),
+          value: darkModeViewModel.getStatus() ?? false,
           onChanged: (value) async {
             await darkModeViewModel.toggle(value);
           },
