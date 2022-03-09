@@ -7,7 +7,6 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from google.cloud import translate_v2 as translate
 import pytesseract as tess
 from PIL import Image
-import tensorflow as tf
 import numpy as np
 from ..helper.utils import *
 
