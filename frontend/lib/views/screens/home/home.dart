@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/camera_view_model.dart';
+import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/views/components/appbar/homeAppBar.dart';
 import 'package:frontend/views/components/camera/cameraWidget.dart';
 import 'package:frontend/views/components/logo/Logo.dart';
@@ -30,26 +31,16 @@ class _HomeScreen extends State<HomeScreen> {
   final List<Widget> _types = [
     const text.CustomText(),
     const Speech(),
+    const Camera()
   ];
 
   @override
   Widget build(BuildContext context) {
-    CameraViewModel cameraViewModel = Provider.of<CameraViewModel>(context);
-
-    for (var i = _types.length; i >= 3; i--) {
-      _types.removeLast();
-    }
-
-    _types.add(CameraScreen(
-      image: cameraViewModel.getImage,
-    ));
+    final CameraViewModel cameraViewModel =
+        Provider.of<CameraViewModel>(context);
 
     return Scaffold(
-      appBar: _selectedIndex != 2
-          ? const HomeAppBar()
-          : cameraViewModel.getImage != null
-              ? const HomeAppBar()
-              : null,
+      appBar: const HomeAppBar(),
       body: _types.elementAt(_selectedIndex),
       drawer: const DrawerScreen(),
       bottomNavigationBar: CustomAnimatedBottomBar(
@@ -74,8 +65,12 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             textAlign: TextAlign.center,
-            active: false,
-            topRightFunction: () => Navigator.pushNamed(context, "/home"),
+            active: true,
+            topRightFunction: () => Navigator.pushNamed(context, '/home/text',
+                arguments: Provider.of<WordTranslatingViewModel>(context,
+                        listen: false)
+                    .getText
+                    .word),
           ),
           BottomNavyBarItem(
             icon: const Icon(
@@ -95,22 +90,23 @@ class _HomeScreen extends State<HomeScreen> {
             topRightFunction: () => Navigator.pushNamed(context, "/speech"),
           ),
           BottomNavyBarItem(
-              icon: const Icon(
-                Icons.camera_alt,
-                size: 30,
+            icon: const Icon(
+              Icons.camera_alt,
+              size: 30,
+            ),
+            title: Text(
+              'Camera',
+              style: GoogleFonts.openSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
-              title: Text(
-                'Camera',
-                style: GoogleFonts.openSans(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              textAlign: TextAlign.center,
-              topRightFunction: () {
-                cameraViewModel.pickImage(ImageSource.gallery);
-              },
-              customIcon: const Icon(Icons.image)),
+            ),
+            textAlign: TextAlign.center,
+            topRightFunction: () {
+              cameraViewModel.pickImage(ImageSource.gallery);
+            },
+            customIcon: const Icon(Icons.image),
+          ),
         ],
       ),
     );
