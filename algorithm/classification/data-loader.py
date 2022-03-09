@@ -54,9 +54,9 @@ X, y = create_data(LABEL, IMAGE)
 
 
 x_file = open('X.pkl', 'wr')
-pickle.dump(x_file, X)
+pickle.dump(X, x_file)
 x_file.close() 
 
 y_file = open('y.pkl', 'wr')
-pickle.dump(y_file, y)
+pickle.dump(y, y_file)
 y_file.close() 
