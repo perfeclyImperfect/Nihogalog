@@ -25,7 +25,7 @@ class translator_helper:
         self.language_convert = language_convert
 
     def text_to_romaji(self, text_input):
-        katsu = x   .Cutlet()
+        katsu = cutlet.Cutlet()
         return katsu.romaji(text_input)
 
     def tone_analyzer_api(self):
