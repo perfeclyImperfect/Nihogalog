@@ -15,6 +15,8 @@ from IPython.display import clear_output, Image, display, HTML
 import re
 from timeit import timeit
 import math
+from PIL import Image
+from matplotlib import cm
 
 
 class BoundBox:
@@ -116,19 +118,30 @@ def do_nms(boxes, nms_thresh):
 
 # load and prepare an image
 def load_image_pixels(filename, shape):
+
 	# load the image to get its shape
-	image = load_img(filename)
-	width, height = image.size
-	# load the image with the required size
-	image = load_img(filename, target_size=shape)
-	# convert to numpy array
-	image = img_to_array(image)
-	# scale pixel values to [0, 1]
-	image = image.astype('float32')
-	image /= 255.0
-	# add a dimension so that we have one sample
-	image = expand_dims(image, 0)
-	return image, width, height
+    # Check if string or a file 
+    if type(filename)==str:
+        image = load_img(filename)
+    else: 
+        image = filename 
+
+    
+    width, height = image.size
+    # load the image with the required size 
+    
+    if type(filename)==str:
+        image = load_img(filename, target_size=shape)
+    else: 
+        image =   image.resize(shape, Image.ANTIALIAS)
+    # convert to numpy array
+    image = img_to_array(image)
+    # scale pixel values to [0, 1]
+    image = image.astype('float32')
+    image /= 255.0
+    # add a dimension so that we have one sample
+    image = expand_dims(image, 0)
+    return image, width, height
 # get all of the results above a threshold
 def get_boxes(boxes, labels, thresh):
 	v_boxes, v_labels, v_scores = list(), list(), list()
@@ -173,28 +186,28 @@ def draw_boxes(filename, v_boxes, v_labels, v_scores):
 # load yolov3 model
 model = load_model('data/model.h5')
 # define the expected input shape for the model
-input_w, input_h = 416, 416
-# define our new photo
-photo_filename = 'data/HD-wallpaper-chopper-chicks-bike-chicks-chopper-harley.jpg'
-# load and prepare image
-image, image_w, image_h = load_image_pixels(photo_filename, (input_w, input_h))
-# make prediction
-yhat = model.predict(image)
-# summarize the shape of the list of arrays
-print([a.shape for a in yhat])
-# define the anchors
-anchors = [[116,90, 156,198, 373,326], [30,61, 62,45, 59,119], [10,13, 16,30, 33,23]]
-# define the probability threshold for detected objects
-class_threshold = 0.6
-boxes = list()
-for i in range(len(yhat)):
-	# decode the output of the network
-	boxes += decode_netout(yhat[i][0], anchors[i], class_threshold, input_h, input_w)
-# correct the sizes of the bounding boxes for the shape of the image
-correct_yolo_boxes(boxes, image_h, image_w, input_h, input_w)
-# suppress non-maximal boxes
-do_nms(boxes, 0.5)
-# define the labels
+# input_w, input_h = 416, 416
+# # define our new photo
+# photo_filename = 'data/HD-wallpaper-chopper-chicks-bike-chicks-chopper-harley.jpg'
+# # load and prepare image
+# image, image_w, image_h = load_image_pixels(photo_filename, (input_w, input_h))
+# # make prediction
+# yhat = model.predict(image)
+# # summarize the shape of the list of arrays
+# print([a.shape for a in yhat])
+# # define the anchors
+# anchors = [[116,90, 156,198, 373,326], [30,61, 62,45, 59,119], [10,13, 16,30, 33,23]]
+# # define the probability threshold for detected objects
+# class_threshold = 0.6
+# boxes = list()
+# for i in range(len(yhat)):
+# 	# decode the output of the network
+# 	boxes += decode_netout(yhat[i][0], anchors[i], class_threshold, input_h, input_w)
+# # correct the sizes of the bounding boxes for the shape of the image
+# correct_yolo_boxes(boxes, image_h, image_w, input_h, input_w)
+# # suppress non-maximal boxes
+# do_nms(boxes, 0.5)
+# # define the labels
 labels = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck",
 	"boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
 	"bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe",
@@ -205,31 +218,58 @@ labels = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", 
 	"chair", "sofa", "pottedplant", "bed", "diningtable", "toilet", "tvmonitor", "laptop", "mouse",
 	"remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator",
 	"book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
-# get the details of the detected objects
-v_boxes, v_labels, v_scores = get_boxes(boxes, labels, class_threshold)
-# summarize what we found
-for i in range(len(v_boxes)):
-	print(v_labels[i], v_scores[i])
+# # get the details of the detected objects
+# v_boxes, v_labels, v_scores = get_boxes(boxes, labels, class_threshold)
+# # summarize what we found
+# for i in range(len(v_boxes)):
+# 	print(v_labels[i], v_scores[i])
 # draw what we found
 
-def draw_box_video(v_boxes, v_labels, v_score):
-    input_w, input_h = 416, 416
+def draw_box_video():
+    
     vid = cv2.VideoCapture(0)
+    input_w, input_h = 416, 416
+    anchors = [[116,90, 156,198, 373,326], [30,61, 62,45, 59,119], [10,13, 16,30, 33,23]]
+    class_threshold = 0.6
     while(True):
-        ret, frame = vid.read()
-        # load and prepare image
-        image, image_w, image_h = frame, frame.shape[1], frame.shape[0]
-        # make prediction
-        # yhat = model.predict(ret)
-        print(cv2.imread(image))
-        cv2.imshow('frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+            ret, frame = vid.read()
+
+            PIL_image = Image.fromarray(frame.astype('uint8'), 'RGB')
+            image, image_w, image_h = load_image_pixels(PIL_image, (input_w, input_h))
+            yhat = model.predict(image)
+
+            PIL_image = cv2.cvtColor( np.squeeze(np.array(image), 0) , cv2.COLOR_RGB2BGR)
+            
+            boxes = list()
+            for i in range(len(yhat)):
+                # decode the output of the network
+                boxes += decode_netout(yhat[i][0], anchors[i], class_threshold, input_h, input_w)
+            correct_yolo_boxes(boxes, image_h, image_w, input_h, input_w)
+            # suppress non-maximal boxes
+            do_nms(boxes, 0.5)
+            # get the details of the detected objects
+            v_boxes, v_labels, v_scores = get_boxes(boxes, labels, class_threshold)
+            # summarize what we found
+            # for i in range(len(v_boxes)):
+            #     print(v_labels[i], v_scores[i])
+
+            for i in range(len(v_boxes)):
+                box = v_boxes[i]
+                # get coordinates
+                y1, x1, y2, x2 = box.ymin, box.xmin, box.ymax, box.xmax
+                # calculate width and height of the box
+                width, height = x2 - x1, y2 - y1
+                label = "%s (%.3f)" % (v_labels[i], v_scores[i])
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (255,250, 255), 2)
+                cv2.putText(frame,label, (x1, y1),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255,255,255), 1)
+                cv2.imshow("holy", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
   
     # After the loop release the cap object
     vid.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
 
-draw_box_video( v_boxes, v_labels, v_scores)
+draw_box_video()
 
