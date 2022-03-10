@@ -32,10 +32,8 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleTextStyle: const TextStyle(fontSize: 14),
-      iconTheme: const IconThemeData(
-        color: Colors.black,
-      ),
       leading: IconButton(
+        color: Theme.of(context).iconTheme.color,
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
           Provider.of<WordTranslatingViewModel>(context, listen: false).reset();
@@ -43,6 +41,8 @@ class TextAppBar extends StatelessWidget implements PreferredSizeWidget {
 
           Navigator.of(context).pop();
         },
+        splashColor: Colors.transparent,
+        splashRadius: 13,
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,

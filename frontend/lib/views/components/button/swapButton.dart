@@ -15,7 +15,7 @@ class _SwapButtonState extends State<SwapButton>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 350),
     );
 
     // animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);

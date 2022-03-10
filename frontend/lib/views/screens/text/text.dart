@@ -103,7 +103,9 @@ class TextScreen extends StatelessWidget {
                                 wordTranslationViewModel.getText.word, 0),
                     child: Icon(
                       isTopTalking ? Icons.stop : Icons.volume_up,
-                      color: isBotTalking ? Colors.grey : Colors.black,
+                      color: isBotTalking
+                          ? Colors.grey
+                          : Theme.of(context).iconTheme.color,
                     ),
                     style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(

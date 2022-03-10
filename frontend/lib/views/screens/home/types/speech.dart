@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/camera_view_model.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
-import 'package:provider/provider.dart';
 
 class Speech extends StatelessWidget {
   const Speech({Key? key}) : super(key: key);
