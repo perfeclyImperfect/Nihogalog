@@ -53,10 +53,10 @@ def create_data(label_path, image_path):
 X, y = create_data(LABEL, IMAGE)
 
 
-x_file = open('X.pkl', 'wr')
+x_file = open('X.pkl', 'wb')
 pickle.dump(X, x_file)
 x_file.close() 
 
-y_file = open('y.pkl', 'wr')
+y_file = open('y.pkl', 'wb')
 pickle.dump(y, y_file)
 y_file.close() 
