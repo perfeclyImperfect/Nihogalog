@@ -34,7 +34,9 @@ class Translation extends StatelessWidget {
                             wordTranslationViewModel.getText.translation, 1),
                 child: Icon(
                   isBotTalking ? Icons.stop : Icons.volume_up,
-                  color: isTopTalking ? Colors.grey : Colors.black,
+                  color: isTopTalking
+                      ? Colors.grey
+                      : Theme.of(context).iconTheme.color,
                 ),
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(

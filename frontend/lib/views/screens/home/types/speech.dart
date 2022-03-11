@@ -17,10 +17,9 @@ class Speech extends StatelessWidget {
         const Expanded(
           child: Align(
             alignment: Alignment.center,
-            child: Text('Tap the microphone and start speaking.',
-                style: TextStyle(
-                  color: Colors.black54,
-                )),
+            child: Text(
+              'Tap the microphone and start speaking.',
+            ),
           ),
         )
       ],

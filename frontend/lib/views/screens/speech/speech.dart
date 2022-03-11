@@ -1,3 +1,4 @@
+import 'package:audio_wave/audio_wave.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/models/historyWord.dart';
@@ -116,7 +117,7 @@ class SpeechScreen extends StatelessWidget {
                                             : Icons.volume_up,
                                         color: isBotTalking
                                             ? Colors.grey
-                                            : Colors.black,
+                                            : Theme.of(context).iconTheme.color,
                                       ),
                                       style: ButtonStyle(
                                         minimumSize: MaterialStateProperty.all(
@@ -194,8 +195,9 @@ class SpeechScreen extends StatelessWidget {
                                           size: 35,
                                           color: Colors.white,
                                         ),
-                                        child:
-                                            Icon(getPlayIcon(topAudioStatus)),
+                                        child: Icon(
+                                          getPlayIcon(topAudioStatus),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -236,7 +238,7 @@ class SpeechScreen extends StatelessWidget {
                                           : Icons.volume_up,
                                       color: isTopTalking
                                           ? Colors.grey
-                                          : Colors.black,
+                                          : Theme.of(context).iconTheme.color,
                                     ),
                                     style: ButtonStyle(
                                       minimumSize: MaterialStateProperty.all(
@@ -344,6 +346,8 @@ class SpeechScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
+                Provider.of<WordTranslatingViewModel>(context, listen: false)
+                    .reset();
                 speechViewModel.reset();
                 Navigator.pop(context);
               },

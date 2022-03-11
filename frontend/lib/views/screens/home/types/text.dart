@@ -21,30 +21,7 @@ class CustomText extends StatelessWidget {
         Expanded(
           child: Align(
             alignment: Alignment.center,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                splashFactory: NoSplash.splashFactory,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/home/text',
-                    arguments: Provider.of<WordTranslatingViewModel>(context,
-                            listen: false)
-                        .getText
-                        .word);
-              },
-              child: DefaultTextStyle.merge(
-                style: const TextStyle(
-                  color: Colors.black54,
-                ),
-                child: Text(
-                  'Type the text to translate.',
-                  style: GoogleFonts.openSans(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
+            child: Text('Tap the text to translate'),
           ),
         )
       ],
