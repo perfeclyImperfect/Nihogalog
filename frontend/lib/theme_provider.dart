@@ -36,8 +36,6 @@ class MyThemes {
     iconTheme: const IconThemeData(
       color: Colors.black,
     ),
-    textButtonTheme: const TextButtonThemeData(
-      style: ButtonStyle(),
-    ),
+    textButtonTheme: TextButtonThemeData(),
   );
 }

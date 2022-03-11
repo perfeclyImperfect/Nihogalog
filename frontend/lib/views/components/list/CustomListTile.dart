@@ -51,16 +51,25 @@ class CustomListTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        historyWord.getOriginalWord,
+                        historyWord.getOriginalWord.length > 20
+                            ? historyWord.getOriginalWord.substring(0, 20) +
+                                ' .....'
+                            : historyWord.getOriginalWord,
                         style: GoogleFonts.openSans(
                           color: Colors.white,
                           fontSize: 17,
                           fontWeight: FontWeight.w800,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 10,
                       ),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 1)),
                       Text(
-                        historyWord.getTranslationWord,
+                        historyWord.getTranslationWord.length > 20
+                            ? historyWord.getTranslationWord.substring(0, 20) +
+                                ' .....'
+                            : historyWord.getTranslationWord,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.openSans(
                           color: Colors.white,
                           fontSize: 17,

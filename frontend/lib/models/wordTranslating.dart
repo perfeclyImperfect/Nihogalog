@@ -2,7 +2,7 @@ class WordTranslating {
   WordTranslating(this.word, this.translation, this.translationPronounciation,
       this.favorite);
 
-  final String word;
+  late final String word;
   final String translation;
   final String translationPronounciation;
   bool favorite;
