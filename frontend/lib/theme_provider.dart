@@ -18,6 +18,10 @@ class MyThemes {
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+          primary: Colors.white, textStyle: const TextStyle(fontSize: 17)),
+    ),
   );
 
   static final lightTheme = ThemeData(
@@ -26,7 +30,6 @@ class MyThemes {
     textTheme: const TextTheme(
       bodyText1: TextStyle(fontSize: 15),
       bodyText2: TextStyle(fontSize: 15),
-      button: TextStyle(fontSize: 15, color: Colors.green),
     ).apply(
       bodyColor: Colors.black,
       fontFamily: 'OpenSans',
@@ -36,6 +39,9 @@ class MyThemes {
     iconTheme: const IconThemeData(
       color: Colors.black,
     ),
-    textButtonTheme: TextButtonThemeData(),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+          primary: Colors.black, textStyle: const TextStyle(fontSize: 17)),
+    ),
   );
 }

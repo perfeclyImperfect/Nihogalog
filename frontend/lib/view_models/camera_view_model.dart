@@ -12,6 +12,25 @@ class CameraViewModel extends ChangeNotifier {
 
   File? get getImage => _image;
 
+  List<String> information = ['Hey ya', 'ye ya', 'yo ya'];
+  List<String> informationTitle = [
+    'Multiple Object Detection',
+    'Single Road Sign Detection',
+    'Optical Character Recognition'
+  ];
+
+  int _selectedMode = 0;
+
+  get getInformation => information[_selectedMode];
+  get getInformationTitle => informationTitle[_selectedMode];
+
+  get getSelectedIndex => _selectedMode;
+
+  setSelectedMode(int selectedMode) {
+    this._selectedMode = selectedMode;
+    notifyListeners();
+  }
+
   pickImage(ImageSource source) async {
     final File tempImage = await _imagePickerSerImp.pickImage(source);
 
