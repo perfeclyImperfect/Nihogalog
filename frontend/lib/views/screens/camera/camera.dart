@@ -1,31 +1,19 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/views/components/camera/cameraWidget.dart';
-import 'package:frontend/views/components/translationHeader/translationHeader.dart';
 
 class CameraScreen extends StatelessWidget {
-  const CameraScreen({Key? key, required this.image}) : super(key: key);
+  final List<CameraDescription>? cameras;
+  const CameraScreen({this.cameras, Key? key}) : super(key: key);
 
-  final File? image;
+  static String route = '/camera';
 
   @override
   Widget build(BuildContext context) {
-    return image == null
-        ? Stack(
-            children: [
-              CameraWidget(),
-              Padding(
-                padding: const EdgeInsets.only(top: 45),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: TranslationHeader(additionalFunction: () {}),
-                ),
-              ),
-            ],
-          )
-        : Center(
-            child: Image.file(image!),
-          );
+    return Scaffold(
+      body: CameraWidget(
+        cameras: cameras,
+      ),
+    );
   }
 }

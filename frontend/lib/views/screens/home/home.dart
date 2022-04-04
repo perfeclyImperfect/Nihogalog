@@ -22,12 +22,6 @@ import 'types/camera.dart';
 class _HomeScreen extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  void _changeItem(index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   final List<Widget> _types = [
     const text.CustomText(),
     const Speech(),

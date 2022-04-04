@@ -18,8 +18,6 @@ class _SwapButtonState extends State<SwapButton>
       duration: const Duration(milliseconds: 350),
     );
 
-    // animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
-
     controller.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
         controller.reset();

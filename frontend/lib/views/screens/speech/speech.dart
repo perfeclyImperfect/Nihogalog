@@ -1,4 +1,4 @@
-import 'package:audio_wave/audio_wave.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/models/historyWord.dart';
@@ -11,7 +11,7 @@ import 'package:frontend/views/components/translationHeader/translationHeader.da
 import 'package:provider/provider.dart';
 
 class SpeechScreen extends StatelessWidget {
-  SpeechScreen({Key? key}) : super(key: key);
+  const SpeechScreen({Key? key}) : super(key: key);
 
   static String route = '/speech';
 
@@ -32,7 +32,7 @@ class SpeechScreen extends StatelessWidget {
 
   void _makeFavorite(context, SpeechViewModel speechViewModel,
       LanguageTranslationViewModel languageTranslationViewModel) {
-    final tempWord = speechViewModel.getCurrentWordTranslating!;
+    final tempWord = speechViewModel.getCurrentWordTranslating;
     final tempLanguage = languageTranslationViewModel.getLanguageTranslation;
 
     HistoryWord tempHistoryWord = HistoryWord(
@@ -70,10 +70,10 @@ class SpeechScreen extends StatelessWidget {
     final languageTranslation =
         languageTranslationViewModel.getLanguageTranslation;
 
-    final originalWord = speechViewModel.getCurrentWordTranslating!.word;
+    final originalWord = speechViewModel.getCurrentWordTranslating.word;
 
     final translationWord =
-        speechViewModel.getCurrentWordTranslating!.translation;
+        speechViewModel.getCurrentWordTranslating.translation;
 
     return Scaffold(
       body: Stack(
@@ -155,7 +155,9 @@ class SpeechScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  translationWord,
+                                  topAudioStatus
+                                      ? 'Tap the button to end recording'
+                                      : translationWord,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25),
@@ -165,38 +167,49 @@ class SpeechScreen extends StatelessWidget {
                             Expanded(
                               child: Align(
                                 alignment: Alignment.center,
-                                child: MaterialButton(
-                                  shape: const CircleBorder(),
-                                  onPressed: bottomAudioStatus
-                                      ? null
-                                      : () => speechViewModel.toggletTopRecord(
-                                            context,
-                                            languageTranslation.getToLanguage,
-                                            languageTranslation.getFromLanguage,
-                                          ),
-                                  child: Ink(
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(80.0)),
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: <Color>[
-                                          HexColor('#F0B831'),
-                                          HexColor('#962F4A'),
-                                          HexColor('#1E307C'),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20),
-                                      child: IconTheme(
-                                        data: const IconThemeData(
-                                          size: 35,
-                                          color: Colors.white,
+                                child: AvatarGlow(
+                                  animate: topAudioStatus,
+                                  endRadius: 50.0,
+                                  glowColor: Colors.red,
+                                  repeat: true,
+                                  duration: const Duration(milliseconds: 2000),
+                                  repeatPauseDuration:
+                                      const Duration(milliseconds: 100),
+                                  child: FloatingActionButton(
+                                    shape: const CircleBorder(),
+                                    onPressed: bottomAudioStatus
+                                        ? null
+                                        : () =>
+                                            speechViewModel.toggletTopRecord(
+                                              context,
+                                              languageTranslation.getToLanguage,
+                                              languageTranslation
+                                                  .getFromLanguage,
+                                            ),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(80.0)),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: <Color>[
+                                            HexColor('#F0B831'),
+                                            HexColor('#962F4A'),
+                                            HexColor('#1E307C'),
+                                          ],
                                         ),
-                                        child: Icon(
-                                          getPlayIcon(topAudioStatus),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: IconTheme(
+                                          data: const IconThemeData(
+                                            size: 35,
+                                            color: Colors.white,
+                                          ),
+                                          child: Icon(
+                                            getPlayIcon(topAudioStatus),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -258,15 +271,20 @@ class SpeechScreen extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.topRight,
                                   child: IconButton(
-                                    onPressed: () => _makeFavorite(
-                                        context,
-                                        speechViewModel,
-                                        languageTranslationViewModel),
+                                    onPressed: () => speechViewModel
+                                            .getCurrentWordTranslating
+                                            .word
+                                            .isEmpty
+                                        ? null
+                                        : _makeFavorite(
+                                            context,
+                                            speechViewModel,
+                                            languageTranslationViewModel),
                                     icon: const Icon(Icons.star_rounded),
                                     splashRadius: 15,
                                     iconSize: 37.5,
                                     color: speechViewModel
-                                            .getCurrentWordTranslating!.favorite
+                                            .getCurrentWordTranslating.favorite
                                         ? HexColor('#ffbc00')
                                         : HexColor('#CECECE'),
                                     splashColor: Colors.transparent,
@@ -279,7 +297,9 @@ class SpeechScreen extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                originalWord,
+                                bottomAudioStatus
+                                    ? 'Tap the button to end recording'
+                                    : originalWord,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
@@ -288,38 +308,48 @@ class SpeechScreen extends StatelessWidget {
                           Expanded(
                             child: Align(
                               alignment: Alignment.center,
-                              child: MaterialButton(
-                                shape: const CircleBorder(),
-                                onPressed: topAudioStatus
-                                    ? null
-                                    : () => speechViewModel.toggleBottomRecord(
-                                          context,
-                                          languageTranslation.getFromLanguage,
-                                          languageTranslation.getToLanguage,
-                                        ),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(80.0)),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: <Color>[
-                                        HexColor('#F0B831'),
-                                        HexColor('#962F4A'),
-                                        HexColor('#1E307C'),
-                                      ],
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: IconTheme(
-                                      data: const IconThemeData(
-                                        size: 35,
-                                        color: iconColor,
+                              child: AvatarGlow(
+                                animate: bottomAudioStatus,
+                                endRadius: 50.0,
+                                glowColor: Colors.red,
+                                repeat: true,
+                                duration: const Duration(milliseconds: 2000),
+                                repeatPauseDuration:
+                                    const Duration(milliseconds: 100),
+                                child: FloatingActionButton(
+                                  shape: const CircleBorder(),
+                                  onPressed: topAudioStatus
+                                      ? null
+                                      : () =>
+                                          speechViewModel.toggleBottomRecord(
+                                            context,
+                                            languageTranslation.getFromLanguage,
+                                            languageTranslation.getToLanguage,
+                                          ),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(80.0)),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: <Color>[
+                                          HexColor('#F0B831'),
+                                          HexColor('#962F4A'),
+                                          HexColor('#1E307C'),
+                                        ],
                                       ),
-                                      child:
-                                          Icon(getPlayIcon(bottomAudioStatus)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: IconTheme(
+                                        data: const IconThemeData(
+                                          size: 35,
+                                          color: iconColor,
+                                        ),
+                                        child: Icon(
+                                            getPlayIcon(bottomAudioStatus)),
+                                      ),
                                     ),
                                   ),
                                 ),

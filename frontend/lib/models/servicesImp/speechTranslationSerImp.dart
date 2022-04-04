@@ -35,15 +35,8 @@ class SpeechTranslationSerImp extends ApiSer {
           filename: temporaryAudioFilename)
     });
 
-    // final FormData = ;
-
     final response = await _dio.post(_url, data: formData);
 
     return response.data;
-    // return {
-    //   "text_output": 'test',
-    //   'text_input': 'of course',
-    //   'text_romaji': 'anu bayan'
-    // };
   }
 }

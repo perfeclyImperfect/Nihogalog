@@ -9,6 +9,10 @@ class AudioRecorderServiceImp {
   bool _isRecorderInitialized = false;
   bool get isRecording => _isRecorderInitialized;
 
+  final bars = [];
+
+  FlutterSoundRecorder? get getAudioRecorder => _audioRecorder;
+
   Future init() async {
     _audioRecorder = FlutterSoundRecorder();
 
@@ -38,12 +42,6 @@ class AudioRecorderServiceImp {
       toFile: tempFullPath,
       codec: Codec.pcm16WAV,
     );
-
-    print('Full path $tempFullPath');
-
-    File file = File(tempFullPath);
-    bool temp = await file.exists();
-    print('size ${await file.length()}');
   }
 
   Future _stop() async {

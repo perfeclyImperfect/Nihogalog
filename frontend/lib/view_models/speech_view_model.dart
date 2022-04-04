@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:frontend/config/locator/locator.dart';
 import 'package:frontend/models/historyWord.dart';
 import 'package:frontend/models/services/historySer.dart';
@@ -30,7 +32,9 @@ class SpeechViewModel extends ChangeNotifier {
   late WordTranslating _currentWordTranslating =
       WordTranslating("", "", "", false);
 
-  WordTranslating? get getCurrentWordTranslating => _currentWordTranslating;
+  late var test;
+
+  WordTranslating get getCurrentWordTranslating => _currentWordTranslating;
   String _toCopy = '';
   String get getToCopy => _toCopy;
 
