@@ -21,7 +21,7 @@ class CustomText extends StatelessWidget {
         Expanded(
           child: Align(
             alignment: Alignment.center,
-            child: Text('Tap the text to translate'),
+            child: Text('Tap the icon to translate'),
           ),
         )
       ],
