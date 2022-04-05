@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/theme_provider.dart';
+import 'package:frontend/config/theme_provider.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
 import 'package:provider/provider.dart';
 

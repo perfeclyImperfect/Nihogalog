@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/theme_data.dart';
 import 'package:frontend/models/repositories/darkModeRepo.dart';
 import 'package:frontend/models/services/darkModeSer.dart';
-import 'package:frontend/theme_provider.dart';
 
 class DarkModeSerImp extends DarkModeSer {
   DarkModeRepo darkModeRepo;
