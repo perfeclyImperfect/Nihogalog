@@ -9,8 +9,8 @@ import pytesseract as tess
 from PIL import Image
 import numpy as np
 from ..helper.utils import *
-
-
+from google.cloud import vision
+import cv2 
 
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -96,13 +96,21 @@ class translator_helper:
                 translate_text = translator.translate("Please try again", source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
 
+
+    # ////////// ======================== OCR Google Vision ======================== //////////
+    
     def image_text_to_text(self, image_input):
-        img = Image.open(image_input)
-        text_image = tess.image_to_string(img,'jpn').replace("\n",'').strip().replace("\'",'')
-        result = ""
-        translator = translate.Client()
-        translate_text = translator.translate(text_image, target_language=self.language_selected)
-        return translate_text['translatedText']
+        img = np.asarray(Image.open(image_input))
+        
+        success, encoded_image = cv2.imencode('.jpg', img)
+        roi_image = encoded_image.tobytes()
+
+        client = vision.ImageAnnotatorClient()
+        image = vision.Image(content=roi_image)
+        response =  client.text_detection(image=image, image_context={"language_hints": ["ja"]})
+
+        texts = response.text_annotations
+        return texts[0].description.strip()
 
     def object_image_detection( self, image_input):
         return image_input

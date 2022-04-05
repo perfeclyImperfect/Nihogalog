@@ -71,6 +71,7 @@ def text_detection(request):
                 'text_romaji': convert.text_romaji,
             }
         )
+    return JsonResponse({'success':False})
 
 
 @csrf_exempt
@@ -94,6 +95,7 @@ def speech_converter(request):
                 'text_romaji': convert.text_romaji,
             }
         )
+    return JsonResponse({'success':False})
 
 
 @csrf_exempt
@@ -115,6 +117,6 @@ def text_converter(request):
             'text_emotion': convert.text_emotion ,
         }
     )
-
+    return JsonResponse({'success':False})
 
 
