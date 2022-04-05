@@ -14,34 +14,32 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: padding,
-        child: Row(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Image.asset(
-                'assets/images/nihogalog_logo.png',
-                scale: scale,
-              ),
+    return Padding(
+      padding: padding,
+      child: Row(
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Image.asset(
+              'assets/images/nihogalog_logo.png',
+              scale: scale,
             ),
-            Text(
-              'niho',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize,
-              ),
+          ),
+          Text(
+            'niho',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: fontSize,
             ),
-            Text(
-              'galog',
-              style: TextStyle(
-                fontWeight: FontWeight.w200,
-                fontSize: fontSize,
-              ),
-            )
-          ],
-        ),
+          ),
+          Text(
+            'galog',
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontSize: fontSize,
+            ),
+          )
+        ],
       ),
     );
   }
