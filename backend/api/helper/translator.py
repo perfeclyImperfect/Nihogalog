@@ -11,9 +11,24 @@ import numpy as np
 from ..helper.utils import *
 from google.cloud import vision
 import cv2 
+import os 
+import tensorflow as tf 
+from django.core.files.storage import default_storage
 
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+TRESHOLD = 0.90 
+CATEGORIES = [
+    'allowed-direction', 'allowed-signs', 'cross-walk', 'probihited-direction',
+    'probihited-signs', 'speed-limit', 'stop-sign', 'traffic-sign', 'warning-sign'
+]
+TAGALOG = [
+    ''
+]
+JAPANESE = [
+
+]
 # yolo_loaded = tf.keras.models.load_model('static/yolo-model.h5')
 
 
@@ -116,4 +131,16 @@ class translator_helper:
         return image_input
 
     def image_classification_detection(self, image_input):
-        return "Hello testing"
+        # model = tf.mode,'alexnet-sigmoid-final')
+        model = tf.keras.models.load_model('static/alexnet-sigmoid-final')
+        img = Image.open(image_input).resize(  (50,50))
+        img_tensor = tf.keras.preprocessing.image.img_to_array(img) 
+        img_tensor /= 255. 
+
+        predict = model.predict( tf.expand_dims(img_tensor, axis=0) ) 
+        label = CATEGORIES[np.argmax(predict)]
+
+        if( TRESHOLD  <  np.max(predict) ):
+            return label 
+        return "No Sign"
+        
