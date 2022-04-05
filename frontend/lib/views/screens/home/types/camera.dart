@@ -1,10 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/view_models/camera_view_model.dart';
-import 'package:frontend/views/components/camera/cameraWidget.dart';
 import 'package:frontend/views/components/translationHeader/translationHeader.dart';
 import 'package:frontend/views/screens/camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class Camera extends StatelessWidget {

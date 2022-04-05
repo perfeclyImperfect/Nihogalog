@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend/view_models/camera_view_model.dart';
 import 'package:frontend/view_models/wordTranslating_view_model.dart';
 import 'package:frontend/views/components/appbar/homeAppBar.dart';
-import 'package:frontend/views/components/camera/cameraWidget.dart';
-import 'package:frontend/views/components/logo/Logo.dart';
-import 'package:frontend/views/components/translationHeader/translationHeader.dart';
-import 'package:frontend/views/screens/camera/camera.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../../components/drawer/drawer.dart';
 import '../../components/bottomNavigationBar/bottomNavyBar.dart';
 import 'package:frontend/views/components/bottomNavigationBar/parts/bottomNavyItem.dart';
-import '../../../utils/hexColor.dart';
 
 import 'types/text.dart' as text;
 import 'types/speech.dart';

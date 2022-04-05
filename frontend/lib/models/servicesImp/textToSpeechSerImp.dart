@@ -5,16 +5,6 @@ class TextToSpeechSerImp {
 
   FlutterTts get getFlutterTts => _flutterTts;
 
-  TextToSpeechSerImp() {
-    _init();
-  }
-
-  void _init() {
-    // _flutterTts.setStartHandler(() {});
-    // _flutterTts.setCompletionHandler(() {});
-    // _flutterTts.setErrorHandler((message) {});
-  }
-
   void speak(String? text) async {
     if (text != null && text.isNotEmpty) {
       await _flutterTts.speak(text);

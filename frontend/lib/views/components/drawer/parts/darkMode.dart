@@ -12,7 +12,7 @@ class _DarkModeState extends State<DarkMode> {
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(9, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(9, 0, 0, 0),
           child: Text(
             'Dark Mode',
             style: GoogleFonts.openSans(

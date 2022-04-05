@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view_models/wordTranslating_view_model.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import '../../../components/translationHeader/translationHeader.dart';
 
 class CustomText extends StatelessWidget {
@@ -18,7 +14,7 @@ class CustomText extends StatelessWidget {
             additionalFunction: () {},
           ),
         ),
-        Expanded(
+        const Expanded(
           child: Align(
             alignment: Alignment.center,
             child: Text('Tap the icon to translate'),

@@ -74,15 +74,4 @@ void getItSetup() {
   locator.registerLazySingleton<TextToSpeechSerImp>(() => TextToSpeechSerImp());
 
   locator.registerLazySingleton<ImagePickerSerImp>(() => ImagePickerSerImp());
-
-  // ViewModels
-
-  // locator.registerLazySingleton<DarkModeViewModel>(
-  //     () => Provider.of<DarkModeViewModel>(locator()));
-  // locator.registerLazySingleton<TranslatingViewModel>(
-  //     () => TranslatingViewModel());
-  // locator.registerLazySingleton<TextTranslationViewModel>(
-  //     () => TextTranslationViewModel());
-  // locator.registerLazySingleton<HistoryViewModel>(
-  //     () => Provider.of<HistoryViewModel>(context));
 }
