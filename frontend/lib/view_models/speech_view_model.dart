@@ -131,6 +131,8 @@ class SpeechViewModel extends ChangeNotifier {
       _toCopy = tempTranslation.translation;
       setCurrentWordTranslating(WordTranslating(tempTranslation.translation,
           tempTranslation.word, '', tempTranslation.favorite));
+
+      _textToSpeechSerImp.speak(_toCopy);
     }
 
     notifyListeners();
@@ -164,6 +166,7 @@ class SpeechViewModel extends ChangeNotifier {
 
       _toCopy = tempTranslation.translation;
       setCurrentWordTranslating(tempTranslation);
+      _textToSpeechSerImp.speak(_toCopy);
     }
 
     notifyListeners();
