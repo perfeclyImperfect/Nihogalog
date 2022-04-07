@@ -75,6 +75,9 @@ class SpeechScreen extends StatelessWidget {
     final translationWord =
         speechViewModel.getCurrentWordTranslating.translation;
 
+    final pronounciationWord =
+        speechViewModel.getCurrentWordTranslating.translationPronounciation;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -152,9 +155,11 @@ class SpeechScreen extends StatelessWidget {
                               ],
                             ),
                             Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
                                   topAudioStatus
                                       ? 'Tap the button to end recording'
                                       : translationWord,
@@ -162,8 +167,16 @@ class SpeechScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25),
                                 ),
-                              ),
-                            ),
+                                Text(((languageTranslationViewModel
+                                                    .getLanguageTranslation
+                                                    .getToLanguage ??
+                                                'Nihongo') ==
+                                            'Nihongo') &&
+                                        !topAudioStatus
+                                    ? pronounciationWord
+                                    : '')
+                              ],
+                            )),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.center,
@@ -179,8 +192,7 @@ class SpeechScreen extends StatelessWidget {
                                     shape: const CircleBorder(),
                                     onPressed: bottomAudioStatus
                                         ? null
-                                        : () =>
-                                            speechViewModel.toggletTopRecord(
+                                        : () => speechViewModel.toggleTopRecord(
                                               context,
                                               languageTranslation.getToLanguage,
                                               languageTranslation
@@ -294,15 +306,27 @@ class SpeechScreen extends StatelessWidget {
                             ],
                           ),
                           Expanded(
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                bottomAudioStatus
-                                    ? 'Tap the button to end recording'
-                                    : originalWord,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 25),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  bottomAudioStatus
+                                      ? 'Tap the button to end recording'
+                                      : originalWord,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25),
+                                ),
+                                Text(((languageTranslationViewModel
+                                                    .getLanguageTranslation
+                                                    .getFromLanguage ??
+                                                'Tagalog') ==
+                                            'Nihongo') &&
+                                        !bottomAudioStatus
+                                    ? pronounciationWord
+                                    : ''),
+                              ],
                             ),
                           ),
                           Expanded(

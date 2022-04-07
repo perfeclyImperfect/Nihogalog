@@ -32,8 +32,6 @@ class SpeechViewModel extends ChangeNotifier {
   late WordTranslating _currentWordTranslating =
       WordTranslating("", "", "", false);
 
-  late var test;
-
   WordTranslating get getCurrentWordTranslating => _currentWordTranslating;
   String _toCopy = '';
   String get getToCopy => _toCopy;
@@ -102,7 +100,7 @@ class SpeechViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  toggletTopRecord(context, fromLanguage, toLanguage) async {
+  toggleTopRecord(context, fromLanguage, toLanguage) async {
     _topAudioRecordStatus = !_topAudioRecordStatus;
 
     _audioRecorderServiceImp.toggleRecording();
@@ -129,8 +127,11 @@ class SpeechViewModel extends ChangeNotifier {
       }
 
       _toCopy = tempTranslation.translation;
-      setCurrentWordTranslating(WordTranslating(tempTranslation.translation,
-          tempTranslation.word, '', tempTranslation.favorite));
+      setCurrentWordTranslating(WordTranslating(
+          tempTranslation.translation,
+          tempTranslation.word,
+          tempTranslation.translationPronounciation,
+          tempTranslation.favorite));
 
       _textToSpeechSerImp.speak(_toCopy);
     }
@@ -166,6 +167,7 @@ class SpeechViewModel extends ChangeNotifier {
 
       _toCopy = tempTranslation.translation;
       setCurrentWordTranslating(tempTranslation);
+
       _textToSpeechSerImp.speak(_toCopy);
     }
 
