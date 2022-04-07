@@ -9,11 +9,26 @@ import pytesseract as tess
 from PIL import Image
 import numpy as np
 from ..helper.utils import *
-
-
+from google.cloud import vision
+import cv2 
+import os 
+import tensorflow as tf 
+from django.core.files.storage import default_storage
 
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+TRESHOLD = 0.90 
+CATEGORIES = [
+    'allowed-direction', 'allowed-signs', 'cross-walk', 'probihited-direction',
+    'probihited-signs', 'speed-limit', 'stop-sign', 'traffic-sign', 'warning-sign'
+]
+TAGALOG = [
+    ''
+]
+JAPANESE = [
+
+]
 # yolo_loaded = tf.keras.models.load_model('static/yolo-model.h5')
 
 
@@ -96,16 +111,36 @@ class translator_helper:
                 translate_text = translator.translate("Please try again", source_language='en' ,target_language=self.language_selected)
                 return translate_text['translatedText']
 
+
+    # ////////// ======================== OCR Google Vision ======================== //////////
+    
     def image_text_to_text(self, image_input):
-        img = Image.open(image_input)
-        text_image = tess.image_to_string(img,'jpn').replace("\n",'').strip().replace("\'",'')
-        result = ""
-        translator = translate.Client()
-        translate_text = translator.translate(text_image, target_language=self.language_selected)
-        return translate_text['translatedText']
+        img = np.asarray(Image.open(image_input))
+        
+        success, encoded_image = cv2.imencode('.jpg', img)
+        roi_image = encoded_image.tobytes()
+
+        client = vision.ImageAnnotatorClient()
+        image = vision.Image(content=roi_image)
+        response =  client.text_detection(image=image, image_context={"language_hints": ["ja"]})
+
+        texts = response.text_annotations
+        return texts[0].description.strip()
 
     def object_image_detection( self, image_input):
         return image_input
 
     def image_classification_detection(self, image_input):
-        return "Hello testing"
+        # model = tf.mode,'alexnet-sigmoid-final')
+        model = tf.keras.models.load_model('static/alexnet-sigmoid-final')
+        img = Image.open(image_input).resize(  (50,50))
+        img_tensor = tf.keras.preprocessing.image.img_to_array(img) 
+        img_tensor /= 255. 
+
+        predict = model.predict( tf.expand_dims(img_tensor, axis=0) ) 
+        label = CATEGORIES[np.argmax(predict)]
+
+        if( TRESHOLD  <  np.max(predict) ):
+            return label 
+        return "No Sign"
+        
