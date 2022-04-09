@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/drawer_icons_icons.dart';
+import 'package:frontend/config/drawer_icons.dart';
 
 import 'parts/darkMode.dart';
 import 'parts/navigationListTile.dart';
