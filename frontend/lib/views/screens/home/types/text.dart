@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/hexColor.dart';
 import '../../../components/translationHeader/translationHeader.dart';
 
 class CustomText extends StatelessWidget {
@@ -14,10 +15,42 @@ class CustomText extends StatelessWidget {
             additionalFunction: () {},
           ),
         ),
-        const Expanded(
-          child: Align(
-            alignment: Alignment.center,
-            child: Text('Tap the icon to translate'),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text('Tap the '),
+              Ink(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(80.0)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      HexColor('#F0B831'),
+                      HexColor('#962F4A'),
+                      HexColor('#1E307C'),
+                    ],
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: IconTheme(
+                    data: IconThemeData(
+                      color: Colors.white,
+                    ),
+                    child: Icon(
+                      Icons.text_fields,
+                      size: 25,
+                    ),
+                  ),
+                ),
+              ),
+              const Text(' to start translate.')
+            ],
           ),
         )
       ],

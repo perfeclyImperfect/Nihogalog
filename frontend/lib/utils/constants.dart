@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 const String kMaterialAppTitle = 'nihogalog';
 
 const String kTheme = '';

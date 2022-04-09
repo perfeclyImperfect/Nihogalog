@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme_provider.dart';
 import 'package:frontend/view_models/darkMode_view_model.dart';
@@ -10,8 +9,6 @@ import '../../config/routes.dart';
 import '../../config/providers.dart';
 
 import '../../utils/constants.dart';
-
-List<CameraDescription> cameras = [];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
